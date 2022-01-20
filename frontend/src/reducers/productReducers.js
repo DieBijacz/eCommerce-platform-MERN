@@ -19,7 +19,7 @@ export const productListReducer = (state = { products: [] }, action) => {
       return { loading: false, products: action.payload }
     case PRODUCT_LIST_FAIL:
       // resp when fail send back error in payload
-      return { loading: false, error: action.paylaod }
+      return { loading: false, error: action.payload }
     default:
       return state
   }

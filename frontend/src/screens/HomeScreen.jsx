@@ -20,14 +20,14 @@ const HomeScreen = () => {
   return (
     <>
      <h1>Latest Products</h1> 
-     {loading ? <Loader /> : error ? {error} : (
-      <Row>
-        {products.map(product => (
-          <Col key={product._id} sm={12} md={6} lg={4} cl={3}>
-            <Product product={product}/>
-          </Col>
-        ))}
-      </Row>
+     {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
+        <Row>
+          {products.map(product => (
+            <Col key={product._id} sm={12} md={6} lg={4} cl={3}>
+              <Product product={product}/>
+            </Col>
+          ))}
+        </Row>
      )
      }
     </>

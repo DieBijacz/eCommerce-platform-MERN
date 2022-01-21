@@ -12,7 +12,9 @@ router.get(
   asyncHandler(async (req, res) => {
     // .find({}) with empty obj will bring eveything in Promise
     const products = await Product.find({})
-    throw new Error('Some error')
+
+    // throw new Error('Some error')
+
     // res.json will convert data to json
     res.json(products)
   })

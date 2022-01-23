@@ -9,8 +9,23 @@ const CartScreen = () => {
   const params = useParams()
   const [searchParams, setSearchParams] = useSearchParams()
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
-  console.log(searchParams.get('qty'));
+  // get items from store
+  const cart = useSelector(state => state.cart)
+  const {cartItems} = cart
+
+  console.log(cartItems);
+
+  // get info from url
+  const productId = params.id
+  const qty = searchParams.get('qty')
+
+  useEffect(() => {
+    if(productId && qty) {
+      dispatch(addToCart(productId, qty))
+    }
+  }, [dispatch, productId, qty])
 
   return (
     <div>asd</div>

@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams, useSearchParams  } from 'react-router-dom
 import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col, ListGroup, Image, Form, Button , Card, ListGroupItem } from 'react-bootstrap'
 import Message from '../components/Message'
-import { addToCart } from '../actions/cartActions'
+import { addToCart, removeFromCart } from '../actions/cartActions'
 
 const CartScreen = () => {
   const params = useParams()
@@ -25,13 +25,16 @@ const CartScreen = () => {
     }
   }, [dispatch, productId, qty])
 
-
   const removeFromCartHandler = (id) => {
-    console.log('remove');
+    // dispach to cartActions removeFromCArt func with id
+    // to be removed from state and from locl storage
+    dispatch(removeFromCart(id))
   }
 
   const checkoutHandler = () => {
+    // if not logged in
     navigate('/login')
+    // else navigate to shepping page
   }
 
   return (

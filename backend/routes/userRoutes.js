@@ -1,6 +1,10 @@
 import express from 'express'
 const router = express.Router()
-import { authUser, getUserProfile } from '../controllers/userController.js'
+import {
+  authUser,
+  getUserProfile,
+  registerUser,
+} from '../controllers/userController.js'
 import { protect } from '../middlewere/authMiddlewere.js'
 
 // Each route can have one or more handler functions, which are executed when the route is matched.
@@ -14,5 +18,6 @@ router.post('/login', authUser)
 // pass that middlewere in .get(<middlewere>, <func>)
 // they will be executed in order. remember to use next() inside them
 router.route('/profile').get(protect, getUserProfile)
+router.route('/').post(registerUser)
 
 export default router

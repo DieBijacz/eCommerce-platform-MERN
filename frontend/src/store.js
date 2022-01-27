@@ -35,6 +35,7 @@ const initialState = {
 
 const middlewere = [thunk]
 
+// STORE
 const store = createStore(
   reducer,
   initialState,

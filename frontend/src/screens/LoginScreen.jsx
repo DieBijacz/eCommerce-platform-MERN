@@ -24,6 +24,7 @@ const LoginScreen = () => {
   useEffect(() => {
     // if no user logged in then userInfo: null
     if(userInfo) {
+      // if there is user logged in then he is redirected to home page
       navigate(redirect)
     }
   }, [userInfo, redirect])
@@ -42,16 +43,21 @@ const LoginScreen = () => {
       {loading ? <Loader /> : (
         <>
           <Form onSubmit={submitHandler}>
+
           <FormGroup className='my-3' controlId='email'>
-          <FormLabel>Email Address</FormLabel>
-          <FormControl type='email' placeholder='Enter email' value={email} onChange={(e) => setEmail(e.target.value)}></FormControl>
+            <FormLabel>Email Address</FormLabel>
+            <FormControl type='email' placeholder='Enter email' value={email} onChange={(e) => setEmail(e.target.value)}></FormControl>
           </FormGroup>
+
           <FormGroup className='my-3' controlId='password'>
-          <FormLabel>Password</FormLabel>
-          <FormControl type='password' placeholder='Your password' value={password} onChange={(e) => setPassword(e.target.value)}></FormControl>
+            <FormLabel>Password</FormLabel>
+            <FormControl type='password' placeholder='Your password' value={password} onChange={(e) => setPassword(e.target.value)}></FormControl>
           </FormGroup>
+
           <Button className='my-3' type='submit' variant='primary'>Sign In</Button>
+
           </Form>
+          
           <Row className='py-3'>
           <Col>
           New Customer? <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>Register</Link>

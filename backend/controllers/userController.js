@@ -10,7 +10,6 @@ export const authUser = asyncHandler(async (req, res) => {
   // get email and password from json body
   const { email, password } = req.body
 
-  // SERVER RESPONSE
   // find user in User db based on email
   const user = await User.findOne({ email })
   // if that user exist AND password matches the encrypted password of that user (userModel.js)
@@ -83,6 +82,39 @@ export const getUserProfile = asyncHandler(async (req, res) => {
     })
   } else {
     res.status(401)
+    throw new Error('User not found')
+  }
+})
+
+// @desc  Update user profile
+// @route PUT /api/users/profile
+// @access Private
+
+export const updateUserProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id)
+
+  if (user) {
+    // update user details if there where send in body, else keep them as they were
+    user.name = req.body.name || user.name
+    user.email = req.body.email || user.email
+    // if there was password send in body
+    if (req.body.password) {
+      user.password = req.body.password
+    }
+
+    // save changes
+    const updatedUser = await user.save()
+
+    // response from server with updated details
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+      token: generateToken(updatedUser._id),
+    })
+  } else {
+    res.status(404)
     throw new Error('User not found')
   }
 })

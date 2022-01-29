@@ -1,5 +1,8 @@
 import axios from 'axios'
 import {
+  USER_DETAILS_FAIL,
+  USER_DETAILS_REQUEST,
+  USER_DETAILS_SUCCESS,
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
@@ -95,6 +98,47 @@ export const register = (name, email, password) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: USER_REGISTER_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
+// GET USER DETAILS
+
+export const getUserDetails = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: USER_DETAILS_REQUEST,
+    })
+
+    // Get userInfo from state
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    // prepare headers with user token inside
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        // token
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    // get data from specific user based on passed id
+    const { data } = await axios.get(`/api/users/${id}`, config)
+
+    // pass data to reducer
+    dispatch({
+      type: USER_DETAILS_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: USER_DETAILS_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

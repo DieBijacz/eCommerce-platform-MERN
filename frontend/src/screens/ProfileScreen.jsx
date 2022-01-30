@@ -46,7 +46,7 @@ const ProfileScreen = () => {
       message && setMessage(null)
     }, 1000);
 
-  }, [dispatch, userInfo, user, message])
+  }, [dispatch, userInfo, user, message, navigate])
 
   const submitHandler = (e) => {
     e.preventDefault()

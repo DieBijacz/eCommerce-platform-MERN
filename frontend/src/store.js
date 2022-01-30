@@ -29,6 +29,11 @@ const cartItemsFromStorage = localStorage.getItem('cartItems')
   ? JSON.parse(localStorage.getItem('cartItems'))
   : []
 
+// check for address in LS
+const shippingAddressFromStorage = localStorage.getItem('shipping address')
+  ? JSON.parse(localStorage.getItem('shipping address'))
+  : []
+
 // check for user in LS
 const initialUserFromStorage = localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo'))
@@ -37,7 +42,10 @@ const initialUserFromStorage = localStorage.getItem('userInfo')
 // INITIAL STATE
 // if there are items in LS get them as initialstate
 const initialState = {
-  cart: { cartItems: cartItemsFromStorage },
+  cart: {
+    cartItems: cartItemsFromStorage,
+    shippingAddress: shippingAddressFromStorage,
+  },
   userLogin: { userInfo: initialUserFromStorage },
 }
 

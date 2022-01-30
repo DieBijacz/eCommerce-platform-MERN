@@ -42,7 +42,11 @@ const ProfileScreen = () => {
         setEmail(user.email)
       }
     }
-  }, [dispatch, userInfo, user])
+    setTimeout(() => {
+      message && setMessage(null)
+    }, 1000);
+
+  }, [dispatch, userInfo, user, message])
 
   const submitHandler = (e) => {
     e.preventDefault()

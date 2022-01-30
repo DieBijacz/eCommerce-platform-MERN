@@ -15,6 +15,9 @@ const CartScreen = () => {
   const cart = useSelector(state => state.cart)
   const {cartItems} = cart
 
+  const userLogin = useSelector(state => state.userLogin)
+  const {userInfo} = userLogin
+
   // get info from url
   const productId = params.id
   const qty = searchParams.get('qty')
@@ -32,9 +35,7 @@ const CartScreen = () => {
   }
 
   const checkoutHandler = () => {
-    // if not logged in
-    navigate('/login')
-    // else navigate to shepping page
+    userInfo ? navigate('/shipping') : navigate('/login')
   }
 
   return (

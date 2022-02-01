@@ -26,7 +26,6 @@ export const cartReducer = (
         }
       } else {
         return {
-          // spread whatever is in state and for cartItems: spread cartItems and add new item
           ...state,
           cartItems: [...state.cartItems, item],
         }
@@ -34,7 +33,7 @@ export const cartReducer = (
 
     case CART_REMOVE_ITEM:
       return {
-        // keep whats is in state
+        // keep whats is in state like shipping address, cart items, payment method
         ...state,
         // and for cartItems keep all just no that which id === passed id
         cartItems: state.cartItems.filter((x) => x.product !== action.payload),
@@ -43,7 +42,7 @@ export const cartReducer = (
     case CART_SAVE_SHIPPING_ADDRESS:
       return {
         ...state,
-        shippingAdress: action.payload,
+        shippingAddress: action.payload,
       }
 
     case CART_SAVE_PAYMENT_METHOD:

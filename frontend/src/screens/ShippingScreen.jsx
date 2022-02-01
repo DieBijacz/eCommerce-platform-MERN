@@ -19,6 +19,7 @@ const ShippingScreen = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
+  // On Submit
   const submitHandler = (e) => {
     e.preventDefault()
     

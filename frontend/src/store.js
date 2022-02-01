@@ -24,17 +24,22 @@ const reducer = combineReducers({
 })
 
 // LOCAL STORAGE
-// check for cart items in LS
+// cart items in LS
 const cartItemsFromStorage = localStorage.getItem('cartItems')
   ? JSON.parse(localStorage.getItem('cartItems'))
   : []
 
-// check for address in LS
+// address in LS
 const shippingAddressFromStorage = localStorage.getItem('shipping address')
   ? JSON.parse(localStorage.getItem('shipping address'))
   : []
 
-// check for user in LS
+// payment method in LS
+const paymentMethodFromStorage = localStorage.getItem('payment method')
+  ? JSON.parse(localStorage.getItem('payment method'))
+  : {}
+
+// user in LS
 const initialUserFromStorage = localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo'))
   : null
@@ -45,6 +50,7 @@ const initialState = {
   cart: {
     cartItems: cartItemsFromStorage,
     shippingAddress: shippingAddressFromStorage,
+    paymentMethod: paymentMethodFromStorage,
   },
   userLogin: { userInfo: initialUserFromStorage },
 }

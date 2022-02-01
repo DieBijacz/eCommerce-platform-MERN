@@ -10,14 +10,14 @@ const PaymentScreen = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
+  // const [paymentMethod, setPaymentMethod] = useState(localStorage.getItem('payment method') ? JSON.parse(localStorage.getItem('payment method')) : 'PayPal')
+  const [paymentMethod, setPaymentMethod] = useState('PayPal')
+
   // bring shipping address from store
   const shippingAddress = useSelector(state => state.cart.shippingAddress)
 
   // if there is no shipping address go back to step 2
   !shippingAddress && navigate('/shipping')
-
-  const [paymentMethod, setPaymentMethod] = useState('PayPal')
-
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -37,7 +37,8 @@ const PaymentScreen = () => {
           <FormGroup>
             <FormLabel as='legend'>Select Method</FormLabel>
             <Col>
-              <FormCheck type='radio' label='PayPal or Credit Card' id='PayPal' name='paymentMethod' value='PayPal' checked onChange={(e) => {setPaymentMethod(e.target.value)}} />
+              <FormCheck type='radio' label='PayPal or Credit Card' id='PayPal' name='paymentMethod' value='PayPal' onChange={(e) => {setPaymentMethod(e.target.value)}} />
+              <FormCheck type='radio' label='Simply take for free' id='Free' name='paymentMethod' value='Take for free' onChange={(e) => {setPaymentMethod(e.target.value)}} />
             </Col>
           </FormGroup>
 

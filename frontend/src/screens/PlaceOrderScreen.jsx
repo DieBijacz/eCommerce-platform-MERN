@@ -9,6 +9,16 @@ const PlaceOrderScreen = () => {
 
   // Bring Cart from store
   const cart = useSelector(state => state.cart)
+  
+  const addDecimals = (num) => {
+    return (Math.round(num * 100) / 100).toFixed(2)
+  }
+
+  // Calculate praices
+  cart.itemsPrice = addDecimals(cart.cartItems.reduce((acc, item) => acc += (item.price * item.qty), 0))
+  cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 10)
+  cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)))
+  cart.totalPrice = addDecimals((Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)).toFixed(2))
 
   const placeOrderHandler = () => {
 
@@ -46,7 +56,7 @@ const PlaceOrderScreen = () => {
                         </Col>
                         <Col md={10}>
                           <Link to={`/product/${item.product}`}>{item.name}</Link>
-                          <div>{item.qty} x ${item.price} = ${(item.qty * item.price).toFixed(2)}</div>
+                          <div>{item.qty}x ${item.price} = ${(item.qty * item.price).toFixed(2)}</div>
                         </Col>
                       </Row>                      
                     </ListGroupItem>

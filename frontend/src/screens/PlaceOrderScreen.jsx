@@ -27,7 +27,6 @@ const PlaceOrderScreen = () => {
   cart.totalPrice = addDecimals((Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)).toFixed(2))
 
   const placeOrderHandler = () => {
-    console.log('dziala');
     dispatch(createOrder({
       orderItems: cart.cartItems,
       shippingAddress: cart.shippingAddress,
@@ -48,9 +47,9 @@ const PlaceOrderScreen = () => {
   return (
     <>
       <CheckoutSteps step1 step2 step3 step4 />
+      {error && <Message variant='danger'>{error}</Message>}
       <Row>
         <Col md={8}>
-          {error && <Message variant='danger'>{error}</Message>}
           <ListGroup variant='flush'>
 
             <ListGroupItem>
@@ -61,7 +60,6 @@ const PlaceOrderScreen = () => {
 
             <ListGroupItem>
               <h2>Payment Method</h2>
-              <div style={{fontWeight: 'bold', fontSize: '1.2rem'}}>Method: </div>
               {cart.paymentMethod}
             </ListGroupItem>
 

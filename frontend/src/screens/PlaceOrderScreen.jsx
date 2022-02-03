@@ -41,7 +41,7 @@ const PlaceOrderScreen = () => {
 
   useEffect(() => {
     if(success) {
-      navigate(`/order/${order._id}`)
+      navigate(`/orders/${order._id}`)
     }
   },[success, navigate])
 

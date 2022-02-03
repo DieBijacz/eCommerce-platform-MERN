@@ -1,5 +1,9 @@
 import express from 'express'
-import { addOrderItems, getOrderById } from '../controllers/orderController.js'
+import {
+  addOrderItems,
+  getOrderById,
+  updateOrder,
+} from '../controllers/orderController.js'
 import { protect } from '../middlewere/authMiddlewere.js'
 
 const router = express.Router()
@@ -8,5 +12,6 @@ const router = express.Router()
 // make sure that the '/' if on the above
 router.route('/').post(protect, addOrderItems)
 router.route('/:id').get(protect, getOrderById)
+router.route('/:id/pay').put(protect, updateOrder)
 
 export default router

@@ -1,14 +1,20 @@
-import React, {useState} from 'react';
+import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Row, Col, ListGroup, Image, Card, ListGroupItem } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
 import CheckoutSteps from '../components/CheckoutSteps.js';
 import Message from '../components/Message.js'
+import { createOrder } from '../actions/orderActions.js'
 
 const PlaceOrderScreen = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   // Bring Cart from store
   const cart = useSelector(state => state.cart)
+
+  const orderCreate = useSelector(state => state.orderCreate)
+  const {order, success, error} = orderCreate
   
   const addDecimals = (num) => {
     return (Math.round(num * 100) / 100).toFixed(2)
@@ -21,14 +27,30 @@ const PlaceOrderScreen = () => {
   cart.totalPrice = addDecimals((Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)).toFixed(2))
 
   const placeOrderHandler = () => {
-
+    console.log('dziala');
+    dispatch(createOrder({
+      orderItems: cart.cartItems,
+      shippingAddress: cart.shippingAddress,
+      paymentMethod: cart.paymentMethod,
+      itemsPrice: cart.itemsPrice,
+      shippingPrice: cart.shippingPrice,
+      taxPrice: cart.taxPrice,
+      totalPrice: cart.totalPrice,
+    }))
   }
+
+  useEffect(() => {
+    if(success) {
+      navigate(`/order/${order._id}`)
+    }
+  },[success, navigate])
 
   return (
     <>
       <CheckoutSteps step1 step2 step3 step4 />
       <Row>
         <Col md={8}>
+          {error && <Message variant='danger'>{error}</Message>}
           <ListGroup variant='flush'>
 
             <ListGroupItem>

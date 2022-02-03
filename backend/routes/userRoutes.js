@@ -8,6 +8,7 @@ import {
 } from '../controllers/userController.js'
 import { protect } from '../middlewere/authMiddlewere.js'
 
+// /api/users/login
 router.post('/login', authUser)
 // to implement middlewere like {protect} (validates user token)
 // pass that middlewere in .get(<middlewere>, <func>)

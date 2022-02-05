@@ -65,9 +65,10 @@ export const updateOrderToPaid = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id)
 
   if (order) {
-    order.isPaid = true
-    order.paidAt = Date.now()
+    order.isPaid = true //updates isPaid status
+    order.paidAt = Date.now() //add datestamp
     order.paymentResult = {
+      //create obj with payment data comes back from PayPal
       id: req.body.id,
       status: req.body.status,
       update_time: req.body.update_time,

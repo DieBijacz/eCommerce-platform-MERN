@@ -37,7 +37,7 @@ const PaymentScreen = () => {
           <FormGroup>
             <FormLabel as='legend'>Select Method</FormLabel>
             <Col>
-              <FormCheck type='radio' label='PayPal or Credit Card' id='PayPal' name='paymentMethod' value='PayPal' onChange={(e) => {setPaymentMethod(e.target.value)}} />
+              <FormCheck type='radio' label='PayPal or Credit Card' id='PayPal' checked name='paymentMethod' value='PayPal' onChange={(e) => {setPaymentMethod(e.target.value)}} />
               <FormCheck type='radio' label='Simply take for free' id='Free' name='paymentMethod' value='Take for free' onChange={(e) => {setPaymentMethod(e.target.value)}} />
             </Col>
           </FormGroup>

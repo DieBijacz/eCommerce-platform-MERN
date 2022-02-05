@@ -1,6 +1,7 @@
 import express from 'express'
 import {
   addOrderItems,
+  getMyOrders,
   getOrderById,
   updateOrderToPaid,
 } from '../controllers/orderController.js'
@@ -11,6 +12,7 @@ const router = express.Router()
 // TIP in case when I have ('/') and ('/something')
 // make sure that the '/' if on the above
 router.route('/').post(protect, addOrderItems)
+router.route('/myorders').get(protect, getMyOrders)
 router.route('/:id').get(protect, getOrderById)
 router.route('/:id/pay').put(protect, updateOrderToPaid)
 

@@ -1,10 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Form, Button, Row, Col, FormGroup, FormLabel, FormControl } from 'react-bootstrap'
+import { Form, Button, Row, Col, FormGroup, FormLabel, FormControl, Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { getUserDetails, updateUserProfile } from '../actions/userActions.js'
+import { getMyOrders } from '../actions/orderActions';
+import { LinkContainer } from 'react-router-bootstrap';
 
 const ProfileScreen = () => {
   const [name, setName] = useState('')
@@ -27,6 +29,9 @@ const ProfileScreen = () => {
   const userUpdateProfile = useSelector(state => state.userUpdateProfile)
   const { success } = userUpdateProfile
 
+  const orderMyList = useSelector(state => state.orderMyList)
+  const { loading: loadingOrders, error: errorOrders, orders } = orderMyList
+
   // Check for logged in user / get details /  and fill up form fields
   useEffect(() => {
     // if there is no logged in user then navigate to log in screen
@@ -34,8 +39,9 @@ const ProfileScreen = () => {
       navigate('/login')
     } else {
       if(!user.name) {
-        // get user details
+        // get user details and orders
         dispatch(getUserDetails('profile'))
+        dispatch(getMyOrders())
       } else {
         // fill fields with fetched user details
         setName(user.name)
@@ -61,7 +67,7 @@ const ProfileScreen = () => {
   }
 
   return <Row>
-    <Col md={6}>
+    <Col lg={4} className='mb-4'>
     <h2>User Profile</h2>
       {error && <Message variant='danger'>{error}</Message>}
       {message && <Message variant='danger'>{message}</Message>}
@@ -94,8 +100,40 @@ const ProfileScreen = () => {
         </Form>
       )}
     </Col>
-    <Col md={6}>
+    <Col lg={8}>
       <h2>My Orders</h2>
+      {loadingOrders ? <Loader /> : errorOrders ? <Message variant='danger'>{errorOrders}</Message> : (
+        <Table stripped bordered responsive className='table-sm'>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Date</th>
+              <th>Total</th>
+              <th>Paid</th>
+              <th>Delivered</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders.map(order => (
+              <tr key={order._id}>
+                <td>{order._id.substring(20,)}</td>
+                <td>{order.createdAt.substring(0, 10)}</td>
+                <td>{order.totalPrice}</td>
+                <td>{order.isPaid ? order.paidAt.substring(0, 10) : <i className='fas fa-times' style={{color: 'red'}}></i>}</td>
+                <td>{order.isDelivered ? order.deliveredAt.substring(0, 10) : <i className='fas fa-times' style={{color: 'red'}}></i>}</td>
+                <td>
+                  <LinkContainer to={`/order/${order._id}`}>
+                    <Button className='order-details-button' variant='light'>Details</Button>
+                  </LinkContainer>
+                </td>
+              </tr>
+            ))}
+
+              
+          </tbody>
+        </Table>
+      )}
     </Col>
   </Row>;
 };

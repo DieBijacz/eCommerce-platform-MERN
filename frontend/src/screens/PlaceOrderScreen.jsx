@@ -42,7 +42,7 @@ const PlaceOrderScreen = () => {
     if(success) {
       navigate(`/orders/${order._id}`)
     }
-  },[success, navigate])
+  },[success, navigate, order])
 
   return (
     <>

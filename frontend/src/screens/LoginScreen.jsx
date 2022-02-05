@@ -11,7 +11,7 @@ const LoginScreen = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
   const dispatch = useDispatch()
   const navigate = useNavigate();
 
@@ -27,7 +27,7 @@ const LoginScreen = () => {
       // if there is user logged in then he is redirected to home page
       navigate(redirect)
     }
-  }, [userInfo, redirect])
+  }, [userInfo, redirect, navigate])
 
   const submitHandler = (e) => {
     e.preventDefault()

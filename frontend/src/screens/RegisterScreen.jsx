@@ -14,7 +14,7 @@ const RegisterScreen = () => {
   const [name, setName] = useState('')
   const [message, setMessage] = useState(null)
 
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
   const dispatch = useDispatch()
   const navigate = useNavigate();
 
@@ -28,7 +28,7 @@ const RegisterScreen = () => {
     if(userInfo) {
       navigate(redirect)
     }
-  }, [userInfo, redirect])
+  }, [userInfo, redirect, navigate])
 
   const submitHandler = (e) => {
     e.preventDefault()

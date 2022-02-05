@@ -18,7 +18,7 @@ const ProductScreen = () => {
 
   useEffect(() => {
     dispatch(listProductDetails(params.id))
-  }, [dispatch])
+  }, [dispatch, params])
 
   const addToCartHandler = () => {
     navigate(`/cart/${params.id}?qty=${qty}`)

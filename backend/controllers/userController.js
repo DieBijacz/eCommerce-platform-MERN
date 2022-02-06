@@ -86,10 +86,23 @@ export const getUserProfile = asyncHandler(async (req, res) => {
   }
 })
 
+// @desc Get all users
+// @route GET /api/users
+// @access Private/Admin
+export const getUsers = asyncHandler(async (req, res) => {
+  const users = await User.find({}) //pass empty obj to get all users
+
+  if (users) {
+    res.json(users)
+  } else {
+    res.status(401)
+    throw new Error('Users not found')
+  }
+})
+
 // @desc  Update user profile
 // @route PUT /api/users/profile
 // @access Private
-
 export const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id)
 

@@ -36,3 +36,13 @@ export const protect = asyncHandler(async (req, res, next) => {
     throw new Error('Not authorized, no token')
   }
 })
+
+export const isAdmin = (req, res, next) => {
+  if (req.user && req.user.isAdmin) {
+    // if logged in user is admin then keep going to next middlewere
+    next()
+  } else {
+    res.status(401)
+    throw new Error('Not authorized as an admin')
+  }
+}

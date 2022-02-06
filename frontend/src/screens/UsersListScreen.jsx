@@ -14,6 +14,7 @@ const UsersListScreen = () => {
   // get users from store
   const usersList = useSelector(state => state.usersList)
   const { loading, error, users } = usersList
+<<<<<<< HEAD
   
   // current logged in user
   const userLogin = useSelector(state => state.userLogin)
@@ -26,6 +27,12 @@ const UsersListScreen = () => {
       navigate('/login')
     }
   }, [dispatch, navigate, userInfo])
+=======
+
+  useEffect(() => {
+    dispatch(listUsers()) //fetch users from db to be set in store
+  }, [dispatch])
+>>>>>>> cfdfc70ec1d829a14b07e07a7d980523de48a2a2
 
   const deleteHandler = (id) => {
     console.log(id);

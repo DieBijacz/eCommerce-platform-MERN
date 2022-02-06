@@ -27,14 +27,35 @@ const Header = () => {
           <LinkContainer to='/cart'>
               <Nav.Link ><i className='fas fa-shopping-cart'></i> Cart</Nav.Link>
           </LinkContainer>
-          {userInfo ? (
-            <NavDropdown title={userInfo.name} id='username' menuVariant="dark">
+          {userInfo ? userInfo.isAdmin ? (
+
+              // ADMIN MENU
+
+              <NavDropdown title={userInfo.name} id='adminMenu' menuVariant="dark">
               <LinkContainer to='/profile'>
                 <NavDropdown.Item>Profile</NavDropdown.Item>
               </LinkContainer>
               <NavDropdown.Item onClick={logoutHandler}>Log out</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item eventKey="4">Separated link</NavDropdown.Item>
+              <LinkContainer to='/admin/users'>
+                <NavDropdown.Item>Users</NavDropdown.Item>
+              </LinkContainer>
+              <LinkContainer to='/admin/products'>
+                <NavDropdown.Item>Products</NavDropdown.Item>
+              </LinkContainer>
+              <LinkContainer to='/admin/orders'>
+                <NavDropdown.Item>Orders</NavDropdown.Item>
+              </LinkContainer>
+            </NavDropdown>
+          ) : (
+
+            // USER MENU
+            
+            <NavDropdown title={userInfo.name} id='username' menuVariant="dark">
+              <LinkContainer to='/profile'>
+                <NavDropdown.Item>Profile</NavDropdown.Item>
+              </LinkContainer>
+              <NavDropdown.Item onClick={logoutHandler}>Log out</NavDropdown.Item>
             </NavDropdown>
           ) : (
             <LinkContainer to='/login'>

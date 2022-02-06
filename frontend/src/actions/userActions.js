@@ -1,6 +1,10 @@
 import axios from 'axios'
 import { ORDER_MY_LIST_RESET } from '../constants/orderConstants'
 import {
+  USERS_LIST_FAIL,
+  USERS_LIST_REQUEST,
+  USERS_LIST_RESET,
+  USERS_LIST_SUCCESS,
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
   USER_DETAILS_RESET,
@@ -63,10 +67,11 @@ export const logout = () => (dispatch) => {
   // remove from LS
   localStorage.removeItem('userInfo')
 
-  // dispatch action to change state
+  // dispatch action clear states
   dispatch({ type: USER_LOGOUT })
-  dispatch({ type: USER_DETAILS_RESET }) // cleares state
-  dispatch({ type: ORDER_MY_LIST_RESET }) //cleares state
+  dispatch({ type: USER_DETAILS_RESET })
+  dispatch({ type: ORDER_MY_LIST_RESET })
+  dispatch({ type: USERS_LIST_RESET })
 }
 
 // ======================== REGISTER ========================
@@ -184,6 +189,41 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: USER_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
+// ====================== GET ALL USERS LIST ======================
+
+export const listUsers = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: USERS_LIST_REQUEST,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    const { data } = await axios.get(`/api/users/`, config)
+
+    dispatch({
+      type: USERS_LIST_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: USERS_LIST_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

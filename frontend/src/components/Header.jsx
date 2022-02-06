@@ -50,11 +50,6 @@ const Header = () => {
           ) : (
 
             // USER MENU
-<<<<<<< HEAD
-
-=======
-            
->>>>>>> cfdfc70ec1d829a14b07e07a7d980523de48a2a2
             <NavDropdown title={userInfo.name} id='username' menuVariant="dark">
               <LinkContainer to='/profile'>
                 <NavDropdown.Item>Profile</NavDropdown.Item>

@@ -8,7 +8,7 @@ import Loader from '../components/Loader';
 import { listUsers, deleteUser } from '../actions/userActions.js'
 import { USER_DELETE_RESET } from '../constants/userConstants';
 
-const UsersListScreen = () => {
+const AdminUsersListScreen = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -22,7 +22,7 @@ const UsersListScreen = () => {
 
   // userDelete state
   const userDelete = useSelector(state => state.userDelete)
-  const { loading: loadingUserDelete, error: errorUserDelete, success: successDelete } = userDelete
+  const { error: errorUserDelete, success: successDelete } = userDelete
 
   useEffect(() => {
     if(userInfo && userInfo.isAdmin) { // when logged in as admin
@@ -62,7 +62,7 @@ const UsersListScreen = () => {
               <td><a href={`mailto:${user.email}`}>{user.email}</a></td>
               <td>{user.isAdmin ? <i className='fas fa-check' style={{color: 'green'}}></i> : <i className='fas fa-times' style={{color: 'red'}}></i>}</td>
               <td>
-                <LinkContainer to={`/user/${user._id}/edit`}>
+                <LinkContainer to={`/admin/edit/user/${user._id}`}>
                   <Button variant='light' className='btn-sm'>
                     <i className='fas fa-edit'></i>
                   </Button>
@@ -79,4 +79,4 @@ const UsersListScreen = () => {
   </>;
 };
 
-export default UsersListScreen;
+export default AdminUsersListScreen;

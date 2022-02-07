@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { listUsers, deleteUser } from '../actions/userActions.js'
+import { USER_DELETE_RESET } from '../constants/userConstants';
 
 const UsersListScreen = () => {
   const dispatch = useDispatch()
@@ -33,6 +34,9 @@ const UsersListScreen = () => {
 
   const deleteHandler = (id) => {
     window.confirm('Are you sure you want to delete this user?') && dispatch(deleteUser(id))
+    setTimeout(() => {
+      dispatch({type: USER_DELETE_RESET})
+    }, 3000);
   }
 
   return <>

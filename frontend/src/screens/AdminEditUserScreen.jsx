@@ -4,8 +4,9 @@ import { Form, Button, FormGroup, FormLabel, FormControl } from 'react-bootstrap
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { getUserDetails } from '../actions/userActions.js'
+import { getUserDetails, updateUserAsAdmin } from '../actions/userActions.js'
 import FormContainer from '../components/FormContainer.js'
+import { USER_UPDATE_ASADMIN_RESET } from '../constants/userConstants';
 
 const AdminEditUserScreen = () => {
   const [email, setEmail] = useState('')
@@ -22,6 +23,9 @@ const AdminEditUserScreen = () => {
   const userDetails = useSelector(state => state.userDetails)
   const {loading, error, user} = userDetails
 
+  const userUpdateAsAdmin = useSelector(state => state.userUpdateAsAdmin)
+  const {loading: loadingUpdate, error: errorUpdate, success: successUpdate} = userUpdateAsAdmin
+
   useEffect(() => {
     if(!user.name || user._id !== userId) {
       dispatch(getUserDetails(userId))
@@ -30,10 +34,15 @@ const AdminEditUserScreen = () => {
       setEmail(user.email)
       setAdmin(user.isAdmin)
     }
-  },[dispatch, user, userId])
+  },[dispatch, user, userId, successUpdate])
 
   const submitHandler = (e) => {
     e.preventDefault()
+    dispatch(updateUserAsAdmin({_id: userId, name, email, isAdmin: admin}))
+
+    setTimeout(() => {
+      dispatch({type: USER_UPDATE_ASADMIN_RESET})
+    }, 2000);
   }
 
   return (
@@ -41,6 +50,9 @@ const AdminEditUserScreen = () => {
       <Link to='/admin/users' className='btn btn-primary my-3'>Go Back</Link>
       <FormContainer>
         <h1>Edit User:</h1>
+        {successUpdate && <Message variant='success'>User Updated</Message>}
+        {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
+        {loadingUpdate && <Loader />}
         {loading ? error ? <Message variant='danger'>{error}</Message> : <Loader /> : (
           <Form onSubmit={submitHandler}>
           

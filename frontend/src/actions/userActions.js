@@ -19,6 +19,9 @@ import {
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
+  USER_UPDATE_ASADMIN_FAIL,
+  USER_UPDATE_ASADMIN_REQUEST,
+  USER_UPDATE_ASADMIN_SUCCESS,
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_SUCCESS,
 } from '../constants/userConstants'
@@ -230,7 +233,6 @@ export const deleteUser = (id) => async (dispatch, getState) => {
 }
 
 // ====================== GET ALL USERS LIST ======================
-
 export const listUsers = () => async (dispatch, getState) => {
   try {
     dispatch({
@@ -256,6 +258,42 @@ export const listUsers = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: USERS_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
+// ====================== UPDATE USER AS ADMIN ======================
+export const updateUserAsAdmin = (user) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: USER_UPDATE_ASADMIN_REQUEST,
+    })
+
+    // get admin token so can perform other user update
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    const { data } = await axios.put(`/api/users/${user._id}`, user, config)
+    console.log(data)
+    console.log(user)
+
+    dispatch({ type: USER_UPDATE_ASADMIN_SUCCESS })
+    dispatch({ type: USER_DETAILS_SUCCESS, payload: data })
+  } catch (error) {
+    dispatch({
+      type: USER_UPDATE_ASADMIN_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

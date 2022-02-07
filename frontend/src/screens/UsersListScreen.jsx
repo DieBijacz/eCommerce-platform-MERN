@@ -5,7 +5,7 @@ import { Table, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { listUsers } from '../actions/userActions.js'
+import { listUsers, deleteUser } from '../actions/userActions.js'
 
 const UsersListScreen = () => {
   const dispatch = useDispatch()
@@ -19,20 +19,26 @@ const UsersListScreen = () => {
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
 
+  // userDelete state
+  const userDelete = useSelector(state => state.userDelete)
+  const { loading: loadingUserDelete, error: errorUserDelete, success: successDelete } = userDelete
+
   useEffect(() => {
     if(userInfo && userInfo.isAdmin) { // when logged in as admin
       dispatch(listUsers()) // fetch users from db to be set in store
     } else {
       navigate('/login')
     }
-  }, [dispatch, navigate, userInfo])
+  }, [dispatch, navigate, userInfo, successDelete])
 
   const deleteHandler = (id) => {
-    console.log(id);
+    window.confirm('Are you sure you want to delete this user?') && dispatch(deleteUser(id))
   }
 
   return <>
     <h1>Users</h1>
+    {successDelete && <Message variant='success'>User Removed</Message>}
+    {errorUserDelete && <Message variant='danger'>{errorUserDelete}</Message>}
     {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
       <Table striped bordered responsive className='table-sm'>
         <thead>

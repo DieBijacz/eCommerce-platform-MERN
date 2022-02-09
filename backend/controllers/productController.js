@@ -16,11 +16,25 @@ export const getProducts = asyncHandler(async (req, res) => {
 // @route   GET /api/products/:id
 // @access  Public
 export const getProductById = asyncHandler(async (req, res) => {
-  // get the product based on passed id
+  // get the product based on id from url
   const product = await Product.findById(req.params.id)
   // if there is one then return it
   if (product) {
     res.json(product)
+  } else {
+    res.status(404)
+    throw new Error('Product not found')
+  }
+})
+
+// @desc    Delete product
+// @route   DELETE /api/products/:id
+// @access  Private/Admin
+export const deleteProduct = asyncHandler(async (req, res) => {
+  const product = await Product.findById(req.params.id)
+  if (product) {
+    await product.remove()
+    res.json({ message: 'Product removed' })
   } else {
     res.status(404)
     throw new Error('Product not found')

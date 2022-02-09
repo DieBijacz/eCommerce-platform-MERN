@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Row, Col, ListGroup, Image, Card, ListGroupItem } from 'react-bootstrap'
+import { Link, useNavigate } from 'react-router-dom';
+import { Row, Col, ListGroup, Image, Card, ListGroupItem, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message.js'
 import Loader from '../components/Loader.js'
@@ -14,6 +14,7 @@ import { ORDER_PAY_RESET } from '../constants/orderConstants.js';
 
 const OrderScreen = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const params = useParams()
   const orderId = params.id
 
@@ -74,7 +75,16 @@ const OrderScreen = () => {
 
   return loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
     <>
-    <h1>Order: {order._id}</h1>
+      <Row className='mb-3'>
+        <Col>
+          <h1>Order: {order._id}</h1>
+        </Col>
+        <Col>
+          <div className='d-flex justify-content-end'>
+            <Button className='btn-primary' onClick={() => navigate('/profile')}>Go Back</Button>
+          </div>
+        </Col>
+      </Row>
       <Row>
         <Col md={7} lg={9}>
           <ListGroup variant='flush'>
@@ -152,10 +162,10 @@ const OrderScreen = () => {
               </ListGroupItem>
               {!order.isPaid && (
                 <ListGroupItem>
-                  {loadingPay && <Loader />}
-                  {!sdkReady ? <Loader /> : (
-                    <PayPalButton amount={order.totalPrice} onSuccess={successPaymentHandler} />
-                  )}
+                    {loadingPay && <Loader />}
+                    {!sdkReady ? <Loader /> : (
+                      <PayPalButton amount={order.totalPrice} onSuccess={successPaymentHandler} />
+                    )}
                 </ListGroupItem>
               )}
             </ListGroup>

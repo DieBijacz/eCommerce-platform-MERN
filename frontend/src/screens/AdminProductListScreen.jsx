@@ -5,7 +5,8 @@ import { Table, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { listProducts } from '../actions/productActions.js'
+import { deleteProduct, listProducts } from '../actions/productActions.js'
+import { PRODUCT_DELETE_RESET } from '../constants/productConstants';
 
 const AdminProductListScreen = () => {
   const dispatch = useDispatch()
@@ -19,6 +20,9 @@ const AdminProductListScreen = () => {
   // current logged in user
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
+
+  const productDelete = useSelector(state => state.productDelete)
+  const { success } = productDelete
 
   useEffect(() => {
     // fetch all products if logged in as admin
@@ -35,10 +39,10 @@ const AdminProductListScreen = () => {
   }
 
   const deleteHandler = (id) => {
-    // window.confirm('Are you sure you want to delete this user?') && dispatch(deleteUser(id))
-    // setTimeout(() => {
-    //   dispatch({type: USER_DELETE_RESET})
-    // }, 3000);
+    window.confirm('Are you sure you want to delete this user?') && dispatch(deleteProduct(id))
+    setTimeout(() => {
+      dispatch({type: PRODUCT_DELETE_RESET})
+    }, 3000);
   }
 
   return <>
@@ -50,6 +54,7 @@ const AdminProductListScreen = () => {
         <Button className='my-3' onClick={createProductHandler}><i className='fas fa-plus'></i> Add Product</Button>
       </Col>
     </Row>
+    {success && <Message variant='success'>Product deleted</Message>}
     {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
       <Table striped bordered responsive className='table-sm'>
       <thead>

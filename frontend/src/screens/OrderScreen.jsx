@@ -75,13 +75,13 @@ const OrderScreen = () => {
 
   return loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
     <>
-      <Row className='mb-3'>
+      <Row className='my-3'>
         <Col>
           <h1>Order: {order._id}</h1>
         </Col>
         <Col>
-          <div className='d-flex justify-content-end'>
-            <Button className='btn-primary' onClick={() => navigate('/profile')}>Go Back</Button>
+          <div className='d-flex justify-content-md-end'>
+            <Button className='btn-primary my-3' onClick={() => navigate('/profile')}>Go Back</Button>
           </div>
         </Col>
       </Row>

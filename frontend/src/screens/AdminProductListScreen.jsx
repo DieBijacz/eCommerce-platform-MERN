@@ -15,7 +15,6 @@ const AdminProductListScreen = () => {
   // get products from store
   const productList = useSelector(state => state.productList)
   const { loading, error, products } = productList
-  console.log(products);
   
   // current logged in user
   const userLogin = useSelector(state => state.userLogin)
@@ -28,7 +27,6 @@ const AdminProductListScreen = () => {
     // fetch all products if logged in as admin
     if(userInfo && userInfo.isAdmin) {
       dispatch(listProducts())
-      console.log(123);
     } else {
       navigate('/login')
     }
@@ -46,11 +44,11 @@ const AdminProductListScreen = () => {
   }
 
   return <>
-    <Row className='aligin-items-center'>
+    <Row className='my-3'>
       <Col>
         <h1>Products</h1>
       </Col>
-      <Col className='text-center'>
+      <Col className='d-flex justify-content-md-end'>
         <Button className='my-3' onClick={createProductHandler}><i className='fas fa-plus'></i> Add Product</Button>
       </Col>
     </Row>

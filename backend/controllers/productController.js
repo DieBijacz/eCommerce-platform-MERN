@@ -40,3 +40,57 @@ export const deleteProduct = asyncHandler(async (req, res) => {
     throw new Error('Product not found')
   }
 })
+
+// @desc    Create product
+// @route   POST /api/products
+// @access  Private/Admin
+export const createProduct = asyncHandler(async (req, res) => {
+  const product = new Product({
+    user: req.user._id,
+    name: 'Change name',
+    image: 'as',
+    brand: 'Change brand',
+    category: 'Change category',
+    description: 'Disciption',
+    numReviews: 0,
+    price: 0,
+    countInStock: 0,
+  })
+
+  // save new product to db
+  const createdProduct = await product.save()
+
+  if (createdProduct) {
+    res.status(201).json(createdProduct)
+  } else {
+    res.status(404)
+    throw new Error('Could not create new product')
+  }
+})
+
+// @desc    Update product
+// @route   PUT /api/products/:id
+// @access  Private/Admin
+export const updateProduct = asyncHandler(async (req, res) => {
+  const { name, image, brand, category, description, price, countInStock } =
+    req.body
+
+  // get product from db
+  const product = await Product.findById(req.params.id)
+
+  if (product) {
+    product.name = name ?? product.name
+    product.image = image ?? product.image
+    product.brand = brand ?? product.brand
+    product.category = category ?? product.category
+    product.description = description ?? product.description
+    product.price = price ?? product.price
+    product.countInStock = countInStock ?? product.countInStock
+
+    const updatedProduct = await product.save()
+    res.status(201).json(updatedProduct)
+  } else {
+    res.status(401)
+    throw new Error('Could not find the product')
+  }
+})

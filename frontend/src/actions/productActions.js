@@ -114,7 +114,7 @@ export const createProduct = () => async (dispatch, getState) => {
 
     dispatch({
       type: PRODUCT_CREATE_SUCCESS,
-      payload: data.createdProduct, // new product sample from backend
+      payload: data, // new product sample from backend
     })
   } catch (error) {
     dispatch({

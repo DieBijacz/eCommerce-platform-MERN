@@ -9,6 +9,9 @@ import {
   PRODUCT_DELETE_REQUEST,
   PRODUCT_DELETE_SUCCESS,
   PRODUCT_DELETE_FAIL,
+  PRODUCT_CREATE_REQUEST,
+  PRODUCT_CREATE_SUCCESS,
+  PRODUCT_CREATE_FAIL,
 } from '../constants/productConstants'
 
 // FETCHING ALL PRODUCTS
@@ -43,6 +46,7 @@ export const listProductDetails = (id) => async (dispatch) => {
 
     // fetch data from db based on passed id
     const { data } = await axios.get(`/api/products/${id}`)
+    console.log('here')
     dispatch({
       type: PRODUCT_DETAILS_SUCCESS,
       payload: data,
@@ -76,12 +80,45 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
 
     await axios.delete(`/api/products/${id}`, config)
 
-    dispatch({
-      type: PRODUCT_DELETE_SUCCESS,
-    })
+    dispatch({ type: PRODUCT_DELETE_SUCCESS })
   } catch (error) {
     dispatch({
       type: PRODUCT_DELETE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
+// CREATE PRODUCT
+export const createProduct = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: PRODUCT_CREATE_REQUEST })
+
+    // get user token
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    // creates new product in db with sample data in it
+    // and bring it backs to client so it can be edited
+    const { data } = await axios.post(`/api/products/`, {}, config)
+
+    dispatch({
+      type: PRODUCT_CREATE_SUCCESS,
+      payload: data.createdProduct, // new product sample from backend
+    })
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_CREATE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

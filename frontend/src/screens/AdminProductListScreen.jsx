@@ -5,8 +5,8 @@ import { Table, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { deleteProduct, listProducts } from '../actions/productActions.js'
-import { PRODUCT_DELETE_RESET } from '../constants/productConstants';
+import { createProduct, deleteProduct, listProducts } from '../actions/productActions.js'
+import { PRODUCT_CREATE_RESET, PRODUCT_DELETE_RESET } from '../constants/productConstants';
 
 const AdminProductListScreen = () => {
   const dispatch = useDispatch()
@@ -21,26 +21,32 @@ const AdminProductListScreen = () => {
   const { userInfo } = userLogin
 
   const productDelete = useSelector(state => state.productDelete)
-  const { success } = productDelete
+  const { loading: loadingDelete, success: successDelete, error:errorDelete } = productDelete
+
+  const productCreate = useSelector(state => state.productCreate)
+  const { loading:loadingCreate, success: successCreate, product: createdProduct, error:errorCreate } = productCreate
 
   useEffect(() => {
-    // fetch all products if logged in as admin
-    if(userInfo && userInfo.isAdmin) {
-      dispatch(listProducts())
-    } else {
-      navigate('/login')
-    }
-  }, [navigate, userInfo, dispatch])
-
+    dispatch({type: PRODUCT_CREATE_RESET})
+    
+    // redirect if user is not admin
+    !userInfo.isAdmin && navigate('/login')
+    
+    successCreate ? navigate(`/admin/edit/product/${createdProduct._id}`) : dispatch(listProducts())
+    
+  }, [navigate, userInfo, dispatch, successCreate, createdProduct, productDelete])
+  
+  // Create new product
   const createProductHandler = () => {
-
+    dispatch(createProduct())
   }
 
+  // Delete product
   const deleteHandler = (id) => {
     window.confirm('Are you sure you want to delete this user?') && dispatch(deleteProduct(id))
     setTimeout(() => {
       dispatch({type: PRODUCT_DELETE_RESET})
-    }, 3000);
+    }, 2000);
   }
 
   return <>
@@ -52,8 +58,8 @@ const AdminProductListScreen = () => {
         <Button className='my-3' onClick={createProductHandler}><i className='fas fa-plus'></i> Add Product</Button>
       </Col>
     </Row>
-    {success && <Message variant='success'>Product deleted</Message>}
-    {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
+    {successDelete && <Message variant='success'>Product deleted</Message>}
+    {loading || loadingCreate || loadingDelete ? <Loader /> : error || errorCreate || errorDelete ? <Message variant='danger'>{error ?? errorCreate ?? errorDelete}</Message> : (
       <Table striped bordered responsive className='table-sm'>
       <thead>
         <tr>

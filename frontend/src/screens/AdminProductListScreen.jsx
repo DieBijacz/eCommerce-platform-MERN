@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { LinkContainer } from 'react-router-bootstrap'
 import { useNavigate } from 'react-router-dom';
 import { Table, Button, Row, Col } from 'react-bootstrap'
@@ -11,6 +11,7 @@ import { PRODUCT_CREATE_RESET, PRODUCT_DELETE_RESET } from '../constants/product
 const AdminProductListScreen = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const [showDeleteMessage, setShowDeleteMessage] = useState(false)
 
   // get products from store
   const productList = useSelector(state => state.productList)
@@ -33,8 +34,17 @@ const AdminProductListScreen = () => {
     !userInfo.isAdmin && navigate('/login')
     
     successCreate ? navigate(`/admin/edit/product/${createdProduct._id}`) : dispatch(listProducts())
+
+    // show delete message and reset state
+    if(successDelete && !loading) {
+      dispatch({type: PRODUCT_DELETE_RESET})
+      setShowDeleteMessage(true)
+      setTimeout(() => {
+        setShowDeleteMessage(false)
+      }, 3000)
+    }
     
-  }, [navigate, userInfo, dispatch, successCreate, createdProduct, productDelete])
+  }, [navigate, userInfo, dispatch, successCreate, createdProduct, productDelete, successDelete])
   
   // Create new product
   const createProductHandler = () => {
@@ -44,9 +54,6 @@ const AdminProductListScreen = () => {
   // Delete product
   const deleteHandler = (id) => {
     window.confirm('Are you sure you want to delete this user?') && dispatch(deleteProduct(id))
-    setTimeout(() => {
-      dispatch({type: PRODUCT_DELETE_RESET})
-    }, 2000);
   }
 
   return <>
@@ -58,7 +65,7 @@ const AdminProductListScreen = () => {
         <Button className='my-3' onClick={createProductHandler}><i className='fas fa-plus'></i> Add Product</Button>
       </Col>
     </Row>
-    {successDelete && <Message variant='success'>Product deleted</Message>}
+    {showDeleteMessage && <Message variant='success'>Product deleted</Message>}
     {loading || loadingCreate || loadingDelete ? <Loader /> : error || errorCreate || errorDelete ? <Message variant='danger'>{error ?? errorCreate ?? errorDelete}</Message> : (
       <Table striped bordered responsive className='table-sm'>
       <thead>

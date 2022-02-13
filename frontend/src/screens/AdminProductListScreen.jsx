@@ -36,7 +36,7 @@ const AdminProductListScreen = () => {
     successCreate ? navigate(`/admin/edit/product/${createdProduct._id}`) : dispatch(listProducts())
 
     // show delete message and reset state
-    if(successDelete && !loading) {
+    if(successDelete) {
       dispatch({type: PRODUCT_DELETE_RESET})
       setShowDeleteMessage(true)
       setTimeout(() => {

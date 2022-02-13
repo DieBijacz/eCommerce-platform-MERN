@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react';
+import axios from 'axios';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Row, Col, Image, Form, Button, FormGroup, FormLabel, FormControl } from 'react-bootstrap'
+import { Row, Col, Image, Form, Button, FormGroup, FormLabel, FormControl} from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
@@ -19,7 +20,9 @@ const AdminEditProductScreen = () => {
   const [category, setCategory] = useState('')
   const [countInStock, setCountInStock] = useState(0)
   const [description, setDescription] = useState('')
+
   const [showUpdateMessage, setShowUpdateMessage] = useState(false)
+  const [uploading, setUploading] = useState(false)
   
   //get product id from url
   const productId = params.id
@@ -77,6 +80,31 @@ const AdminEditProductScreen = () => {
     }))
   }
 
+  const uploadFileHandler = async (e) => {
+    e.preventDefault();
+
+    const file = e.target.files[0]
+    const formData = new FormData()
+    formData.append('image', file)
+    setUploading(true)
+
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+      // data is gonna be formated path to that file
+      const {data} = await axios.post('/api/upload', formData, config)
+
+      setImage(data)
+      setUploading(false)
+    } catch (error) {
+      console.error(error)
+      setUploading(false)
+    }
+  }
+
   return (
     <>
       <Link to='/admin/products' className='btn btn-primary my-3'>Go Back</Link>
@@ -89,9 +117,7 @@ const AdminEditProductScreen = () => {
         <Col md={7}>
           <h1>Edit Product:</h1>
           <h4 style={{color: 'grey'}}>{product._id}</h4>
-          {/* {successUpdate && <Message variant='success'>User Updated</Message>}
-          {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
-          {loadingUpdate && <Loader />} */}
+
           {(loadingProduct || loadingUpdateProduct) ? <Loader /> : (errorProduct || errorUpdateProduct) ? <Message variant='danger'>{errorProduct ?? errorUpdateProduct}</Message> : (
             <Form onSubmit={submitHandler}>
             
@@ -105,9 +131,11 @@ const AdminEditProductScreen = () => {
               <FormControl type='number' value={price} onChange={(e)=> setPrice(e.target.value)}></FormControl>
             </FormGroup>
 
-            <FormGroup className='my-3' controlId='image'>
+            <FormGroup className='my-3'>
               <FormLabel>Images</FormLabel>
               <FormControl type='text' placeholder='Image URL' value={image} onChange={(e)=> setImage(e.target.value)}></FormControl>
+              <FormControl type='file' id='image-file' formlabel='Choose files' onChange={uploadFileHandler} />
+              {uploading && <Loader />}
             </FormGroup>
 
             <FormGroup className='my-3' controlId='brand'>

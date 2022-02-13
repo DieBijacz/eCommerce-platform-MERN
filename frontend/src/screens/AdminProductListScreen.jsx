@@ -70,7 +70,7 @@ const AdminProductListScreen = () => {
       <Table striped bordered responsive className='table-sm'>
       <thead>
         <tr>
-          <th>ID</th>
+          <th>Product</th>
           <th>Name</th>
           <th>Price</th>
           <th>Category</th>
@@ -81,8 +81,12 @@ const AdminProductListScreen = () => {
       <tbody>
         {products.map(product => (
           <tr key={product._id}>
-            <td>{product._id}</td>
-            <td>{product.name}</td>
+            <td>
+              <div style={{width: '100px'}}>
+                <img src={product.image} alt={product.name} style={{width: '100%', height: 'auto'}} className={product.countInStock === 0 && 'outOfStockImageCover'}/>
+              </div>
+            </td>
+            <td>{product.name}{product.countInStock === 0 && <div style={{color: 'red'}}>Out of stock</div>}</td>
             <td>$ {product.price}</td>
             <td>{product.category}</td>
             <td>{product.brand}</td>

@@ -1,10 +1,12 @@
 import express from 'express'
+import path from 'path'
 import dotenv from 'dotenv'
 import connectDB from './config/db.js'
 import colors from 'colors'
 import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
+import uploadRoutes from './routes/uploadRoutes.js'
 import { notFound, errorHandler } from './middlewere/errorMiddlewere.js'
 
 dotenv.config()
@@ -13,6 +15,9 @@ const app = express()
 
 // that will allow json to be used in req body
 app.use(express.json())
+// make uploads folder static
+const __dirname = path.resolve()
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
 
 // PAYPAL ID to be fetch when making payment
 app.get('/api/config/paypal', (req, res) =>
@@ -32,6 +37,7 @@ app.get('/', (req, res) => {
 app.use('/api/products', productRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/orders', orderRoutes)
+app.use('/api/upload', uploadRoutes)
 
 // MIDDLEWERE
 // https://expressjs.com/en/guide/using-middleware.html

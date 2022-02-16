@@ -92,15 +92,17 @@ export const payOrder =
 
       const config = {
         headers: {
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${userInfo.token}`,
         },
       }
 
       const { data } = await axios.put(
-        `/api/orders/${order._id}/pay`,
+        `/api/orders/pay/${order._id}`,
         paymentResult,
         config
       )
+      console.log(data)
 
       dispatch({
         type: ORDER_PAY_SUCCESS,

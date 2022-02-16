@@ -13,7 +13,7 @@ const router = express.Router()
 // make sure that the '/' if on the above
 router.route('/').post(protect, addOrderItems)
 router.route('/myorders').get(protect, getMyOrders)
+router.route('/pay/:id').put(protect, updateOrderToPaid)
 router.route('/:id').get(protect, getOrderById)
-router.route('/:id/pay').put(protect, updateOrderToPaid)
 
 export default router

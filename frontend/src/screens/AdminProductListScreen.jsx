@@ -83,7 +83,7 @@ const AdminProductListScreen = () => {
           <tr key={product._id}>
             <td>
               <div style={{width: '100px'}}>
-                  <img src={product.image} alt={product.name} style={{width: '100%', height: 'auto'}} className={product.countInStock === 0 && 'outOfStockImageCover'}/>
+                  <img src={product.image} alt={product.name} style={{width: '100%', height: 'auto'}} className={product.countInStock === 0 ? 'outOfStockImageCover' : undefined}/>
               </div>
             </td>
             <td>{product.name}{product.countInStock === 0 && <div style={{color: 'red'}}>Out of stock</div>}</td>

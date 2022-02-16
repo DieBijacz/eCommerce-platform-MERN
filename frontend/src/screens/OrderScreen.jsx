@@ -7,7 +7,7 @@ import Loader from '../components/Loader.js'
 import { getOrderDetails, payOrder } from '../actions/orderActions.js'
 import { useParams } from 'react-router-dom';
 import axios from 'axios'
-import { PayPalButton } from 'react-paypal-button-v2'
+import { PayPalButton } from "react-paypal-button-v2"
 import { ORDER_PAY_RESET } from '../constants/orderConstants.js';
 
 // PayPal Button https://www.npmjs.com/package/react-paypal-button-v2
@@ -26,7 +26,7 @@ const OrderScreen = () => {
 
   // get orderPay state
   const orderPay = useSelector(state => state.orderPay)
-  const { loading: loadingPay, success: successPay } = orderPay //rename loading => loadingPay
+  const { loading: loadingPay, success: successPay, error: errorPay } = orderPay
 
   //   Calculate prices
   if (!loading) {
@@ -39,10 +39,6 @@ const OrderScreen = () => {
     )
   }
 
-  const successPaymentHandler = (paymentResult) => {
-    dispatch(payOrder(orderId, paymentResult))
-  }
-
   useEffect(() => {
     const addPayPalScript = async () => {
       // fetch id from backend
@@ -51,7 +47,7 @@ const OrderScreen = () => {
       // create PayPal script
       const script = document.createElement('script')
       script.type = 'text/javascript'
-      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`
+      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=GBP`
       script.async = true // If the async attribute is present, then the script will be executed asynchronously, as soon as it is available.
       script.onload = () => {
         setSdkReady(true)
@@ -72,8 +68,13 @@ const OrderScreen = () => {
       }
     }
   }, [dispatch, order, orderId, successPay])
+  
+  const successPaymentHandler = (paymentResult) => {
+    console.log(paymentResult)
+    dispatch(payOrder(orderId, paymentResult))
+  }
 
-  return loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
+  return loading ? <Loader /> : error || errorPay ? <Message variant='danger'>{error ?? errorPay}</Message> : (
     <>
       <Row className='my-3'>
         <Col>
@@ -115,10 +116,10 @@ const OrderScreen = () => {
                   {order.orderItems.map((item, index) => (
                     <ListGroupItem key={index}>
                       <Row>
-                        <Col md={2}>
+                        <Col md={5} lg={3}>
                           <Image src={item.image} alt={item.name} fluid rounded />
                         </Col>
-                        <Col md={10}>
+                        <Col md={7} lg={9}>
                           <Link to={`/product/${item.product}`}>{item.name}</Link>
                           <div>{item.qty}x ${item.price} = ${(item.qty * item.price).toFixed(2)}</div>
                         </Col>
@@ -164,7 +165,25 @@ const OrderScreen = () => {
                 <ListGroupItem>
                     {loadingPay && <Loader />}
                     {!sdkReady ? <Loader /> : (
-                      <PayPalButton amount={order.totalPrice} onSuccess={successPaymentHandler} />
+                      <PayPalButton
+                      amount="0.01"
+                      // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
+                      onSuccess={(details, data) => {
+                          alert("Transaction completed by " + details.payer.name.given_name);
+      
+                          // OPTIONAL: Call your server to save the transaction
+                          return fetch("/paypal-transaction-complete", {
+                              method: "post",
+                              body: JSON.stringify({
+                                  orderId: data.orderID
+                              })
+                          });
+                      }}
+                      options={{
+                          clientId: "PRODUCTION_CLIENT_ID"
+                      }}
+                  />
+                      // <PayPalButton amount={order.totalPrice} onSuccess={successPaymentHandler} />
                     )}
                 </ListGroupItem>
               )}

@@ -11,7 +11,7 @@ const PaymentScreen = () => {
   const dispatch = useDispatch()
 
   // const [paymentMethod, setPaymentMethod] = useState(localStorage.getItem('payment method') ? JSON.parse(localStorage.getItem('payment method')) : 'PayPal')
-  const [paymentMethod, setPaymentMethod] = useState('PayPal')
+  const [paymentMethod, setPaymentMethod] = useState('')
 
   // bring shipping address from store
   const shippingAddress = useSelector(state => state.cart.shippingAddress)

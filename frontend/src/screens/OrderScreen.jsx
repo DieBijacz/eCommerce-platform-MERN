@@ -28,6 +28,10 @@ const OrderScreen = () => {
   const orderPay = useSelector(state => state.orderPay)
   const { loading: loadingPay, success: successPay, error: errorPay } = orderPay
 
+  // current logged in user
+  const userLogin = useSelector(state => state.userLogin)
+  const { userInfo } = userLogin
+
   //   Calculate prices
   if (!loading) {
     const addDecimals = (num) => {
@@ -67,7 +71,13 @@ const OrderScreen = () => {
         setSdkReady(true)
       }
     }
-  }, [dispatch, order, orderId, successPay])
+
+    if(order) {
+      if(!userInfo || order.user.name != userInfo.name || !userInfo.isAdmin) {
+        navigate('/login')
+      }
+    }
+  }, [dispatch, order, orderId, successPay, userInfo])
   
   const successPaymentHandler = (paymentResult) => {
     console.log(paymentResult)

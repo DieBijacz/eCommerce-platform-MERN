@@ -62,7 +62,7 @@ const AdminOrdersListScreen = () => {
                 <td>{order.isPaid ? order.paidAt.substring(0,10) : <i className='fas fa-times' style={{color: 'red'}}></i>}</td>
                 <td>{order.idDelivered ? order.deliveredAt.substring(0,10) : <i className='fas fa-times' style={{color: 'red'}}></i>}</td>
                 <td>
-                  <LinkContainer to={`/admin/order/${order._id}`}>
+                  <LinkContainer to={`/orders/${order._id}`}>
                     <Button variant='light' className='btn-sm order-details-button'>Details</Button>
                   </LinkContainer>
                 </td>

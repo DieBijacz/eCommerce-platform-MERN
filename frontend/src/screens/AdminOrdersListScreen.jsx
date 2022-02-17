@@ -1,16 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import { LinkContainer } from 'react-router-bootstrap'
 import { useNavigate } from 'react-router-dom';
 import { Table, Button, Row, Col, ListGroup } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { getAllOrders } from '../actions/orderActions.js'
+import { LinkContainer } from 'react-router-bootstrap';
 
 const AdminOrdersListScreen = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const [showDeleteMessage, setShowDeleteMessage] = useState(false)
 
   // get products from store
   const allOrders = useSelector(state => state.allOrders)
@@ -24,9 +23,10 @@ const AdminOrdersListScreen = () => {
     // redirect if user is not admin
     if(!userInfo || !userInfo.isAdmin) {
       navigate('/login')
+    } else {
+      dispatch(getAllOrders())
     }
     
-    dispatch(getAllOrders())
   }, [navigate, dispatch, userInfo])
   
   return <>
@@ -40,24 +40,35 @@ const AdminOrdersListScreen = () => {
           <thead>
             <tr>
               <th>Order Id</th>
-              <th>Name</th>
-              <th>Price</th>
-              <th>Category</th>
-              <th>Brand</th>
-              <th></th>
+              <th>User</th>
+              <th>Date</th>
+              <th>Total Price</th>
+              <th>Paid</th>
+              <th>Delivered</th>
+              <th>Details</th>
             </tr>
           </thead>
           <tbody>
             {orders.map(order => (
               <tr key={order._id}>
-                <td>{order.isPaid ? 'paid' : ' not paid'}</td>
-                <td>{order.isPaid ? 'paid' : ' not paid'}</td>
-                <td>{order.isPaid ? 'paid' : ' not paid'}</td>
-                <td>{order.isPaid ? 'paid' : ' not paid'}</td>
-                <td>{order.isPaid ? 'paid' : ' not paid'}</td>
+                <td>{order._id}</td>
+                <td>{order.user && order.user.name}</td>
+                <td>
+                  <div>Created: {order.createdAt.substring(0,10)}</div>
+                  {order.updatedAt != order.createdAt ? 
+                  <div>Updated: {order.updatedAt.substring(0, 10)} </div> : ''}
+                </td>
+                <td>$ {order.totalPrice}</td>
+                <td>{order.isPaid ? order.paidAt.substring(0,10) : <i className='fas fa-times' style={{color: 'red'}}></i>}</td>
+                <td>{order.idDelivered ? order.deliveredAt.substring(0,10) : <i className='fas fa-times' style={{color: 'red'}}></i>}</td>
+                <td>
+                  <LinkContainer to={`/admin/order/${order._id}`}>
+                    <Button variant='light' className='btn-sm order-details-button'>Details</Button>
+                  </LinkContainer>
+                </td>
               </tr>
             ))}
-          </tbody>
+          </tbody> 
         </Table>
         )}
       </Row>

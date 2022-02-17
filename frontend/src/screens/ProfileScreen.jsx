@@ -124,7 +124,7 @@ const ProfileScreen = () => {
                 <td>{order.isDelivered ? order.deliveredAt.substring(0, 10) : <i className='fas fa-times' style={{color: 'red'}}></i>}</td>
                 <td>
                   <LinkContainer to={`/orders/${order._id}`}>
-                    <Button className='order-details-button' variant='light'>Details</Button>
+                    <Button className='btn-sm order-details-button' variant='light'>Details</Button>
                   </LinkContainer>
                 </td>
               </tr>

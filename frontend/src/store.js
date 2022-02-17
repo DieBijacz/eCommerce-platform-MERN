@@ -19,6 +19,7 @@ import {
   userUpdateAsAdminReducer,
 } from './reducers/userReducers'
 import {
+  allOrdersReducer,
   myOrdersReducer,
   orderCreateReducer,
   orderDetailsReducer,
@@ -43,6 +44,7 @@ const reducer = combineReducers({
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
   orderMyList: myOrdersReducer,
+  allOrders: allOrdersReducer,
 })
 
 // LOCAL STORAGE

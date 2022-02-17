@@ -31,7 +31,9 @@ const AdminProductListScreen = () => {
     dispatch({type: PRODUCT_CREATE_RESET})
     
     // redirect if user is not admin
-    !userInfo.isAdmin && navigate('/login')
+    if(!userInfo || !userInfo.isAdmin) {
+      navigate('/login')
+    }
     
     successCreate ? navigate(`/admin/edit/product/${createdProduct._id}`) : dispatch(listProducts())
 

@@ -6,6 +6,7 @@ import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { getAllOrders } from '../actions/orderActions.js'
 import { LinkContainer } from 'react-router-bootstrap';
+import Card from '../components/Card';
 
 const AdminOrdersListScreen = () => {
   const dispatch = useDispatch()
@@ -34,7 +35,10 @@ const AdminOrdersListScreen = () => {
       <Col>
         <h1>Orders:</h1>
       </Col>
-      <Row>
+      {orders && orders.map(order => (
+        <Card order={order} key={order._id} />
+      ))}
+      {/* <Row>
         {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
         <Table striped bordered responsive className='table-sm'>
           <thead>
@@ -71,7 +75,7 @@ const AdminOrdersListScreen = () => {
           </tbody> 
         </Table>
         )}
-      </Row>
+      </Row> */}
     </Row>
   </>;
 };

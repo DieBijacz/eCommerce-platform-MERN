@@ -29,10 +29,10 @@ const ProductScreen = () => {
       <Link to='/' className='btn btn-primary my-3'>Go Back</Link>
       {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
       <Row>
-        <Col md={6}>
+        <Col lg={6}>
           <Image src={product.image} alt={product.name} fluid />
         </Col>
-        <Col md={3}>
+        <Col lg={3}>
           <ListGroup variant='flush'>
             <ListGroupItem>
               <h3>{product.name}</h3>
@@ -48,7 +48,7 @@ const ProductScreen = () => {
             </ListGroupItem>
           </ListGroup>
         </Col>
-        <Col md={3}>
+        <Col lg={3}>
           <Card>
             <ListGroup variant='flush'>
               <ListGroupItem>

@@ -22,7 +22,7 @@ h3 {
 }
 .btn {
   position: relative;
-  transition: 0.4s ease-in;
+  transition: 0.3s ease-in;
 }
 
 .btn:hover {

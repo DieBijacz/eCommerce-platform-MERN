@@ -51,7 +51,7 @@ const OrderScreen = () => {
       // create PayPal script
       const script = document.createElement('script')
       script.type = 'text/javascript'
-      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=GBP`
+      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`
       script.async = true // If the async attribute is present, then the script will be executed asynchronously, as soon as it is available.
       script.onload = () => {
         setSdkReady(true)
@@ -81,6 +81,7 @@ const OrderScreen = () => {
   
   const successPaymentHandler = (paymentResult) => {
     console.log(paymentResult)
+    alert("Transaction completed by " + paymentResult.payer.name.given_name);
     dispatch(payOrder(orderId, paymentResult))
   }
 
@@ -175,25 +176,7 @@ const OrderScreen = () => {
                 <ListGroupItem>
                     {loadingPay && <Loader />}
                     {!sdkReady ? <Loader /> : (
-                      <PayPalButton
-                      amount="0.01"
-                      // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
-                      onSuccess={(details, data) => {
-                          alert("Transaction completed by " + details.payer.name.given_name);
-      
-                          // OPTIONAL: Call your server to save the transaction
-                          return fetch("/paypal-transaction-complete", {
-                              method: "post",
-                              body: JSON.stringify({
-                                  orderId: data.orderID
-                              })
-                          });
-                      }}
-                      options={{
-                          clientId: "PRODUCTION_CLIENT_ID"
-                      }}
-                  />
-                      // <PayPalButton amount={order.totalPrice} onSuccess={successPaymentHandler} />
+                      <PayPalButton amount={order.totalPrice} onSuccess={successPaymentHandler} />
                     )}
                 </ListGroupItem>
               )}

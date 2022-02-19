@@ -1,12 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Form, Button, Row, Col, FormGroup, FormLabel, FormControl, Table } from 'react-bootstrap'
+import { Form, Button, Row, Col, FormGroup, FormLabel, FormControl } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { getUserDetails, updateUserProfile } from '../actions/userActions.js'
 import { getMyOrders } from '../actions/orderActions';
-import { LinkContainer } from 'react-router-bootstrap';
 import Card from '../components/Card';
 
 const ProfileScreen = () => {

@@ -73,11 +73,11 @@ const OrderScreen = () => {
     }
 
     if(order) {
-      if(!userInfo || order.user.name != userInfo.name || !userInfo.isAdmin) {
+      if(!userInfo || order.user.name !== userInfo.name || !userInfo.isAdmin) {
         navigate('/login')
       }
     }
-  }, [dispatch, order, orderId, successPay, userInfo])
+  }, [dispatch, order, orderId, successPay, userInfo, navigate])
   
   const successPaymentHandler = (paymentResult) => {
     console.log(paymentResult)
@@ -98,7 +98,7 @@ const OrderScreen = () => {
         </Col>
       </Row>
       <Row>
-        <Col md={7} lg={9}>
+        <Col md={7} lg={8} xl={9}>
           <ListGroup variant='flush'>
 
             <ListGroupItem>
@@ -116,7 +116,7 @@ const OrderScreen = () => {
             <ListGroupItem>
               <h2>Payment Method</h2>
               <p>{order.paymentMethod}</p>
-              {order.isPaid ? <Message variant='success'>Paid on {order.paidAt}</Message> : <Message variant='danger'>Not Paid</Message>}
+              {order.isPaid ? <Message variant='success'>Paid on {order.paidAt.substring(0,10)}</Message> : <Message variant='danger'>Not Paid</Message>}
             </ListGroupItem>
 
             <ListGroupItem>
@@ -142,7 +142,7 @@ const OrderScreen = () => {
             </ListGroupItem>
           </ListGroup>
         </Col>
-        <Col md={5} lg={3}>
+        <Col md={5} lg={4} xl={3}>
           <Card>
             <ListGroup>
               <ListGroupItem>

@@ -1,11 +1,10 @@
-import React, {useState, useEffect} from 'react'
+import React, { useEffect } from 'react'
 import { Container, Row, Col, Image, ListGroup, ListGroupItem, Button } from 'react-bootstrap'
-import { LinkContainer } from 'react-router-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Message from './Message'
 
 const Card = ({order}) => {
-  const [imagesArray, setImagesArray] = useState([])
+  const navigate = useNavigate()
 
   useEffect(() => {
   }, [])
@@ -27,8 +26,11 @@ const Card = ({order}) => {
           </Row>
         </Col>
         <Col md={9}>
-          <h4>Order: {order._id}</h4>
-          <hr/>
+          <div className='d-flex justify-content-between align-items-center'>
+            <h4>Order: {order._id}</h4>
+            {/* <button className='btn-copy-clipboard' onClick={() => navigator.clipboard.writeText(order._id)}><i className="fa-regular fa-copy"></i></button> */}
+          </div>
+            <hr/>
           <Row>
             <Col>
               <h5>Delivery details:</h5>
@@ -40,24 +42,31 @@ const Card = ({order}) => {
             </Col>
             <Col>
               <h5>Payment details:</h5>
-              <div>{order.isPaid ? 'Paid' : 'Not paid'}</div>
+              <div>{order.isPaid ? <Message variant='success'>Paid on {order.paidAt.substring(0, 10)}</Message> : <Message variant='danger'>Not Paid</Message>}</div>
               <div>Total price: {order.totalPrice}</div>
-              <hr />
-              <h5>Order Items:</h5>
-              <ListGroup variant='flush'>
-                {order.orderItems.map(item => (
-                  <ListGroupItem key={item._id}>
-                    <Link to={`/product/${item.product}`}>
-                      {item.qty} x {item.name}
-                    </Link>
-                  </ListGroupItem>
-                ))}
-              </ListGroup>
-
+              <Button onClick={() => navigate(`/orders/${order._id}`)}>Go to payment</Button>
             </Col>
           </Row>
-          <hr/>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta culpa quibusdam iure asperiores distinctio, consectetur quas quidem totam at voluptates.
+          <Row>
+            <hr />
+            <h5>Order Items:</h5>
+            <ListGroup variant='flush'>
+              {order.orderItems.map(item => (
+                <ListGroupItem key={item._id}>
+                  <Row>
+                    <Col sm={5} md={3} lg={2}>
+                      <Image fluid src={item.image}></Image>
+                    </Col>
+                    <Col sm={7} md={9} lg={10}>
+                      <Link to={`/product/${item.product}`}>
+                        {item.qty} x {item.name}
+                      </Link>
+                    </Col>
+                  </Row>
+                </ListGroupItem>
+              ))}
+            </ListGroup>
+          </Row>
         </Col>
       </Row>
     </Container>

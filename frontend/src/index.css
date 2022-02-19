@@ -1,3 +1,7 @@
+:root {
+  --main: #dab900;
+}
+
 main {
   min-height: 80vh;
 }
@@ -15,4 +19,12 @@ h3 {
 
 .outOfStockImageCover {
   opacity: 0.5;
+}
+.btn {
+  position: relative;
+  transition: 0.4s ease-in;
+}
+
+.btn:hover {
+  box-shadow: inset -10.5em 0 0 0 var(--main), inset 10.5em 0 0 0 var(--main);
 }

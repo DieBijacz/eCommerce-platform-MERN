@@ -99,7 +99,6 @@ export const updateProduct = asyncHandler(async (req, res) => {
 // @route   POST api/products/:id/reviews
 // @access  Private
 export const addReview = asyncHandler(async (req, res) => {
-  console.log(req)
   const { rating, comment } = req.body
 
   // get product from db

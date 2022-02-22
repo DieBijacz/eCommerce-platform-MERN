@@ -5,12 +5,14 @@ import {
   deleteProduct,
   updateProduct,
   createProduct,
+  addReview,
 } from '../controllers/productController.js'
 import { isAdmin, protect } from '../middlewere/authMiddlewere.js'
 
 const router = express.Router()
 
 router.route('/').get(getProducts).post(protect, isAdmin, createProduct)
+router.route('/:id/reviews').post(protect, addReview)
 router
   .route('/:id')
   .get(getProductById)

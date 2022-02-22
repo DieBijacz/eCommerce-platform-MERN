@@ -55,7 +55,7 @@ const AdminProductListScreen = () => {
 
   // Delete product
   const deleteHandler = (id) => {
-    window.confirm('Are you sure you want to delete this user?') && dispatch(deleteProduct(id))
+    window.confirm('Are you sure you want to delete this product?') && dispatch(deleteProduct(id))
   }
 
   return <>

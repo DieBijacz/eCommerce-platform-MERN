@@ -7,13 +7,15 @@ import Loader from '../components/Loader';
 import { getUserDetails, updateUserProfile } from '../actions/userActions.js'
 import { getMyOrders } from '../actions/orderActions';
 import Card from '../components/Card';
+import { USER_DETAILS_RESET, USER_UPDATE_PROFILE_RESET } from '../constants/userConstants';
 
 const ProfileScreen = () => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [message, setMessage] = useState(null)
+  const [messageUpdatedProfile, setMessageUpdatedProfile] = useState(null)
+  const [formChanged, setFormChanged] = useState(false)
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -47,98 +49,83 @@ const ProfileScreen = () => {
         setName(user.name)
         setEmail(user.email)
       }
-    }
-    setTimeout(() => {
-      message && setMessage(null)
-    }, 1000);
 
-  }, [dispatch, userInfo, user, message, navigate])
+      if (success) {
+        setMessageUpdatedProfile('Profile Updated')
+        dispatch({type: USER_UPDATE_PROFILE_RESET})
+        setTimeout(() => {
+          setMessageUpdatedProfile(null)
+        }, 2000);
+      }
+    }
+
+    if((password === confirmPassword) && password !== '') {
+      setFormChanged(true)
+    } else {
+      setFormChanged(false)
+    }
+
+  }, [dispatch, userInfo, user, messageUpdatedProfile, navigate, success, password, confirmPassword])
 
   const submitHandler = (e) => {
     e.preventDefault()
 
-    // validate new password
-    if(password !== confirmPassword) {
-      setMessage('Password do not match')
-    } else {
-      // dispach updateProfile with updeted user details
-      dispatch(updateUserProfile({id: user._id, name, email, password}))
+    // dispach updateProfile with updeted user details
+    dispatch(updateUserProfile({id: user._id, name, email, password}))
+    dispatch({type: USER_DETAILS_RESET})
     }
-  }
+  
+  return <>
+      <Row>
+        <Col lg={4} className='mb-4'>
+        <h2>User Profile</h2>
+          {error && <Message variant='danger'>{error}</Message>}
+          {messageUpdatedProfile && <Message variant='success'>{messageUpdatedProfile}</Message>}
+          {loading ? <Loader /> : (       
+            <Form onSubmit={submitHandler}>
+            
+            <FormGroup className='my-3' controlId='name'>
+              <FormLabel>Username</FormLabel>
+              <FormControl type='text' placeholder='Update username' value={name} onChange={(e)=> {
+                setName(e.target.value)
+                setFormChanged(true)
+              }}></FormControl>
+            </FormGroup>
 
-  return <Row>
-    <Col lg={4} className='mb-4'>
-    <h2>User Profile</h2>
-      {error && <Message variant='danger'>{error}</Message>}
-      {message && <Message variant='danger'>{message}</Message>}
-      {success && <Message variant='success'>Profile Updated</Message>}
-      {loading ? <Loader /> : (       
-        <Form onSubmit={submitHandler}>
-        
-        <FormGroup className='my-3' controlId='name'>
-          <FormLabel>Username</FormLabel>
-          <FormControl type='text' placeholder='Update username' value={name} onChange={(e)=> setName(e.target.value)}></FormControl>
-        </FormGroup>
+            <FormGroup className='my-3' controlId='email'>
+              <FormLabel>Email Address</FormLabel>
+            <FormControl type='email' placeholder='Update email' value={email} onChange={(e) => {
+              setEmail(e.target.value)
+              setFormChanged(true)
+              }}></FormControl>
+            </FormGroup>
 
-        <FormGroup className='my-3' controlId='email'>
-          <FormLabel>Email Address</FormLabel>
-         <FormControl type='email' placeholder='Update email' value={email} onChange={(e) => setEmail(e.target.value)}></FormControl>
-        </FormGroup>
+            <FormGroup className='my-3' controlId='password'>
+              <FormLabel>Password</FormLabel>
+              <FormControl type='password' placeholder='New password' value={password} onChange={(e) => setPassword(e.target.value)}></FormControl>
+            </FormGroup>
 
-        <FormGroup className='my-3' controlId='password'>
-          <FormLabel>Password</FormLabel>
-          <FormControl type='password' placeholder='New password' value={password} onChange={(e) => setPassword(e.target.value)}></FormControl>
-        </FormGroup>
+            <FormGroup className='my-3' controlId='ConfirmPassword'>
+              <FormLabel>Confirm password</FormLabel>
+              {password !== confirmPassword && <div style={{color: 'red'}}>Password does not match!</div>}
+              <FormControl type='password' placeholder='Confirm new password' value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}></FormControl>
+            </FormGroup>
 
-        <FormGroup className='my-3' controlId='ConfirmPassword'>
-          <FormLabel>Confiorm password</FormLabel>
-          <FormControl type='password' placeholder='Confirm new password' value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}></FormControl>
-        </FormGroup>
+            <Button disabled={!formChanged} className='my-3' type='submit' variant='primary'>Update Details</Button>
 
-        <Button className='my-3' type='submit' variant='primary'>Update Details</Button>
-
-        </Form>
-      )}
-    </Col>
-    <Col lg={8}>
-      <h2>My Orders</h2>
-      {loadingOrders ? <Loader /> : errorOrders ? <Message variant='danger'>{errorOrders}</Message> : (
-        orders && orders.map(order => (
-          <Card order={order} key={order._id} />
-        ))
-      )
-
-        // <Table striped bordered responsive className='table-sm'>
-        //   <thead>
-        //     <tr>
-        //       <th>ID</th>
-        //       <th>Date</th>
-        //       <th>Total</th>
-        //       <th>Paid</th>
-        //       <th>Delivered</th>
-        //       <th></th>
-        //     </tr>
-        //   </thead>
-        //   <tbody>
-        //     {orders.map(order => (
-        //       <tr key={order._id}>
-        //         <td>{order._id.substring(20,)}</td>
-        //         <td>{order.createdAt.substring(0, 10)}</td>
-        //         <td>{order.totalPrice}</td>
-        //         <td>{order.isPaid ? order.paidAt.substring(0, 10) : <i className='fas fa-times' style={{color: 'red'}}></i>}</td>
-        //         <td>{order.isDelivered ? order.deliveredAt.substring(0, 10) : <i className='fas fa-times' style={{color: 'red'}}></i>}</td>
-        //         <td>
-        //           <LinkContainer to={`/orders/${order._id}`}>
-        //             <Button className='btn-sm order-details-button' variant='light'>Details</Button>
-        //           </LinkContainer>
-        //         </td>
-        //       </tr>
-        //     ))}
-        //   </tbody>
-        // </Table>
-      }
-    </Col>
-  </Row>;
+            </Form>
+          )}
+        </Col>
+        <Col lg={8}>
+          <h2>My Orders</h2>
+          {loadingOrders ? <Loader /> : errorOrders ? <Message variant='danger'>{errorOrders}</Message> : (
+            orders && orders.map(order => (
+              <Card order={order} key={order._id} />
+            ))
+          )}
+        </Col>
+      </Row>;
+    </>
 };
 
 export default ProfileScreen;

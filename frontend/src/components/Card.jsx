@@ -1,13 +1,10 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Container, Row, Col, Image, ListGroup, ListGroupItem, Button } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import Message from './Message'
 
 const Card = ({order}) => {
   const navigate = useNavigate()
-
-  useEffect(() => {
-  }, [])
 
   return (
     <Container>
@@ -34,17 +31,21 @@ const Card = ({order}) => {
           <Row>
             <Col>
               <h5>Delivery details:</h5>
-              <div>{order.isDelivered ? <Message variant='success'>Delivered</Message> : <Message variant='danger'>Not delivered</Message>}</div>
-              <div>{order.shippingAddress.city}</div>
-              <div>{order.shippingAddress.address}</div>
-              <div>{order.shippingAddress.country}</div>
-              <div>{order.shippingAddress.postalCode}</div>
+              <Row>
+                  <div>{order.isDelivered ? <Message variant='success'>Delivered</Message> : <Message variant='danger'>Not delivered</Message>}</div>
+                <Col>
+                  <div>{order.shippingAddress.city}</div>
+                  <div>{order.shippingAddress.address}</div>
+                  <div>{order.shippingAddress.country}</div>
+                  <div>{order.shippingAddress.postalCode}</div>
+                </Col>
+              </Row>
             </Col>
             <Col>
               <h5>Payment details:</h5>
               <div>{order.isPaid ? <Message variant='success'>Paid on {order.paidAt.substring(0, 10)}</Message> : <Message variant='danger'>Not Paid</Message>}</div>
               <div>Total price: {order.totalPrice}</div>
-              <Button onClick={() => navigate(`/orders/${order._id}`)}>Go to payment</Button>
+              {!order.isPaid &&<Button onClick={() => navigate(`/orders/${order._id}`)}>Go to payment</Button>}
             </Col>
           </Row>
           <Row>

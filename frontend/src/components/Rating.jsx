@@ -31,7 +31,7 @@ Rating.propTypes = {
 }
 
 Rating.defaultProps = {
-  color: '#EFC700'
+  color: '#ffae00'
 }
 
 export default Rating

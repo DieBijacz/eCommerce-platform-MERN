@@ -31,30 +31,31 @@ const Header = () => {
 
               // ADMIN MENU
 
-              <NavDropdown title={userInfo.name} id='adminMenu' menuVariant="dark">
-              <LinkContainer to='/profile'>
-                <NavDropdown.Item>Profile</NavDropdown.Item>
-              </LinkContainer>
-              <NavDropdown.Item onClick={logoutHandler}>Log out</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <LinkContainer to='/admin/users'>
-                <NavDropdown.Item>Users</NavDropdown.Item>
-              </LinkContainer>
-              <LinkContainer to='/admin/products'>
-                <NavDropdown.Item>Products</NavDropdown.Item>
-              </LinkContainer>
-              <LinkContainer to='/admin/orders'>
-                <NavDropdown.Item>Orders</NavDropdown.Item>
-              </LinkContainer>
-            </NavDropdown>
+              <NavDropdown title={userInfo.name} id='adminMenu' menuVariant="light">
+                <LinkContainer to='/profile'>
+                  <NavDropdown.Item><i className='fas fa-user'></i> Profile</NavDropdown.Item>
+                </LinkContainer>
+                <NavDropdown.Item onClick={logoutHandler}><i class="fa-solid fa-door-open"></i> Log out</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <LinkContainer to='/admin/users'>
+                  <NavDropdown.Item><i className="fa-solid fa-users"></i> Users</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to='/admin/products'>
+                  <NavDropdown.Item><i className="fa-solid fa-cubes"></i> Products</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to='/admin/orders'>
+                  <NavDropdown.Item><i className="fa-solid fa-box"></i> Orders</NavDropdown.Item>
+                </LinkContainer>
+              </NavDropdown>
           ) : (
 
             // USER MENU
-            <NavDropdown title={userInfo.name} id='username' menuVariant="dark">
+
+            <NavDropdown title={userInfo.name} id='username' menuVariant="light">
               <LinkContainer to='/profile'>
-                <NavDropdown.Item>Profile</NavDropdown.Item>
+                <NavDropdown.Item><i className='fas fa-user'></i> Profile</NavDropdown.Item>
               </LinkContainer>
-              <NavDropdown.Item onClick={logoutHandler}>Log out</NavDropdown.Item>
+              <NavDropdown.Item onClick={logoutHandler}><i class="fa-solid fa-door-open"></i> Log out</NavDropdown.Item>
             </NavDropdown>
           ) : (
             <LinkContainer to='/login'>

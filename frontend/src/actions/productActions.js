@@ -48,14 +48,17 @@ export const listProducts = () => async (dispatch) => {
 // FETCHING SINGLE PRODUCT BASED ON ID
 export const listProductDetails = (id) => async (dispatch) => {
   try {
+    console.log(2)
     dispatch({ type: PRODUCT_DETAILS_REQUEST })
 
+    console.log(3)
     // fetch data from db based on passed id
     const { data } = await axios.get(`/api/products/${id}`)
     dispatch({
       type: PRODUCT_DETAILS_SUCCESS,
       payload: data,
     })
+    console.log(4)
   } catch (error) {
     dispatch({
       type: PRODUCT_DETAILS_FAIL,

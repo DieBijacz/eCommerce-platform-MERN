@@ -2,7 +2,7 @@ import React, { useState, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { listProductDetails } from '../actions/productActions' 
 import { Link, useParams, useNavigate } from 'react-router-dom'
-import {Row, Col, Image, ListGroup, ListGroupItem, Card, Button, Form} from 'react-bootstrap'
+import {Row, Col, Image, ListGroup, ListGroupItem, Card, Button, Form, FormGroup, FormLabel, FormControl} from 'react-bootstrap'
 import Rating from '../components/Rating'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
@@ -15,23 +15,39 @@ const ProductScreen = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const params = useParams()
+
+  // get product details from store
   const productDetails = useSelector(state => state.productDetails)
   const {loading, error, product} = productDetails
 
   // get createReview state from store
-  const productReview = useSelector(state => state.productReview)
-  const {loading: loadingProductReview, success: successCreateProductReview, error: errorCreteProductReview} = productReview
+  const productCreateReview = useSelector(state => state.productCreateReview)
+  const {loading: loadingProductReview, success: successCreateProductReview, error: errorCreteProductReview} = productCreateReview
 
   // logged in User
   const userLogin = useSelector(state => state.userLogin)
   const {userInfo} = userLogin
 
   useEffect(() => {
-    dispatch(listProductDetails(params.id))
-  }, [dispatch, params])
+    // if there is no product in store => fetch it from db and set in state
+    if(!product._id) {
+      dispatch(listProductDetails(params.id))
+    }
+
+    // check if user have commented this product before
+    if(userInfo && product.reviews.some(r => r.user === userInfo._id)) {
+      const prevReview = product.reviews.filter(r => r.user === userInfo._id)[0]
+      setRating(prevReview.rating)
+      setComment(prevReview.comment)
+    }
+  }, [dispatch, params, userInfo, product])
 
   const addToCartHandler = () => {
     navigate(`/cart/${params.id}?qty=${qty}`)
+  }
+
+  const reviewSubmitHandler = () => {
+
   }
 
   return (
@@ -40,6 +56,9 @@ const ProductScreen = () => {
       {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
         <>
           <Row>
+
+            {/* PRODUCT */}
+
             <Col lg={6}>
               <Image src={product.image} alt={product.name} fluid />
             </Col>
@@ -59,9 +78,14 @@ const ProductScreen = () => {
                 </ListGroupItem>
               </ListGroup>
             </Col>
-            <Col lg={3}>
+
+            {/* PRODUCT */}
+            {/* PRICE // ADD TO CART */}
+
+            <Col lg={3} className='my-3'>
               <Card>
                 <ListGroup variant='flush'>
+
                   <ListGroupItem>
                     <Row>
                       <Col>
@@ -83,7 +107,6 @@ const ProductScreen = () => {
                     </Row>
                   </ListGroupItem>
 
-                  {/* STOCK QTY */}
                   {product.countInStock > 0 && (
                     <ListGroupItem>
                       <Row>
@@ -104,33 +127,66 @@ const ProductScreen = () => {
                       <Button onClick={addToCartHandler} disabled={product.countInStock === 0} className='btn' type='button'>Add To Cart</Button>
                     </div>
                   </ListGroupItem>
+
                 </ListGroup>
               </Card>
             </Col>
           </Row>
-          <Row>
-            <Col md={6}>
-              <h2>Reviews:</h2>
-              {product.reviews.length === 0 ? 'No reviews' : (
-                <ListGroup variant='flush'>
-                  {product.reviews.map(r => (
-                    <ListGroupItem key={r._id}>
-                      <div className='d-flex justify-content-between align-items-center'>
-                        <h5>{r.name}</h5>
-                        <div>
-                          <Rating value={r.rating}/>
-                          <p>{r.createdAt.substring(0, 10)}</p>
-                        </div>
-                      </div>
-                      <p>{r.comment}</p>
-                    </ListGroupItem>
-                  ))}
-                </ListGroup>
+
+            {/* PRICE // ADD TO CART */}
+            {/* REVIEW SECITON */}
+
+          <Row className='my-3'>
+            <Col lg={6} className='my-3'>
+              <h2>Write review:</h2>
+              {errorCreteProductReview && <Message variant='danger'>{errorCreteProductReview}</Message>}
+              {successCreateProductReview && <Message variant='success'>Review Added</Message>}
+
+              {!userInfo ? <h5>You are not logged in. Please <Link to='/login'>Log In</Link> first.</h5> : (
+                <Form onSubmit={reviewSubmitHandler()}>
+                  <FormGroup controlId='rating'>
+                    <FormLabel>Rating</FormLabel>
+                    <FormControl as='select' value={rating} onChange={(e) => setRating(e.target.value)}>
+                      <option value=''>Select...</option>
+                      <option value='1'>1 - Poor</option>
+                      <option value='2'>2 - Fair</option>
+                      <option value='3'>3 - Good</option>
+                      <option value='4'>4 - Very Good</option>
+                      <option value='5'>5 - Exelent</option>
+                    </FormControl>
+                  </FormGroup>
+                  <FormGroup controlId='comment'>
+                    <FormLabel>Comment</FormLabel>
+                    <FormControl as='textarea' row='3' value={comment} onChange={(e) => setComment(e.target.value)}></FormControl>
+                  </FormGroup>
+                  <Button type='submit' disabled={(comment === '') || (rating === 0)} className='my-3'>Submit</Button>
+                </Form>
               )}
             </Col>
-            <Col md={6}>
-                              Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe dignissimos iusto consequuntur ad corrupti quod perspiciatis commodi quos excepturi nemo tempore debitis inventore, mollitia accusamus at optio? A, aliquid soluta cumque eligendi vel, asperiores, illum dolore non accusantium eum veniam? Similique nihil numquam corrupti voluptate aliquid atque! Veniam, similique labore!
+            <Col lg={6} className='my-3'>
+              <h2>Reviews:</h2>
+              {loadingProductReview ? <Loader /> : (
+                product.reviews.length === 0 ? 'No reviews' : (
+                  <ListGroup variant='flush'>
+                    {product.reviews.map(r => (
+                      <ListGroupItem key={r._id}>
+                        <div className='d-flex justify-content-between align-items-center'>
+                          <h5>{r.name}</h5>
+                          <div>
+                            <Rating value={r.rating}/>
+                            <p>{r.createdAt.substring(0, 10)}</p>
+                          </div>
+                        </div>
+                        <p>{r.comment}</p>
+                      </ListGroupItem>
+                    ))}
+                  </ListGroup>
+                )
+              )}
             </Col>
+
+            {/* REVIEW SECITON */}
+
           </Row>
         </>
       )}

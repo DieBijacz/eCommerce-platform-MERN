@@ -1,16 +1,19 @@
 import React, { useState, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { listProductDetails } from '../actions/productActions' 
+import { createProductReview, listProductDetails, updateProductReview } from '../actions/productActions' 
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import {Row, Col, Image, ListGroup, ListGroupItem, Card, Button, Form, FormGroup, FormLabel, FormControl} from 'react-bootstrap'
 import Rating from '../components/Rating'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
+import { PRODUCT_CREATE_REVIEW_RESET, PRODUCT_UPDATE_REVIEW_RESET } from '../constants/productConstants'
 
 const ProductScreen = () => {
   const [qty, setQty] = useState(1)
   const [rating, setRating] = useState(0)
   const [comment, setComment] = useState('')
+  const [showMessage, setShowMessage] = useState('')
+  const [alreadyReviewed, setAlreadyReviewed] = useState(false)
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -20,9 +23,13 @@ const ProductScreen = () => {
   const productDetails = useSelector(state => state.productDetails)
   const {loading, error, product} = productDetails
 
-  // get createReview state from store
+  // get productCreateReview state from store
   const productCreateReview = useSelector(state => state.productCreateReview)
   const {loading: loadingProductReview, success: successCreateProductReview, error: errorCreteProductReview} = productCreateReview
+  
+  // get productUpdateReview state from store
+  const productUpdateReview = useSelector(state => state.productUpdateReview)
+  const {loading: loadingUpdatedProductReview, success: successUpdatedProductReview, error: errorUpdatedProductReview} = productUpdateReview
 
   // logged in User
   const userLogin = useSelector(state => state.userLogin)
@@ -30,24 +37,49 @@ const ProductScreen = () => {
 
   useEffect(() => {
     // if there is no product in store => fetch it from db and set in state
-    if(!product._id) {
+    if(!product._id || successCreateProductReview || successUpdatedProductReview) {
       dispatch(listProductDetails(params.id))
+    }
+
+    if(successCreateProductReview) {
+      setShowMessage('Review Added')
+      dispatch({type: PRODUCT_CREATE_REVIEW_RESET})
+      setTimeout(() => {
+        setShowMessage('')
+      }, 2000)
+    }
+
+    if(successUpdatedProductReview) {
+      console.log(23);
+      setShowMessage('Review Updated')
+      dispatch({type: PRODUCT_UPDATE_REVIEW_RESET})
+      setTimeout(() => {
+        setShowMessage('')
+      }, 2000)
     }
 
     // check if user have commented this product before
     if(userInfo && product.reviews.some(r => r.user === userInfo._id)) {
       const prevReview = product.reviews.filter(r => r.user === userInfo._id)[0]
+      setAlreadyReviewed(true)
       setRating(prevReview.rating)
       setComment(prevReview.comment)
     }
-  }, [dispatch, params, userInfo, product])
+  }, [dispatch, params, userInfo, product, successCreateProductReview, successUpdatedProductReview])
 
+  // ADD TO CART
   const addToCartHandler = () => {
     navigate(`/cart/${params.id}?qty=${qty}`)
   }
 
-  const reviewSubmitHandler = () => {
-
+  // SUBMIT FORM
+  const reviewSubmitHandler = (e) => {
+    e.preventDefault()
+    if(alreadyReviewed) {
+      dispatch(updateProductReview(params.id, {rating, comment}))
+    } else {
+      dispatch(createProductReview(params.id, {rating, comment}))
+    }
   }
 
   return (
@@ -139,11 +171,11 @@ const ProductScreen = () => {
           <Row className='my-3'>
             <Col lg={6} className='my-3'>
               <h2>Write review:</h2>
-              {errorCreteProductReview && <Message variant='danger'>{errorCreteProductReview}</Message>}
-              {successCreateProductReview && <Message variant='success'>Review Added</Message>}
+              {(errorCreteProductReview || errorUpdatedProductReview) && <Message variant='danger'>{errorCreteProductReview ?? errorUpdatedProductReview}</Message>}
+              {showMessage && <Message variant={showMessage.startsWith('Review') ? 'success' : 'danger'}>{showMessage}</Message>}
 
               {!userInfo ? <h5>You are not logged in. Please <Link to='/login'>Log In</Link> first.</h5> : (
-                <Form onSubmit={reviewSubmitHandler()}>
+                <Form onSubmit={reviewSubmitHandler}>
                   <FormGroup controlId='rating'>
                     <FormLabel>Rating</FormLabel>
                     <FormControl as='select' value={rating} onChange={(e) => setRating(e.target.value)}>
@@ -159,17 +191,17 @@ const ProductScreen = () => {
                     <FormLabel>Comment</FormLabel>
                     <FormControl as='textarea' row='3' value={comment} onChange={(e) => setComment(e.target.value)}></FormControl>
                   </FormGroup>
-                  <Button type='submit' disabled={(comment === '') || (rating === 0)} className='my-3'>Submit</Button>
+                  <Button type='submit' disabled={(comment === '') || (rating === 0)} className='my-3'>{alreadyReviewed ? 'Update' : 'Submit'}</Button>
                 </Form>
               )}
             </Col>
             <Col lg={6} className='my-3'>
               <h2>Reviews:</h2>
-              {loadingProductReview ? <Loader /> : (
+              {(loadingProductReview || loadingUpdatedProductReview) ? <Loader /> : (
                 product.reviews.length === 0 ? 'No reviews' : (
                   <ListGroup variant='flush'>
                     {product.reviews.map(r => (
-                      <ListGroupItem key={r._id}>
+                      <ListGroupItem key={r._id} style={{backgroundColor: `${r.user === userInfo._id && '#eee'}`}}>
                         <div className='d-flex justify-content-between align-items-center'>
                           <h5>{r.name}</h5>
                           <div>

@@ -21,6 +21,10 @@ import {
   PRODUCT_CREATE_REVIEW_SUCCESS,
   PRODUCT_CREATE_REVIEW_FAIL,
   PRODUCT_CREATE_REVIEW_RESET,
+  PRODUCT_UPDATE_REVIEW_REQUEST,
+  PRODUCT_UPDATE_REVIEW_SUCCESS,
+  PRODUCT_UPDATE_REVIEW_FAIL,
+  PRODUCT_UPDATE_REVIEW_RESET,
 } from '../constants/productConstants'
 // reducer takes 2 parameters
 // initial state
@@ -111,6 +115,21 @@ export const createReviewReducer = (state = {}, action) => {
     case PRODUCT_CREATE_REVIEW_FAIL:
       return { loading: false, error: action.payload }
     case PRODUCT_CREATE_REVIEW_RESET:
+      return {}
+    default:
+      return state
+  }
+}
+
+export const updateReviewReducer = (state = {}, action) => {
+  switch (action.type) {
+    case PRODUCT_UPDATE_REVIEW_REQUEST:
+      return { loading: true }
+    case PRODUCT_UPDATE_REVIEW_SUCCESS:
+      return { loading: false, success: true }
+    case PRODUCT_UPDATE_REVIEW_FAIL:
+      return { loading: false, error: action.payload }
+    case PRODUCT_UPDATE_REVIEW_RESET:
       return {}
     default:
       return state

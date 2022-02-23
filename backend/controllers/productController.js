@@ -140,3 +140,42 @@ export const addReview = asyncHandler(async (req, res) => {
     throw new Error('Could not find the product')
   }
 })
+
+// @desc    Update review
+// @route   PUT api/products/:id/reviews
+// @access  Private
+export const updateReview = asyncHandler(async (req, res) => {
+  const { rating, comment } = req.body
+
+  // get product from db
+  const product = await Product.findById(req.params.id)
+
+  if (product) {
+    // get previous review
+    let filteredReviews = product.reviews.filter(
+      (r) => r.user.toString() !== req.user._id.toString()
+    )
+
+    // update review
+    const updatedReview = {
+      name: req.user.name,
+      rating: Number(rating),
+      comment,
+      user: req.user._id,
+    }
+
+    product.reviews = [updatedReview, ...filteredReviews]
+    product.numReviews = product.reviews.length
+    // calculate new rating (avarage)
+    product.rating =
+      product.reviews.reduce((acc, r) => r.rating + acc, 0) /
+      product.reviews.length
+
+    // save updated product
+    await product.save()
+    res.status(201).json({ message: 'Review updated' })
+  } else {
+    res.status(401)
+    throw new Error('Could not find the product')
+  }
+})

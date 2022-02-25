@@ -24,29 +24,29 @@ import {
 } from '../constants/productConstants'
 
 // FETCHING ALL PRODUCTS
-export const listProducts = () => async (dispatch) => {
-  try {
-    // send action with type of req. that will set loading to true and return []
-    dispatch({ type: PRODUCT_LIST_REQUEST })
+export const listProducts =
+  (keyword = '') =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: PRODUCT_LIST_REQUEST })
 
-    // actual req
-    // fetch data from db
-    const { data } = await axios.get('/api/products')
-    // dispatch will set loading to false and pass data as payload
-    dispatch({
-      type: PRODUCT_LIST_SUCCESS,
-      payload: data,
-    })
-  } catch (error) {
-    dispatch({
-      type: PRODUCT_LIST_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    })
+      // fetch data from db
+      const { data } = await axios.get(`/api/products?keyword=${keyword}`)
+
+      dispatch({
+        type: PRODUCT_LIST_SUCCESS,
+        payload: data,
+      })
+    } catch (error) {
+      dispatch({
+        type: PRODUCT_LIST_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      })
+    }
   }
-}
 
 // FETCHING SINGLE PRODUCT BASED ON ID
 export const getProductDetails = (id) => async (dispatch) => {

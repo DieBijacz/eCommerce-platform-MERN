@@ -190,7 +190,7 @@ const ProductScreen = () => {
                   </FormGroup>
                   <FormGroup controlId='comment'>
                     <FormLabel>Comment</FormLabel>
-                    <FormControl as='textarea' row='3' value={comment} onChange={(e) => setComment(e.target.value)}></FormControl>
+                    <FormControl as='textarea' rows='5' value={comment} onChange={(e) => setComment(e.target.value)}></FormControl>
                   </FormGroup>
                   <Button type='submit' disabled={(rating === '0')|| (comment === '')} className='my-3'>{alreadyReviewed ? 'Update' : 'Submit'}</Button>
                 </Form>

@@ -6,8 +6,18 @@ import Product from '../models/productModel.js'
 // @access  Public
 // asyncHandler https://github.com/Abazhenov/express-async-handler
 export const getProducts = asyncHandler(async (req, res) => {
-  // .find({}) with empty obj will bring eveything in Promise
-  const products = await Product.find({})
+  //  if there is a keyword then use regex to match name of any product
+  // else use {} so Product.fint({}) will get all products
+  const keyword = req.query.keyword
+    ? {
+        name: {
+          $regex: req.query.keyword,
+          $options: 'i',
+        },
+      }
+    : {}
+
+  const products = await Product.find({ ...keyword })
 
   res.json(products)
 })
@@ -124,7 +134,7 @@ export const addReview = asyncHandler(async (req, res) => {
         user: req.user._id,
       }
 
-      product.reviews.push(review)
+      product.reviews.unshift(review)
       product.numReviews = product.reviews.length
       // calculate new rating (avarage)
       product.rating =

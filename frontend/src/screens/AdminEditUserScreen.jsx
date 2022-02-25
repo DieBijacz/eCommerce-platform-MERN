@@ -56,20 +56,23 @@ const AdminEditUserScreen = () => {
         {loading ? error ? <Message variant='danger'>{error}</Message> : <Loader /> : (
           <Form onSubmit={submitHandler}>
           
-          <FormGroup className='my-3' controlId='name'>
-            <FormLabel>Username</FormLabel>
-            <FormControl type='text' placeholder='Enter username' value={name} onChange={(e)=> setName(e.target.value)}></FormControl>
-          </FormGroup>
+            <FormGroup className='my-3' controlId='name'>
+              <FormLabel>Username</FormLabel>
+              <FormControl type='text' placeholder='Enter username' value={name} onChange={(e)=> setName(e.target.value)}></FormControl>
+            </FormGroup>
 
-          <FormGroup className='my-3' controlId='email'>
-          <FormLabel>Email Address</FormLabel>
-          <FormControl type='email' placeholder='Enter email' value={email} onChange={(e) => setEmail(e.target.value)}></FormControl>
-          </FormGroup>
+            <FormGroup className='my-3' controlId='email'>
+            <FormLabel>Email Address</FormLabel>
+            <FormControl type='email' placeholder='Enter email' value={email} onChange={(e) => setEmail(e.target.value)}></FormControl>
+            </FormGroup>
 
-          <FormGroup className='my-3' controlId='admin'>
-          <Form.Check type='checkbox' checked={admin} onChange={() => setAdmin(!admin)} label={admin ? 'is Admin' : 'Set as Admin'}/>
-          </FormGroup>
-          <Button className='my-3' type='submit' variant='primary'>Update</Button>
+            <FormGroup className='my-3' controlId='admin'>
+              {admin ? 'yes' : 'no'}
+            <Form.Check type='checkbox' checked={admin} onChange={() => setAdmin(!admin)} label={admin ? 'is Admin' : 'Set as Admin'}/>
+            </FormGroup>
+
+            <Button className='my-3' type='submit' variant='primary'>Update</Button>
+            
           </Form>
         )}
         <h1>User Orders:</h1>

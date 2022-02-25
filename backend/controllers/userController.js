@@ -124,7 +124,16 @@ export const updateUserProfile = asyncHandler(async (req, res) => {
 // @route GET /api/users
 // @access Private/Admin
 export const getUsers = asyncHandler(async (req, res) => {
-  const users = await User.find({}) //pass empty obj to get all users
+  const keyword = req.query.keyword
+    ? {
+        name: {
+          $regex: req.query.keyword,
+          $options: 'i',
+        },
+      }
+    : {}
+
+  const users = await User.find({ ...keyword }) //pass empty obj to get all users
 
   if (users) {
     res.json(users)
@@ -170,9 +179,9 @@ export const updateUserAsAdmin = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id)
 
   if (user) {
-    user.name = req.body.name || user.name
-    user.email = req.body.email || user.email
-    user.isAdmin = req.body.isAdmin || user.isAdmin
+    user.name = req.body.name ?? user.name
+    user.email = req.body.email ?? user.email
+    user.isAdmin = req.body.isAdmin ?? user.isAdmin
 
     const updatedUser = await user.save()
 

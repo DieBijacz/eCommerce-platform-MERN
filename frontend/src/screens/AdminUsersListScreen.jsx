@@ -1,16 +1,21 @@
 import React, {useEffect} from 'react';
 import { LinkContainer } from 'react-router-bootstrap'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Table, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { listUsers, deleteUser } from '../actions/userActions.js'
 import { USER_DELETE_RESET } from '../constants/userConstants';
+import SearchBar from '../components/SearchBar';
 
 const AdminUsersListScreen = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const params = useParams()
+  
+  // get keyword from URL
+  const keyword = params.keyword
 
   // get users from store
   const usersList = useSelector(state => state.usersList)
@@ -26,11 +31,11 @@ const AdminUsersListScreen = () => {
 
   useEffect(() => {
     if(userInfo && userInfo.isAdmin) { // when logged in as admin
-      dispatch(listUsers()) // fetch users from db to be set in store
+      dispatch(listUsers(keyword)) // fetch users from db to be set in store
     } else {
       navigate('/login')
     }
-  }, [dispatch, navigate, userInfo, successDelete])
+  }, [dispatch, navigate, userInfo, successDelete, keyword])
 
   const deleteHandler = (id) => {
     window.confirm('Are you sure you want to delete this user?') && dispatch(deleteUser(id))
@@ -41,6 +46,7 @@ const AdminUsersListScreen = () => {
 
   return <>
     <h1>Users</h1>
+    <SearchBar params={'/admin/users'}/>
     {successDelete && <Message variant='success'>User Removed</Message>}
     {errorUserDelete && <Message variant='danger'>{errorUserDelete}</Message>}
     {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (

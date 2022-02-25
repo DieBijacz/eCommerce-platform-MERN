@@ -5,11 +5,14 @@ import { Table, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { listUsers, deleteUser } from '../actions/userActions.js'
-import { USER_DELETE_RESET } from '../constants/userConstants';
+import { listUsers } from '../actions/userActions.js'
 import SearchBar from '../components/SearchBar';
+import { USER_DELETE_RESET } from '../constants/userConstants';
+import { useState } from 'react';
 
 const AdminUsersListScreen = () => {
+  const [showSuccessDeleteMessage, setShowSuccessDeleteMessage] = useState(false)
+
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const params = useParams()
@@ -30,25 +33,25 @@ const AdminUsersListScreen = () => {
   const { error: errorUserDelete, success: successDelete } = userDelete
 
   useEffect(() => {
+    if (successDelete) {
+      setShowSuccessDeleteMessage(true)
+      dispatch({type: USER_DELETE_RESET})
+      setTimeout(() => {
+        setShowSuccessDeleteMessage(false)
+      }, 3000)
+    }
+
     if(userInfo && userInfo.isAdmin) { // when logged in as admin
       dispatch(listUsers(keyword)) // fetch users from db to be set in store
     } else {
       navigate('/login')
     }
-  }, [dispatch, navigate, userInfo, successDelete, keyword])
-
-  const deleteHandler = (id) => {
-    window.confirm('Are you sure you want to delete this user?') && dispatch(deleteUser(id))
-    setTimeout(() => {
-      dispatch({type: USER_DELETE_RESET})
-    }, 3000);
-  }
+  }, [dispatch, navigate, userInfo, keyword])
 
   return <>
     <h1>Users</h1>
     <SearchBar params={'/admin/users'}/>
-    {successDelete && <Message variant='success'>User Removed</Message>}
-    {errorUserDelete && <Message variant='danger'>{errorUserDelete}</Message>}
+    {showSuccessDeleteMessage && <Message variant='success'>User removed</Message>}
     {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
       <Table striped bordered responsive className='table-sm'>
         <thead>
@@ -69,13 +72,10 @@ const AdminUsersListScreen = () => {
               <td>{user.isAdmin ? <i className='fas fa-check' style={{color: 'green'}}></i> : <i className='fas fa-times' style={{color: 'red'}}></i>}</td>
               <td>
                 <LinkContainer to={`/admin/edit/user/${user._id}`}>
-                  <Button variant='light' className='btn-sm'>
-                    <i className='fas fa-edit'></i>
+                  <Button variant='light' className='btn'>
+                    Edit user
                   </Button>
                 </LinkContainer>
-                <Button className='btn-sm' onClick={() => deleteHandler(user._id)}>
-                  <i className='fas fa-trash'></i>
-                </Button>
               </td>
             </tr>
           ))}

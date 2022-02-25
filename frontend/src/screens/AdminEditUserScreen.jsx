@@ -1,10 +1,10 @@
 import {useState, useEffect} from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Form, Button, FormGroup, FormLabel, FormControl } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { getUserDetails, updateUserAsAdmin } from '../actions/userActions.js'
+import { deleteUser, getUserDetails, updateUserAsAdmin } from '../actions/userActions.js'
 import FormContainer from '../components/FormContainer.js'
 import { USER_UPDATE_ASADMIN_RESET } from '../constants/userConstants';
 
@@ -14,6 +14,7 @@ const AdminEditUserScreen = () => {
   const [admin, setAdmin] = useState(false)
 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const params = useParams()
 
   // get user id
@@ -23,10 +24,16 @@ const AdminEditUserScreen = () => {
   const userDetails = useSelector(state => state.userDetails)
   const {loading, error, user} = userDetails
 
+  // userDelete state
+  const userDelete = useSelector(state => state.userDelete)
+  const { error: errorUserDelete, success: successDelete } = userDelete
+
   const userUpdateAsAdmin = useSelector(state => state.userUpdateAsAdmin)
   const {loading: loadingUpdate, error: errorUpdate, success: successUpdate} = userUpdateAsAdmin
 
   useEffect(() => {
+    successDelete && navigate('/admin/users')
+
     if(!user.name || user._id !== userId) {
       dispatch(getUserDetails(userId))
     } else {
@@ -34,7 +41,7 @@ const AdminEditUserScreen = () => {
       setEmail(user.email)
       setAdmin(user.isAdmin)
     }
-  },[dispatch, user, userId, successUpdate])
+  },[dispatch, user, userId, successUpdate, successDelete])
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -44,6 +51,10 @@ const AdminEditUserScreen = () => {
       dispatch({type: USER_UPDATE_ASADMIN_RESET})
     }, 2000);
   }
+  
+  const deleteHandler = (id) => {
+    window.confirm('Are you sure you want to delete this user?') && dispatch(deleteUser(id))
+  }
 
   return (
     <>
@@ -51,7 +62,8 @@ const AdminEditUserScreen = () => {
       <FormContainer>
         <h1>Edit User:</h1>
         {successUpdate && <Message variant='success'>User Updated</Message>}
-        {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
+        {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}        
+        {errorUserDelete && <Message variant='danger'>{errorUserDelete}</Message>}
         {loadingUpdate && <Loader />}
         {loading ? error ? <Message variant='danger'>{error}</Message> : <Loader /> : (
           <Form onSubmit={submitHandler}>
@@ -62,16 +74,20 @@ const AdminEditUserScreen = () => {
             </FormGroup>
 
             <FormGroup className='my-3' controlId='email'>
-            <FormLabel>Email Address</FormLabel>
-            <FormControl type='email' placeholder='Enter email' value={email} onChange={(e) => setEmail(e.target.value)}></FormControl>
+              <FormLabel>Email Address</FormLabel>
+              <FormControl type='email' placeholder='Enter email' value={email} onChange={(e) => setEmail(e.target.value)}></FormControl>
             </FormGroup>
 
             <FormGroup className='my-3' controlId='admin'>
-              {admin ? 'yes' : 'no'}
-            <Form.Check type='checkbox' checked={admin} onChange={() => setAdmin(!admin)} label={admin ? 'is Admin' : 'Set as Admin'}/>
+              <Form.Check type='checkbox' checked={admin} onChange={() => setAdmin(!admin)} label={admin ? 'is Admin' : 'Set as Admin'}/>
             </FormGroup>
 
-            <Button className='my-3' type='submit' variant='primary'>Update</Button>
+            <div className='d-flex justify-content-between my-3'>
+              <Button className='btn' type='submit' variant='primary'>Update</Button>
+              <Button className='btn' variant='primary' onClick={() => deleteHandler(user._id)}>
+                Delete user
+              </Button>
+            </div>
             
           </Form>
         )}

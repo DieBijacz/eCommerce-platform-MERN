@@ -49,7 +49,7 @@ export const listProducts = () => async (dispatch) => {
 }
 
 // FETCHING SINGLE PRODUCT BASED ON ID
-export const listProductDetails = (id) => async (dispatch) => {
+export const getProductDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST })
 

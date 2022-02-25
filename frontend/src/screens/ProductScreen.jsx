@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { createProductReview, listProductDetails, updateProductReview } from '../actions/productActions' 
+import { createProductReview, getProductDetails, updateProductReview } from '../actions/productActions' 
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import {Row, Col, Image, ListGroup, ListGroupItem, Card, Button, Form, FormGroup, FormLabel, FormControl} from 'react-bootstrap'
 import Rating from '../components/Rating'
@@ -10,7 +10,7 @@ import { PRODUCT_CREATE_REVIEW_RESET, PRODUCT_UPDATE_REVIEW_RESET } from '../con
 
 const ProductScreen = () => {
   const [qty, setQty] = useState(1)
-  const [rating, setRating] = useState(0)
+  const [rating, setRating] = useState('0')
   const [comment, setComment] = useState('')
   const [showMessage, setShowMessage] = useState('')
   const [alreadyReviewed, setAlreadyReviewed] = useState(false)
@@ -34,15 +34,17 @@ const ProductScreen = () => {
   // logged in User
   const userLogin = useSelector(state => state.userLogin)
   const {userInfo} = userLogin
-
+  
   useEffect(() => {
+    !userInfo && navigate('/login')
+
     // if there is no product in store => fetch it from db and set in state
     if(!product._id || successCreateProductReview || successUpdatedProductReview) {
-      dispatch(listProductDetails(params.id))
+      dispatch(getProductDetails(params.id))
     }
 
     if(successCreateProductReview) {
-      setShowMessage('Review Added')
+      setShowMessage('Review Added. Thank you')
       dispatch({type: PRODUCT_CREATE_REVIEW_RESET})
       setTimeout(() => {
         setShowMessage('')
@@ -50,7 +52,6 @@ const ProductScreen = () => {
     }
 
     if(successUpdatedProductReview) {
-      console.log(23);
       setShowMessage('Review Updated')
       dispatch({type: PRODUCT_UPDATE_REVIEW_RESET})
       setTimeout(() => {
@@ -65,7 +66,7 @@ const ProductScreen = () => {
       setRating(prevReview.rating)
       setComment(prevReview.comment)
     }
-  }, [dispatch, params, userInfo, product, successCreateProductReview, successUpdatedProductReview])
+  }, [dispatch, navigate, params, userInfo, product, successCreateProductReview, successUpdatedProductReview])
 
   // ADD TO CART
   const addToCartHandler = () => {
@@ -170,7 +171,7 @@ const ProductScreen = () => {
 
           <Row className='my-3'>
             <Col lg={6} className='my-3'>
-              <h2>Write review:</h2>
+              <h2>{alreadyReviewed ? 'Update review:' : 'Write review:'}</h2>
               {(errorCreteProductReview || errorUpdatedProductReview) && <Message variant='danger'>{errorCreteProductReview ?? errorUpdatedProductReview}</Message>}
               {showMessage && <Message variant={showMessage.startsWith('Review') ? 'success' : 'danger'}>{showMessage}</Message>}
 
@@ -179,7 +180,7 @@ const ProductScreen = () => {
                   <FormGroup controlId='rating'>
                     <FormLabel>Rating</FormLabel>
                     <FormControl as='select' value={rating} onChange={(e) => setRating(e.target.value)}>
-                      <option value=''>Select...</option>
+                      <option value='0'>Select...</option>
                       <option value='1'>1 - Poor</option>
                       <option value='2'>2 - Fair</option>
                       <option value='3'>3 - Good</option>
@@ -191,7 +192,7 @@ const ProductScreen = () => {
                     <FormLabel>Comment</FormLabel>
                     <FormControl as='textarea' row='3' value={comment} onChange={(e) => setComment(e.target.value)}></FormControl>
                   </FormGroup>
-                  <Button type='submit' disabled={(comment === '') || (rating === 0)} className='my-3'>{alreadyReviewed ? 'Update' : 'Submit'}</Button>
+                  <Button type='submit' disabled={(rating === '0')|| (comment === '')} className='my-3'>{alreadyReviewed ? 'Update' : 'Submit'}</Button>
                 </Form>
               )}
             </Col>
@@ -200,7 +201,7 @@ const ProductScreen = () => {
               {(loadingProductReview || loadingUpdatedProductReview) ? <Loader /> : (
                 product.reviews.length === 0 ? 'No reviews' : (
                   <ListGroup variant='flush'>
-                    {product.reviews.map(r => (
+                    {(product && userInfo) && product.reviews.map(r => (
                       <ListGroupItem key={r._id} style={{backgroundColor: `${r.user === userInfo._id && '#eee'}`}}>
                         <div className='d-flex justify-content-between align-items-center'>
                           <h5>{r.name}</h5>

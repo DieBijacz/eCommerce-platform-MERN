@@ -5,7 +5,7 @@ import { Row, Col, Image, Form, Button, FormGroup, FormLabel, FormControl} from 
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { listProductDetails, updateProduct } from '../actions/productActions';
+import { getProductDetails, updateProduct } from '../actions/productActions';
 import { PRODUCT_UPDATE_RESET } from '../constants/productConstants';
 
 const AdminEditProductScreen = () => {
@@ -43,12 +43,12 @@ const AdminEditProductScreen = () => {
     (!userInfo || !userInfo.isAdmin) && navigate('/')
 
     if (!product.name || product._id !== productId) {
-      dispatch(listProductDetails(productId))
+      dispatch(getProductDetails(productId))
     }
 
     if (successUpdate) {
       dispatch({ type: PRODUCT_UPDATE_RESET })
-      dispatch(listProductDetails(productId))
+      dispatch(getProductDetails(productId))
       setShowUpdateMessage(true)
     }  
 

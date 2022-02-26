@@ -72,9 +72,11 @@ const AdminUsersListScreen = () => {
               <td>{user.isAdmin ? <i className='fas fa-check' style={{color: 'green'}}></i> : <i className='fas fa-times' style={{color: 'red'}}></i>}</td>
               <td>
                 <LinkContainer to={`/admin/edit/user/${user._id}`}>
-                  <Button variant='light' className='btn'>
-                    Edit user
-                  </Button>
+                  <div className='d-grid gap-2'>
+                    <Button variant='light' className='btn'>
+                      Edit user
+                    </Button>
+                  </div>
                 </LinkContainer>
               </td>
             </tr>

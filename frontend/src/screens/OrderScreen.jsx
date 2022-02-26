@@ -77,6 +77,7 @@ const OrderScreen = () => {
         navigate('/login')
       }
     }
+    
   }, [dispatch, order, orderId, successPay, userInfo, navigate])
   
   const successPaymentHandler = (paymentResult) => {

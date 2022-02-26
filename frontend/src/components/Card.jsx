@@ -34,6 +34,7 @@ const Card = ({order}) => {
               <Row>
                   <div>{order.isDelivered ? <Message variant='success'>Delivered</Message> : <Message variant='danger'>Not delivered</Message>}</div>
                 <Col>
+                  <div>{order.user.name}</div>
                   <div>{order.shippingAddress.city}</div>
                   <div>{order.shippingAddress.address}</div>
                   <div>{order.shippingAddress.country}</div>

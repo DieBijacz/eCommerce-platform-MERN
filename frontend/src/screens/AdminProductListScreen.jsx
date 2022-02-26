@@ -53,11 +53,6 @@ const AdminProductListScreen = () => {
     dispatch(createProduct())
   }
 
-  // Delete product
-  const deleteHandler = (id) => {
-    window.confirm('Are you sure you want to delete this product?') && dispatch(deleteProduct(id))
-  }
-
   return <>
     <Row className='my-3'>
       <Col>
@@ -94,13 +89,15 @@ const AdminProductListScreen = () => {
             <td>{product.brand}</td>
             <td>
               <LinkContainer to={`/admin/edit/product/${product._id}`}>
-                <Button variant='light' className='btn-sm'>
-                  <i className='fas fa-edit'></i>
-                </Button>
+                  <div className='d-grid gap-2'>
+                    <Button variant='light' className='btn'>
+                      Edit Product
+                    </Button>
+                  </div>
               </LinkContainer>
-              <Button className='btn-sm' onClick={() => deleteHandler(product._id)}>
+              {/* <Button className='btn-sm' onClick={() => deleteHandler(product._id)}>
                 <i className='fas fa-trash'></i>
-              </Button>
+              </Button> */}
             </td>
           </tr>
         ))}

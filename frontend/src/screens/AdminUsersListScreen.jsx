@@ -46,7 +46,7 @@ const AdminUsersListScreen = () => {
     } else {
       navigate('/login')
     }
-  }, [dispatch, navigate, userInfo, keyword])
+  }, [dispatch, navigate, userInfo, keyword, successDelete])
 
   return <>
     <h1>Users</h1>

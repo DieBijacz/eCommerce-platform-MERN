@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Row, Col } from 'react-bootstrap'
+import { Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllOrders } from '../actions/orderActions.js'
 import Card from '../components/Card';

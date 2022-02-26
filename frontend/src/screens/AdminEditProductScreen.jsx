@@ -5,7 +5,7 @@ import { Row, Col, Image, Form, Button, FormGroup, FormLabel, FormControl} from 
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { getProductDetails, updateProduct } from '../actions/productActions';
+import { deleteProduct, getProductDetails, updateProduct } from '../actions/productActions';
 import { PRODUCT_UPDATE_RESET } from '../constants/productConstants';
 
 const AdminEditProductScreen = () => {
@@ -34,6 +34,10 @@ const AdminEditProductScreen = () => {
   const productDetails = useSelector(state => state.productDetails)
   const {loading: loadingProduct, error: errorProduct, product} = productDetails
 
+  // get productDelete
+  const productDelete = useSelector(state => state.productDelete)
+  const { loading: loadingDelete, success: successDelete, error:errorDelete } = productDelete
+
   // get from state updated product
   const productUpdate = useSelector(state => state.productUpdate)
   const {loading: loadingUpdateProduct, error: errorUpdateProduct, success: successUpdate} = productUpdate
@@ -41,6 +45,8 @@ const AdminEditProductScreen = () => {
   useEffect(() => {
     // if user is not admin redirect to home page
     (!userInfo || !userInfo.isAdmin) && navigate('/')
+
+    successDelete && navigate('/admin/products')
 
     if (!product.name || product._id !== productId) {
       dispatch(getProductDetails(productId))
@@ -64,7 +70,7 @@ const AdminEditProductScreen = () => {
       setShowUpdateMessage(false)
     }, 3000);
 
-  }, [dispatch, navigate, userInfo, productId, product, successUpdate, showUpdateMessage])
+  }, [dispatch, navigate, userInfo, productId, product, successUpdate, showUpdateMessage, successDelete])
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -105,65 +111,75 @@ const AdminEditProductScreen = () => {
     }
   }
 
+  // Delete product
+  const deleteHandler = (id) => {
+    window.confirm('Are you sure you want to delete this product?') && dispatch(deleteProduct(id))
+  }
+
   return (
     <>
       <Link to='/admin/products' className='btn btn-primary my-3'>Go Back</Link>
       {showUpdateMessage && <Message variant='success'>Product Updated</Message>}
-      <Row>
-        <Col md={5}>
-          <Image src={product.image} alt={product.name} fluid />
-          <h3 style={{color:'red'}}>to do: add rating here</h3>
-        </Col>
-        <Col md={7}>
-          <h1>Edit Product:</h1>
-          <h4 style={{color: 'grey'}}>{product._id}</h4>
+      {loadingDelete ? <Loader /> : errorDelete ? <Message variant='danger'>{errorDelete}</Message> : (
+        <Row>
+          <Col md={5}>
+            <Image src={product.image} alt={product.name} fluid />
+            <h3 style={{color:'red'}}>to do: add rating here</h3>
+          </Col>
+          <Col md={7}>
+            <h1>Edit Product:</h1>
+            <h4 style={{color: 'grey'}}>{product._id}</h4>
 
-          {(loadingProduct || loadingUpdateProduct) ? <Loader /> : (errorProduct || errorUpdateProduct) ? <Message variant='danger'>{errorProduct ?? errorUpdateProduct}</Message> : (
-            <Form onSubmit={submitHandler}>
-            
-            <FormGroup className='my-3' controlId='name'>
-              <FormLabel>Username</FormLabel>
-              <FormControl type='text' placeholder='Enter username' value={name} onChange={(e)=> setName(e.target.value)}></FormControl>
-            </FormGroup>
+            {(loadingProduct || loadingUpdateProduct) ? <Loader /> : (errorProduct || errorUpdateProduct) ? <Message variant='danger'>{errorProduct ?? errorUpdateProduct}</Message> : (
+              <Form onSubmit={submitHandler}>
+              
+              <FormGroup className='my-3' controlId='name'>
+                <FormLabel>Username</FormLabel>
+                <FormControl type='text' placeholder='Enter username' value={name} onChange={(e)=> setName(e.target.value)}></FormControl>
+              </FormGroup>
 
-            <FormGroup className='my-3' controlId='price'>
-              <FormLabel>Price</FormLabel>
-              <FormControl type='number' value={price} onChange={(e)=> setPrice(e.target.value)}></FormControl>
-            </FormGroup>
+              <FormGroup className='my-3' controlId='price'>
+                <FormLabel>Price</FormLabel>
+                <FormControl type='number' value={price} onChange={(e)=> setPrice(e.target.value)}></FormControl>
+              </FormGroup>
 
-            <FormGroup className='my-3'>
-              <FormLabel>Images</FormLabel>
-              <FormControl type='text' placeholder='Image URL' value={image} onChange={(e)=> setImage(e.target.value)}></FormControl>
-              <FormControl type='file' id='image-file' formlabel='Choose files' onChange={uploadFileHandler} />
-              {uploading && <Loader />}
-            </FormGroup>
+              <FormGroup className='my-3'>
+                <FormLabel>Images</FormLabel>
+                <FormControl type='text' placeholder='Image URL' value={image} onChange={(e)=> setImage(e.target.value)}></FormControl>
+                <FormControl type='file' id='image-file' formlabel='Choose files' onChange={uploadFileHandler} />
+                {uploading && <Loader />}
+              </FormGroup>
 
-            <FormGroup className='my-3' controlId='brand'>
-              <FormLabel>Brand</FormLabel>
-              <FormControl type='text' placeholder='Brand' value={brand} onChange={(e)=> setBrand(e.target.value)}></FormControl>
-            </FormGroup>
+              <FormGroup className='my-3' controlId='brand'>
+                <FormLabel>Brand</FormLabel>
+                <FormControl type='text' placeholder='Brand' value={brand} onChange={(e)=> setBrand(e.target.value)}></FormControl>
+              </FormGroup>
 
-            <FormGroup className='my-3' controlId='category'>
-              <FormLabel>Category</FormLabel>
-              <FormControl type='text' placeholder='Category' value={category} onChange={(e)=> setCategory(e.target.value)}></FormControl>
-            </FormGroup>
+              <FormGroup className='my-3' controlId='category'>
+                <FormLabel>Category</FormLabel>
+                <FormControl type='text' placeholder='Category' value={category} onChange={(e)=> setCategory(e.target.value)}></FormControl>
+              </FormGroup>
 
-            <FormGroup className='my-3' controlId='countInStock'>
-              <FormLabel>Count in stock</FormLabel>
-              <FormControl type='number' value={countInStock} onChange={(e)=> setCountInStock(e.target.value)}></FormControl>
-            </FormGroup>
+              <FormGroup className='my-3' controlId='countInStock'>
+                <FormLabel>Count in stock</FormLabel>
+                <FormControl type='number' value={countInStock} onChange={(e)=> setCountInStock(e.target.value)}></FormControl>
+              </FormGroup>
 
-            <FormGroup className='my-3' controlId='description'>
-              <FormLabel>Description</FormLabel>
-              <FormControl type='text' placeholder='Description' value={description} onChange={(e)=> setDescription(e.target.value)}></FormControl>
-            </FormGroup>
+              <FormGroup className='my-3' controlId='description'>
+                <FormLabel>Description</FormLabel>
+                <FormControl type='text' placeholder='Description' value={description} onChange={(e)=> setDescription(e.target.value)}></FormControl>
+              </FormGroup>
 
-            <Button type='submit' variant='primary'>Update Product</Button>
+              <Button type='submit' variant='primary'>Update Product</Button>
+              <Button variant='light' onClick={() => deleteHandler(product._id)}>
+                Delete Product
+              </Button>
 
-            </Form>
-          )}
-        </Col>
-      </Row>
+              </Form>
+            )}
+          </Col>
+        </Row>
+      )}
     </>
   );
 };

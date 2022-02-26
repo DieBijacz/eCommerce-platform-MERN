@@ -6,9 +6,8 @@ import Card from '../components/Card';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { deleteUser, getUserDetails, updateUserAsAdmin } from '../actions/userActions.js'
-import FormContainer from '../components/FormContainer.js'
 import { USER_UPDATE_ASADMIN_RESET } from '../constants/userConstants';
-import { getMyOrders, getUserOrders } from '../actions/orderActions';
+import { getUserOrders } from '../actions/orderActions';
 
 const AdminEditUserScreen = () => {
   const [email, setEmail] = useState('')

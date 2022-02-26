@@ -1,17 +1,22 @@
 import React, {useEffect, useState} from 'react';
 import { LinkContainer } from 'react-router-bootstrap'
-import { useNavigate } from 'react-router-dom';
-import { Table, Button, Row, Col } from 'react-bootstrap'
+import { useNavigate, useParams } from 'react-router-dom';
+import { Table, Button, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { createProduct, deleteProduct, listProducts } from '../actions/productActions.js'
+import { createProduct, listProducts } from '../actions/productActions.js'
 import { PRODUCT_CREATE_RESET, PRODUCT_DELETE_RESET } from '../constants/productConstants';
+import SearchBar from '../components/SearchBar';
 
 const AdminProductListScreen = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const params = useParams()
   const [showDeleteMessage, setShowDeleteMessage] = useState(false)
+    
+  // get keyword from URL
+  const keyword = params.keyword
 
   // get products from store
   const productList = useSelector(state => state.productList)
@@ -35,7 +40,7 @@ const AdminProductListScreen = () => {
       navigate('/login')
     }
     
-    successCreate ? navigate(`/admin/edit/product/${createdProduct._id}`) : dispatch(listProducts())
+    successCreate ? navigate(`/admin/edit/product/${createdProduct._id}`) : dispatch(listProducts(keyword))
 
     // show delete message and reset state
     if(successDelete) {
@@ -46,7 +51,7 @@ const AdminProductListScreen = () => {
       }, 3000)
     }
     
-  }, [navigate, userInfo, dispatch, successCreate, createdProduct, productDelete, successDelete])
+  }, [navigate, userInfo, dispatch, successCreate, createdProduct, productDelete, successDelete, keyword])
   
   // Create new product
   const createProductHandler = () => {
@@ -54,13 +59,12 @@ const AdminProductListScreen = () => {
   }
 
   return <>
-    <Row className='my-3'>
-      <Col>
+    <Row>
+      <div className='d-flex justify-content-between'>
         <h1>Products</h1>
-      </Col>
-      <Col className='d-flex justify-content-md-end'>
-        <Button className='my-3' onClick={createProductHandler}><i className='fas fa-plus'></i> Add Product</Button>
-      </Col>
+        <Button variant='light' className='btn' onClick={createProductHandler}><i className='fas fa-plus'></i> Add New Product</Button>
+      </div>
+        <SearchBar params={'/admin/products'}/>
     </Row>
     {showDeleteMessage && <Message variant='success'>Product deleted</Message>}
     {loading || loadingCreate || loadingDelete ? <Loader /> : error || errorCreate || errorDelete ? <Message variant='danger'>{error ?? errorCreate ?? errorDelete}</Message> : (

@@ -25,6 +25,7 @@ import {
   PRODUCT_UPDATE_REVIEW_SUCCESS,
   PRODUCT_UPDATE_REVIEW_FAIL,
   PRODUCT_UPDATE_REVIEW_RESET,
+  PRODUCT_DETAILS_RESET,
 } from '../constants/productConstants'
 // reducer takes 2 parameters
 // initial state

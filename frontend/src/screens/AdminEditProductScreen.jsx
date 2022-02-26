@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { deleteProduct, getProductDetails, updateProduct } from '../actions/productActions';
-import { PRODUCT_UPDATE_RESET } from '../constants/productConstants';
+import { PRODUCT_DETAILS_RESET, PRODUCT_UPDATE_RESET } from '../constants/productConstants';
 
 const AdminEditProductScreen = () => {
   const dispatch = useDispatch()
@@ -53,7 +53,6 @@ const AdminEditProductScreen = () => {
     }
 
     if (successUpdate) {
-      dispatch({ type: PRODUCT_UPDATE_RESET })
       dispatch(getProductDetails(productId))
       setShowUpdateMessage(true)
     }  

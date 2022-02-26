@@ -286,10 +286,8 @@ export const updateUserAsAdmin = (user) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     }
-    console.log(user)
 
     const { data } = await axios.put(`/api/users/${user._id}`, user, config)
-    console.log(data)
 
     dispatch({ type: USER_UPDATE_ASADMIN_SUCCESS })
     dispatch({ type: USER_DETAILS_SUCCESS, payload: data })

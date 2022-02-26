@@ -26,11 +26,16 @@ const App = () => {
         <Container>
           <Routes>
             <Route path='/' element={<HomeScreen />} />
+            <Route path='/page/:pageNumber' element={<HomeScreen />} />
+            <Route path='/search/:keyword' element={<HomeScreen />} />
+            <Route
+              path='/search/:keyword/page/:pageNumber'
+              element={<HomeScreen />}
+            />
             <Route path='/product/:id' element={<ProductScreen />} />
             <Route path='/login' element={<LoginScreen />} />
             <Route path='/profile' element={<ProfileScreen />} />
             <Route path='/register' element={<RegisterScreen />} />
-            <Route path='/search/:keyword' element={<HomeScreen />} />
             <Route path='/cart'>
               <Route path=':id' element={<CartScreen />} />
               <Route path='' element={<CartScreen />} />
@@ -47,7 +52,15 @@ const App = () => {
               />
               <Route path='products' element={<AdminProductListScreen />} />
               <Route
+                path='products/page/:pageNumber'
+                element={<AdminProductListScreen />}
+              />
+              <Route
                 path='products/search/:keyword'
+                element={<AdminProductListScreen />}
+              />
+              <Route
+                path='products/search/:keyword/page/:pageNumber'
                 element={<AdminProductListScreen />}
               />
               <Route path='orders' element={<AdminOrdersListScreen />} />

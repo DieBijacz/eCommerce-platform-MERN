@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { deleteProduct, getProductDetails, updateProduct } from '../actions/productActions';
-import { PRODUCT_DETAILS_RESET, PRODUCT_UPDATE_RESET } from '../constants/productConstants';
 
 const AdminEditProductScreen = () => {
   const dispatch = useDispatch()
@@ -133,35 +132,35 @@ const AdminEditProductScreen = () => {
               <Form onSubmit={submitHandler}>
               
               <FormGroup className='my-3' controlId='name'>
-                <FormLabel>Username</FormLabel>
+                <FormLabel>Product name:</FormLabel>
                 <FormControl type='text' placeholder='Enter username' value={name} onChange={(e)=> setName(e.target.value)}></FormControl>
               </FormGroup>
 
               <FormGroup className='my-3' controlId='price'>
-                <FormLabel>Price</FormLabel>
+                <FormLabel>Price:</FormLabel>
                 <FormControl type='number' value={price} onChange={(e)=> setPrice(e.target.value)}></FormControl>
               </FormGroup>
 
               <FormGroup className='my-3'>
-                <FormLabel>Images</FormLabel>
+                <FormLabel>Images:</FormLabel>
                 <FormControl type='text' placeholder='Image URL' value={image} onChange={(e)=> setImage(e.target.value)}></FormControl>
                 <FormControl type='file' id='image-file' formlabel='Choose files' onChange={uploadFileHandler} />
                 {uploading && <Loader />}
               </FormGroup>
 
               <FormGroup className='my-3' controlId='brand'>
-                <FormLabel>Brand</FormLabel>
+                <FormLabel>Brand:</FormLabel>
                 <FormControl type='text' placeholder='Brand' value={brand} onChange={(e)=> setBrand(e.target.value)}></FormControl>
               </FormGroup>
 
               <FormGroup className='my-3' controlId='category'>
-                <FormLabel>Category</FormLabel>
+                <FormLabel>Category:</FormLabel>
                 <FormControl type='text' placeholder='Category' value={category} onChange={(e)=> setCategory(e.target.value)}></FormControl>
               </FormGroup>
 
               <FormGroup className='my-3' controlId='countInStock'>
-                <FormLabel>Count in stock</FormLabel>
-                <FormControl type='number' value={countInStock} onChange={(e)=> setCountInStock(e.target.value)}></FormControl>
+                <FormLabel>Count in stock:</FormLabel>
+                <FormControl type='number' value={countInStock} onChange={(e)=> e.target.value > 0 ? setCountInStock(e.target.value) : setCountInStock(0)}></FormControl>
               </FormGroup>
 
               <FormGroup className='my-3' controlId='description'>

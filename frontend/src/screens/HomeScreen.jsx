@@ -7,34 +7,39 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import SearchBar from '../components/SearchBar.jsx'
 import { useParams } from 'react-router-dom'
+import Paginate from '../components/Paginate'
 
 const HomeScreen = () => {
   const dispatch = useDispatch()
   const params = useParams()
 
-  // get keyword from URL
+  // get keyword and pageNumber from URL
   const keyword = params.keyword
+  const pageNumber = params.pageNumber || 1
 
   const productList = useSelector(state => state.productList)
   // return { loading: false, products: action.payload } from productReducers.js
-  const {loading, error, products} = productList
+  const {loading, error, products, page, pages} = productList
 
   useEffect(() => {
-    dispatch(listProducts(keyword))
-  }, [dispatch, keyword])
+    dispatch(listProducts(keyword, pageNumber))
+  }, [dispatch, keyword, pageNumber])
 
   return (
     <>
      <h1>Latest Products</h1> 
      <SearchBar />
      {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
-        <Row>
-          {products.map(product => (
-            <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-              <Product product={product}/>
-            </Col>
-          ))}
-        </Row>
+        <>
+          <Row>
+            {products.map(product => (
+              <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                <Product product={product}/>
+              </Col>
+            ))}
+          </Row>
+          <Paginate pages={pages} page={page} keyword={keyword ? keyword : ''}/>
+        </>
      )
      }
     </>

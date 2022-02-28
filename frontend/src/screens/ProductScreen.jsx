@@ -39,7 +39,7 @@ const ProductScreen = () => {
     !userInfo && navigate('/login')
 
     // if there is no product in store => fetch it from db and set in state
-    if(!product._id || successCreateProductReview || successUpdatedProductReview) {
+    if(!product._id || product._id !== params.id || successCreateProductReview || successUpdatedProductReview) {
       dispatch(getProductDetails(params.id))
     }
 

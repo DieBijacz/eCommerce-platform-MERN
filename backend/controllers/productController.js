@@ -195,3 +195,16 @@ export const updateReview = asyncHandler(async (req, res) => {
     throw new Error('Could not find the product')
   }
 })
+
+// @desc    Get topp rated product
+// @route   GET api/products/top
+// @access  Public
+export const getTopProducts = asyncHandler(async (req, res) => {
+  const products = await Product.find({}).sort({ rating: -1 }).limit(3)
+  if (products) {
+    res.json(products)
+  } else {
+    res.status(401)
+    throw new Error('Could not find the products')
+  }
+})

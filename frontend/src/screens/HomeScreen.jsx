@@ -8,6 +8,7 @@ import Loader from '../components/Loader'
 import SearchBar from '../components/SearchBar.jsx'
 import { useParams } from 'react-router-dom'
 import Paginate from '../components/Paginate'
+import ProductCarousel from '../components/ProductCarousel'
 
 const HomeScreen = () => {
   const dispatch = useDispatch()
@@ -27,8 +28,9 @@ const HomeScreen = () => {
 
   return (
     <>
-     <h1>Latest Products</h1> 
      <SearchBar />
+     {!keyword && <ProductCarousel />}
+     <h1>Latest Products</h1> 
      {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
         <>
           <Row>

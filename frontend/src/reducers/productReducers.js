@@ -25,6 +25,9 @@ import {
   PRODUCT_UPDATE_REVIEW_SUCCESS,
   PRODUCT_UPDATE_REVIEW_FAIL,
   PRODUCT_UPDATE_REVIEW_RESET,
+  PRODUCT_TOP_REQUEST,
+  PRODUCT_TOP_FAIL,
+  PRODUCT_TOP_SUCCESS,
 } from '../constants/productConstants'
 
 // reducer takes 2 parameters
@@ -137,6 +140,19 @@ export const updateReviewReducer = (state = {}, action) => {
       return { loading: false, error: action.payload }
     case PRODUCT_UPDATE_REVIEW_RESET:
       return {}
+    default:
+      return state
+  }
+}
+
+export const topProductsReducer = (state = { products: [] }, action) => {
+  switch (action.type) {
+    case PRODUCT_TOP_REQUEST:
+      return { loading: true, products: [] }
+    case PRODUCT_TOP_SUCCESS:
+      return { loading: false, products: action.payload }
+    case PRODUCT_TOP_FAIL:
+      return { loading: false, error: action.payload }
     default:
       return state
   }

@@ -68,7 +68,9 @@ export const login = (email, password) => async (dispatch) => {
   }
 }
 
+// ======================== LOGIN ========================
 // ======================== LOGOUT ========================
+
 export const logout = () => (dispatch) => {
   // remove from LS
   localStorage.removeItem('userInfo')
@@ -80,7 +82,9 @@ export const logout = () => (dispatch) => {
   dispatch({ type: USERS_LIST_RESET })
 }
 
+// ======================== LOGOUT ========================
 // ======================== REGISTER ========================
+
 export const register = (name, email, password) => async (dispatch) => {
   try {
     dispatch({
@@ -123,6 +127,7 @@ export const register = (name, email, password) => async (dispatch) => {
   }
 }
 
+// ======================== REGISTER ========================
 // ========================= GET USER DETAILS =========================
 
 export const getUserDetails = (id) => async (dispatch, getState) => {
@@ -164,6 +169,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
   }
 }
 
+// ========================= GET USER DETAILS =========================
 // ====================== UPDATE USER PROFILE ======================
 
 export const updateUserProfile = (user) => async (dispatch, getState) => {
@@ -192,6 +198,13 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
       type: USER_UPDATE_PROFILE_SUCCESS,
       payload: data,
     })
+
+    dispatch({
+      type: USER_LOGIN_SUCCESS,
+      payload: data,
+    })
+
+    localStorage.setItem('userInfo', JSON.stringify(data))
   } catch (error) {
     dispatch({
       type: USER_DETAILS_FAIL,
@@ -203,7 +216,9 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
   }
 }
 
+// ====================== UPDATE USER PROFILE ======================
 // ====================== DELETE USER ============================
+
 export const deleteUser = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: USER_DELETE_REQUEST })
@@ -232,7 +247,9 @@ export const deleteUser = (id) => async (dispatch, getState) => {
   }
 }
 
+// ====================== DELETE USER ============================
 // ====================== GET ALL USERS LIST ======================
+
 export const listUsers =
   (keyword = '') =>
   async (dispatch, getState) => {
@@ -268,7 +285,9 @@ export const listUsers =
     }
   }
 
+// ====================== GET ALL USERS LIST ======================
 // ====================== UPDATE USER AS ADMIN ======================
+
 export const updateUserAsAdmin = (user) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -301,3 +320,5 @@ export const updateUserAsAdmin = (user) => async (dispatch, getState) => {
     })
   }
 }
+
+// ====================== UPDATE USER AS ADMIN ======================

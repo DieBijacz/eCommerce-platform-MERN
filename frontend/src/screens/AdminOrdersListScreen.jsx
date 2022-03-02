@@ -6,6 +6,7 @@ import { getAllOrders } from '../actions/orderActions.js'
 import Card from '../components/Card';
 import Loader from '../components/Loader.js';
 import Message from '../components/Message.js';
+import Meta from '../components/Meta.js';
 
 const AdminOrdersListScreen = () => {
   const dispatch = useDispatch()
@@ -30,6 +31,7 @@ const AdminOrdersListScreen = () => {
   }, [navigate, dispatch, userInfo])
   
   return <>
+    <Meta title={'Admin Orders Control Panel'} />
     <Row className='my-3'>
       <h1>Orders:</h1>
       {loadingAllOrders ? <Loader /> : errorLoadingOrders ? <Message variant='danger'>{errorLoadingOrders}</Message> : 

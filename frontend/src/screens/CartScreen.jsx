@@ -4,10 +4,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col, ListGroup, Image, Form, Button , Card, ListGroupItem } from 'react-bootstrap'
 import Message from '../components/Message'
 import { addToCart, removeFromCart } from '../actions/cartActions'
+import Meta from '../components/Meta';
 
 const CartScreen = () => {
   const params = useParams()
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -38,7 +39,8 @@ const CartScreen = () => {
     userInfo ? navigate('/shipping') : navigate('/login')
   }
 
-  return (
+  return <>
+    <Meta title={'Cart'} />
     <Row>
       <Col md={8}>
         <h1>Shopping Cart</h1>
@@ -89,7 +91,7 @@ const CartScreen = () => {
         </Card>
       </Col>
     </Row>
-  )
+  </>
 };
 
 export default CartScreen;

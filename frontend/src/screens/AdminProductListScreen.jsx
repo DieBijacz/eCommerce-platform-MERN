@@ -9,6 +9,7 @@ import { createProduct, listProducts } from '../actions/productActions.js'
 import { PRODUCT_CREATE_RESET, PRODUCT_DELETE_RESET } from '../constants/productConstants';
 import SearchBar from '../components/SearchBar';
 import Paginate from '../components/Paginate';
+import Meta from '../components/Meta';
 
 const AdminProductListScreen = () => {
   const dispatch = useDispatch()
@@ -61,6 +62,7 @@ const AdminProductListScreen = () => {
   }
 
   return <>
+    <Meta title={'Admin Products Control Panel'} />
     <Row>
       <div className='d-flex justify-content-between'>
         <h1>Products</h1>

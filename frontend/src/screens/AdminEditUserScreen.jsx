@@ -8,6 +8,7 @@ import Loader from '../components/Loader';
 import { deleteUser, getUserDetails, updateUserAsAdmin } from '../actions/userActions.js'
 import { USER_UPDATE_ASADMIN_RESET } from '../constants/userConstants';
 import { getUserOrders } from '../actions/orderActions';
+import Meta from '../components/Meta';
 
 const AdminEditUserScreen = () => {
   const [email, setEmail] = useState('')
@@ -73,6 +74,7 @@ const AdminEditUserScreen = () => {
 
   return (
     <>
+      <Meta title={'Admin User Edit Panel'} />
       <Link to='/admin/users' className='btn btn-primary my-3'>Go Back</Link>
       <Row>
         <Col lg={4} className='mb-4'>

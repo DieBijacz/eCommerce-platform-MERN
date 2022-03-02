@@ -6,6 +6,7 @@ import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { register } from '../actions/userActions.js'
 import FormContainer from '../components/FormContainer.js'
+import Meta from '../components/Meta';
 
 const RegisterScreen = () => {
   const [email, setEmail] = useState('')
@@ -41,7 +42,8 @@ const RegisterScreen = () => {
     }
   }
 
-  return (
+  return <>
+    <Meta title={'Register'} />
     <FormContainer>
       <h1>Register</h1>
       {/* Check if error comes from userLogin from store*/}
@@ -83,7 +85,7 @@ const RegisterScreen = () => {
         </>
       )}
     </FormContainer>
-  );
+  </>
 };
 
 export default RegisterScreen;

@@ -1,6 +1,11 @@
 :root {
   --main: #ffae00;
 }
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
 
 main {
   min-height: 80vh;
@@ -20,6 +25,25 @@ h3 {
 .outOfStockImageCover {
   opacity: 0.5;
 }
+
+.four-icons i {
+  color: var(--main);
+  font-size: 1.8rem;
+  margin-right: 10px;
+}
+.four-icons p {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.product-component-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* ============================================ BUTTON  ============================================ */
 .btn {
   position: relative;
   transition: 0.4s ease-in;
@@ -39,7 +63,14 @@ h3 {
   color: var(--main);
 }
 
-/* carousel */
+/* ============================================ BUTTON  ============================================ */
+/*============================================ CAROUSEL ============================================ */
+.carousel {
+  width: 500px;
+  border-radius: 50px;
+  overflow: hidden;
+}
+
 .carousel-item-next,
 .carousel-item-prev,
 .carousel-item.active {
@@ -48,25 +79,38 @@ h3 {
 .carousel-caption {
   position: absolute;
   top: 0;
+  bottom: auto;
+  border-radius: 30px;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
-.carousel-caption h2 {
-  color: #fff;
+.carousel-caption h4 {
+  color: rgb(255, 255, 255);
+  padding: 0 10px;
+  font-size: 1rem;
 }
 
 .carousel img {
+  width: 100%;
   height: 300px;
-  padding: 30px;
-  margin: 40px;
-  border-radius: 50%;
-  margin-left: auto;
-  margin-right: auto;
+  object-fit: cover;
 }
-.carousel a {
-  margin: 0 auto;
+
+.carousel-inner a {
+  width: 100%;
 }
+
 @media (max-width: 900px) {
   .carousel-caption h2 {
     font-size: 2.5vw;
+  }
+  .product-component-image {
+    height: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .product-component-image {
+    height: 400px;
   }
 }

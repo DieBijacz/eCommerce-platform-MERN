@@ -6,6 +6,7 @@ import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { login } from '../actions/userActions.js'
 import FormContainer from '../components/FormContainer.js'
+import Meta from '../components/Meta';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('')
@@ -35,7 +36,8 @@ const LoginScreen = () => {
     dispatch(login(email, password))
   }
 
-  return (
+  return <>
+    <Meta title={'Login'} />
     <FormContainer>
       <h1>Sign In</h1>
       {/* Check if error comes from userLogin from store*/}
@@ -66,7 +68,7 @@ const LoginScreen = () => {
         </>
       )}
     </FormContainer>
-  );
+  </>
 };
 
 export default LoginScreen;

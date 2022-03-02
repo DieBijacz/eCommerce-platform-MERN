@@ -6,6 +6,7 @@ import CheckoutSteps from '../components/CheckoutSteps.js';
 import Message from '../components/Message.js'
 import { createOrder } from '../actions/orderActions.js'
 import { CART_RESET } from '../constants/cartConstants.js';
+import Meta from '../components/Meta.js';
 
 const PlaceOrderScreen = () => {
   const dispatch = useDispatch()
@@ -44,10 +45,11 @@ const PlaceOrderScreen = () => {
       navigate(`/orders/${order._id}`)
       dispatch({type: CART_RESET})
     }
-  },[success, navigate, order])
+  },[dispatch, success, navigate, order])
 
   return (
     <>
+      <Meta title={'Order Summary'} />
       <CheckoutSteps step1 step2 step3 step4 />
       {error && <Message variant='danger'>{error}</Message>}
       <Row>

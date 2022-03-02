@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import FormContainer from '../components/FormContainer.js'
 import { savePaymentMethod } from '../actions/cartActions.js'
 import CheckoutSteps from '../components/CheckoutSteps.js';
+import Meta from '../components/Meta.js'
 
 const PaymentScreen = () => {
   const navigate = useNavigate()
@@ -29,6 +30,7 @@ const PaymentScreen = () => {
 
   return (
     <>
+      <Meta title={'Payment Method'} />
       <CheckoutSteps step1 step2 step3 />
       <FormContainer>
         <h1 className='my-5'>Payment Method</h1>
@@ -41,7 +43,7 @@ const PaymentScreen = () => {
             </Col>
           </FormGroup>
 
-          <Button disabled={paymentMethod == ''} className='my-3' type='submit'>Countinue</Button>
+          <Button disabled={paymentMethod === ''} className='my-3' type='submit'>Countinue</Button>
 
         </Form>
       </FormContainer>

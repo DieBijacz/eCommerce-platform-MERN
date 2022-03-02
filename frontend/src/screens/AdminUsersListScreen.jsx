@@ -9,6 +9,7 @@ import { listUsers } from '../actions/userActions.js'
 import SearchBar from '../components/SearchBar';
 import { USER_DELETE_RESET } from '../constants/userConstants';
 import { useState } from 'react';
+import Meta from '../components/Meta';
 
 const AdminUsersListScreen = () => {
   const [showSuccessDeleteMessage, setShowSuccessDeleteMessage] = useState(false)
@@ -49,9 +50,10 @@ const AdminUsersListScreen = () => {
   }, [dispatch, navigate, userInfo, keyword, successDelete])
 
   return <>
+    <Meta title={'Admin Users Control Panel'} />
     <h1>Users</h1>
     {showSuccessDeleteMessage && <Message variant='success'>User removed</Message>}
-    {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
+    {loading ? <Loader /> : (error || errorUserDelete) ? <Message variant='danger'>{error ?? errorUserDelete}</Message> : (
       <>
         <Row>
           <Col>

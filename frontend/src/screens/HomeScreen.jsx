@@ -9,6 +9,8 @@ import SearchBar from '../components/SearchBar.jsx'
 import { useParams } from 'react-router-dom'
 import Paginate from '../components/Paginate'
 import ProductCarousel from '../components/ProductCarousel'
+import Meta from '../components/Meta'
+import FourIcon from '../components/FourIcon.jsx'
 
 const HomeScreen = () => {
   const dispatch = useDispatch()
@@ -28,22 +30,24 @@ const HomeScreen = () => {
 
   return (
     <>
-     <SearchBar />
-     {!keyword && <ProductCarousel />}
-     <h1>Latest Products</h1> 
-     {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
-        <>
-          <Row>
-            {products.map(product => (
-              <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-                <Product product={product}/>
-              </Col>
-            ))}
-          </Row>
-          <Paginate pages={pages} page={page} keyword={keyword ? keyword : ''}/>
-        </>
-     )
-     }
+      <Meta title={'Home Page'} />
+      <SearchBar />
+      <FourIcon />
+      {!keyword && <ProductCarousel />}
+      <h1>Latest Products</h1> 
+      {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
+          <>
+            <Row>
+              {products.map(product => (
+                <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                  <Product product={product}/>
+                </Col>
+              ))}
+            </Row>
+            <Paginate pages={pages} page={page} keyword={keyword ? keyword : ''}/>
+          </>
+      )
+      }
     </>
   )
 }

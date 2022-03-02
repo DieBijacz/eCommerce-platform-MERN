@@ -8,13 +8,14 @@ import { getUserDetails, updateUserProfile } from '../actions/userActions.js'
 import { getMyOrders } from '../actions/orderActions';
 import Card from '../components/Card';
 import { USER_DETAILS_RESET, USER_UPDATE_PROFILE_RESET } from '../constants/userConstants';
+import Meta from '../components/Meta';
 
 const ProfileScreen = () => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [messageUpdatedProfile, setMessageUpdatedProfile] = useState(null)
+  const [messageUpdatedProfile, setMessageUpdatedProfile] = useState('')
   const [formChanged, setFormChanged] = useState(false)
 
   const dispatch = useDispatch()
@@ -29,7 +30,7 @@ const ProfileScreen = () => {
   const {userInfo} = userLogin
 
   const userUpdateProfile = useSelector(state => state.userUpdateProfile)
-  const { success } = userUpdateProfile
+  const { success: successUpdateProfile } = userUpdateProfile
 
   const orderMyList = useSelector(state => state.orderMyList)
   const { loading: loadingOrders, error: errorOrders, orders } = orderMyList
@@ -40,7 +41,8 @@ const ProfileScreen = () => {
     if(!userInfo) {
       navigate('/login')
     } else {
-      if(!user.name) {
+      if(!user.name || successUpdateProfile) {
+        dispatch({type: USER_UPDATE_PROFILE_RESET})
         // get user details and orders
         dispatch(getUserDetails('profile'))
         dispatch(getMyOrders())
@@ -50,11 +52,10 @@ const ProfileScreen = () => {
         setEmail(user.email)
       }
 
-      if (success) {
+      if (successUpdateProfile) {
         setMessageUpdatedProfile('Profile Updated')
-        dispatch({type: USER_UPDATE_PROFILE_RESET})
         setTimeout(() => {
-          setMessageUpdatedProfile(null)
+          setMessageUpdatedProfile('')
         }, 2000);
       }
     }
@@ -65,7 +66,7 @@ const ProfileScreen = () => {
       setFormChanged(false)
     }
 
-  }, [dispatch, userInfo, user, messageUpdatedProfile, navigate, success, password, confirmPassword])
+  }, [dispatch, userInfo, user, messageUpdatedProfile, navigate, successUpdateProfile, password, confirmPassword])
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -76,6 +77,7 @@ const ProfileScreen = () => {
     }
   
   return <>
+      <Meta title={'Profile'} />
       <Row>
         <Col lg={4} className='mb-4'>
         <h2>User Profile</h2>

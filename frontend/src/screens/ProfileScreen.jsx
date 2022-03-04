@@ -78,7 +78,7 @@ const ProfileScreen = () => {
   
   return <>
       <Meta title={'Profile'} />
-      <Row>
+      <Row className='mt-5'>
         <Col lg={4} className='mb-4'>
         <h2>User Profile</h2>
           {error && <Message variant='danger'>{error}</Message>}

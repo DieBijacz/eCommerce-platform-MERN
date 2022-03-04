@@ -63,9 +63,9 @@ const AdminProductListScreen = () => {
 
   return <>
     <Meta title={'Admin Products Control Panel'} />
-    <Row>
+    <Row className='mt-5'>
       <div className='d-flex justify-content-between'>
-        <h1>Products</h1>
+        <h2>Products</h2>
         <Button variant='light' className='btn' onClick={createProductHandler}><i className='fas fa-plus'></i> Add New Product</Button>
       </div>
       <Row>

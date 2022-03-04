@@ -51,11 +51,11 @@ const AdminUsersListScreen = () => {
 
   return <>
     <Meta title={'Admin Users Control Panel'} />
-    <h1>Users</h1>
     {showSuccessDeleteMessage && <Message variant='success'>User removed</Message>}
     {loading ? <Loader /> : (error || errorUserDelete) ? <Message variant='danger'>{error ?? errorUserDelete}</Message> : (
       <>
-        <Row>
+        <Row className='mt-5'>
+          <h1>Users</h1>
           <Col>
             <SearchBar params={'/admin/users'}/>
           </Col>

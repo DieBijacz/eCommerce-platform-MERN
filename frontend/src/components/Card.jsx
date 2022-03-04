@@ -9,22 +9,22 @@ const Card = ({order}) => {
   return (
     <Container>
       <Row className='justify-content-md-center border my-3 p-3 shadow'>
-        <Col md={3}>
+        {/* <Col md={3}>
           <Row>
             <div style={{width: '100%'}}>
               <Image src={order.orderItems[0].image} alt={order.orderItems[0].name} fluid />
             </div>
           </Row>
           <Row>
-            {/* <div className='d-flex' style={{width: '100px'}}>
+            <div className='d-flex' style={{width: '100px'}}>
               <Image src={order.orderItems[0].image} alt={order.orderItems[0].name} fluid />
               <Image src={order.orderItems[0].image} alt={order.orderItems[0].name} fluid />
-            </div> */}
+            </div>
           </Row>
-        </Col>
-        <Col md={9}>
-          <div className='d-flex justify-content-between align-items-center'>
-            <h4>Order: {order._id}</h4>
+        </Col> */}
+        <Col>
+          <div className='d-flex justify-content-center align-items-center'>
+            <h5 className='text-center'>{order._id}</h5>
             {/* <button className='btn-copy-clipboard' onClick={() => navigator.clipboard.writeText(order._id)}><i className="fa-regular fa-copy"></i></button> */}
           </div>
             <hr/>

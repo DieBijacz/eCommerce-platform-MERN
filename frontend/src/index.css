@@ -18,12 +18,31 @@ h3 {
   padding: 1rem 0;
 }
 
+p,
+h4,
+h5 {
+  margin: 0;
+}
+
 .order-details-button:hover {
   text-decoration: underline;
 }
 
 .outOfStockImageCover {
   opacity: 0.5;
+}
+
+.hero {
+  display: flex;
+  justify-content: center;
+  height: 90vh;
+}
+
+.hero img {
+  position: absolute;
+  max-width: 1920px;
+  height: 90vh;
+  object-fit: cover;
 }
 
 .four-icons i {
@@ -67,7 +86,7 @@ h3 {
 /*============================================ CAROUSEL ============================================ */
 .carousel {
   width: 500px;
-  border-radius: 50px;
+  border-radius: 10px;
   overflow: hidden;
 }
 
@@ -78,7 +97,8 @@ h3 {
 }
 .carousel-caption {
   position: absolute;
-  top: 0;
+  padding: 10px;
+  top: 10px;
   bottom: auto;
   border-radius: 30px;
   background-color: rgba(0, 0, 0, 0.4);
@@ -86,8 +106,9 @@ h3 {
 
 .carousel-caption h4 {
   color: rgb(255, 255, 255);
+  margin: 0;
   padding: 0 10px;
-  font-size: 1rem;
+  font-size: 0.8rem;
 }
 
 .carousel img {

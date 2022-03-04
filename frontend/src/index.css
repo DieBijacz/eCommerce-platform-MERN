@@ -7,6 +7,11 @@
   box-sizing: border-box;
 }
 
+body::-webkit-scrollbar {
+  overflow-x: hidden;
+  display: none;
+}
+
 main {
   min-height: 80vh;
 }
@@ -31,37 +36,6 @@ h5 {
 .outOfStockImageCover {
   opacity: 0.5;
 }
-
-.hero {
-  display: flex;
-  justify-content: center;
-  height: 90vh;
-}
-
-.hero img {
-  position: absolute;
-  max-width: 1920px;
-  height: 90vh;
-  object-fit: cover;
-}
-
-.four-icons i {
-  color: var(--main);
-  font-size: 1.8rem;
-  margin-right: 10px;
-}
-.four-icons p {
-  margin: 0;
-  font-size: 1.4rem;
-  font-weight: bold;
-}
-
-.product-component-image {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-}
-
 /* ============================================ BUTTON  ============================================ */
 .btn {
   position: relative;
@@ -83,8 +57,57 @@ h5 {
 }
 
 /* ============================================ BUTTON  ============================================ */
+
+/*=========================================== HERO =========================================== */
+.hero {
+  display: flex;
+  justify-content: center;
+  height: 90vh;
+}
+
+.hero img {
+  position: absolute;
+  max-width: 1920px;
+  height: 90vh;
+  object-fit: cover;
+}
+
+#hero-btn-box {
+  position: absolute;
+  bottom: 5vh;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.hero-btn {
+  color: rgb(218, 218, 218);
+}
+.hero-btn:hover {
+  color: rgb(0, 0, 0);
+}
+
+/*=========================================== HERO =========================================== */
+/* ======================================= FOUR ICONS  ======================================= */
+
+.four-icons i {
+  color: var(--main);
+  font-size: 1.8rem;
+  margin-right: 10px;
+}
+.four-icons p {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+/* ======================================= FOUR ICONS  ======================================= */
+
+.product-component-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
 /*============================================ CAROUSEL ============================================ */
 .carousel {
+  position: relative;
   width: 500px;
   border-radius: 10px;
   overflow: hidden;
@@ -96,7 +119,6 @@ h5 {
   display: flex;
 }
 .carousel-caption {
-  position: absolute;
   padding: 10px;
   top: 10px;
   bottom: auto;
@@ -120,6 +142,12 @@ h5 {
 .carousel-inner a {
   width: 100%;
 }
+@media (max-width: 1600px) {
+  .hero img,
+  .hero {
+    height: 70vh;
+  }
+}
 
 @media (max-width: 900px) {
   .carousel-caption h2 {
@@ -127,6 +155,10 @@ h5 {
   }
   .product-component-image {
     height: 300px;
+  }
+  .hero img,
+  .hero {
+    height: 60vh;
   }
 }
 

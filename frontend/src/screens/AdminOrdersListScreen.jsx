@@ -36,13 +36,8 @@ const AdminOrdersListScreen = () => {
       {loadingAllOrders ? <Loader /> : errorLoadingOrders ? <Message variant='danger'>{errorLoadingOrders}</Message> : (
         <>
           <Col lg={7}>
-            <Row className='my-3'>
-              <p>Total orders: {orders && orders.length}</p>
-              <p>Total orders: {orders && orders.length}</p>
-              <p>Total orders: {orders && orders.length}</p>
-              <p>Total orders: {orders && orders.length}</p>
-            </Row>
             <Row>
+              <p>Total orders: {orders && orders.length}</p>
               <Table striped bordered responsive className='table-sm'>
                 <thead>
                   <tr>

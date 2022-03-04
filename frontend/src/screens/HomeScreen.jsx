@@ -33,17 +33,20 @@ const HomeScreen = () => {
     <>
       <Meta title={'Home Page'} />
       <Hero />
-      <FourIcon />
-      <Row>
-        <h2>Top rate products:</h2>
-        <Col md={8}>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorum numquam a suscipit eius fugit maxime consequatur hic nobis corrupti officiis eaque blanditiis nostrum sapiente iure laudantium quod facere quasi laborum sunt, earum architecto, temporibus modi quis! Obcaecati nostrum eligendi aperiam quam ratione officia possimus impedit perspiciatis consequatur assumenda? Adipisci exercitationem iure dignissimos provident itaque officiis, porro illo minima nesciunt quisquam neque perspiciatis consectetur. Molestias odio est maiores ea ab, praesentium architecto culpa repellat quas? Tenetur aliquid vitae nisi dolorum perferendis exercitationem in mollitia dignissimos consequuntur quibusdam quisquam distinctio optio ut adipisci deserunt delectus, ab tempore repellat. Minus aliquam unde quibusdam!
+      <Row className='my-5' style={{minHeight: '300px'}}>
+        <Col lg={8}>
+        <div className='d-flex-column justify-content-center align-items-center my-3'>
+          <h2>Top rated products:</h2>
+          <div>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatem nihil illo, earum laborum esse minima, culpa fugiat, accusantium saepe tempore accusamus itaque sit quae delectus est laudantium consectetur iure tempora?
+          </div>
+        </div>
         </Col>
-        <Col md={4}>
+        <Col lg={4}>
           {!keyword && <ProductCarousel />}
         </Col>
       </Row>
-      <h2 className='my-5'>Latest Products:</h2> 
+      <FourIcon />
       <SearchBar />
       {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
           <>

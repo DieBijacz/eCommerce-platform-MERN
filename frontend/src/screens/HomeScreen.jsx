@@ -32,7 +32,7 @@ const HomeScreen = () => {
   return (
     <>
       <Meta title={'Home Page'} />
-      <Row style={{height: '90vh'}}>
+      <Row className='hero-high'>
         <Hero />
       </Row>
       <Row className='my-5' style={{minHeight: '300px'}}>

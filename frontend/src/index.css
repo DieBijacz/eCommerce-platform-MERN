@@ -56,32 +56,40 @@ h5 {
   color: var(--main);
 }
 
-/* ============================================ BUTTON  ============================================ */
+.ober {
+  max-height: 200px;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+.ober::-webkit-scrollbar {
+  display: none;
+}
 
+/* ============================================ BUTTON  ============================================ */
 /*=========================================== HERO =========================================== */
 .hero {
-  display: flex;
-  justify-content: center;
+  position: absolute;
+  left: 0;
   height: 90vh;
+  padding: 0;
 }
 
 .hero img {
-  position: absolute;
-  max-width: 1920px;
-  height: 90vh;
   object-fit: cover;
+  height: 100%;
 }
 
-#hero-btn-box {
-  position: absolute;
-  bottom: 5vh;
-  background-color: rgba(0, 0, 0, 0.4);
-}
 .hero-btn {
-  color: rgb(218, 218, 218);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 5vh;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 1px solid black;
+  color: black;
 }
 .hero-btn:hover {
-  color: rgb(0, 0, 0);
+  color: black;
 }
 
 /*=========================================== HERO =========================================== */
@@ -142,6 +150,8 @@ h5 {
 .carousel-inner a {
   width: 100%;
 }
+
+/*==================================================== MEDIA ====================================================*/
 @media (max-width: 1600px) {
   .hero img,
   .hero {
@@ -160,10 +170,26 @@ h5 {
   .hero {
     height: 60vh;
   }
+
+  span {
+    font-size: 0.8rem;
+  }
+  i {
+    font-size: 1.2rem;
+  }
+  p {
+    font-size: 1rem;
+  }
 }
 
 @media (max-width: 768px) {
   .product-component-image {
     height: 400px;
+  }
+
+  .four-icons-box,
+  .four-icons > * {
+    display: none;
+    margin: 0 !important;
   }
 }

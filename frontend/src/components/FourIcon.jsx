@@ -2,7 +2,7 @@ import React from 'react'
 
 const FourIcon = () => {
   return (
-    <div className='d-flex justify-content-between my-5'>
+    <div className='d-flex justify-content-between my-5 four-icons-box'>
 
       <div className='four-icons d-flex justify-content-center align-items-center'>
         <i className="fa-brands fa-paypal"></i>

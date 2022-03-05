@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { deleteProduct, getProductDetails, updateProduct } from '../actions/productActions';
+import { PRODUCT_UPDATE_RESET } from '../constants/productConstants';
 
 const AdminEditProductScreen = () => {
   const dispatch = useDispatch()
@@ -54,6 +55,7 @@ const AdminEditProductScreen = () => {
     if (successUpdate) {
       dispatch(getProductDetails(productId))
       setShowUpdateMessage(true)
+      dispatch({type: PRODUCT_UPDATE_RESET})
     }  
 
     setName(product.name)
@@ -122,7 +124,6 @@ const AdminEditProductScreen = () => {
         <Row>
           <Col md={5}>
             <Image src={product.image} alt={product.name} fluid />
-            <h3 style={{color:'red'}}>to do: add rating here</h3>
           </Col>
           <Col md={7}>
             <h1>Edit Product:</h1>

@@ -32,7 +32,9 @@ const HomeScreen = () => {
   return (
     <>
       <Meta title={'Home Page'} />
-      <Hero />
+      <Row style={{height: '90vh'}}>
+        <Hero />
+      </Row>
       <Row className='my-5' style={{minHeight: '300px'}}>
         <Col lg={8}>
         <div className='d-flex-column justify-content-center align-items-center my-3'>

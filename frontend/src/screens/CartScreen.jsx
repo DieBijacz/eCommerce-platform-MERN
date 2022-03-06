@@ -56,7 +56,7 @@ const CartScreen = () => {
                     <Link to={`/product/${item.product}`}>{item.name}</Link>
                   </Col>
                   <Col md={2}>
-                    ${item.price}
+                    £{item.price}
                   </Col>
                   <Col md={3}>
                     <Form.Control as='select' value={item.qty} onChange={(e) => dispatch(addToCart(item.product, Number(e.target.value)))}>
@@ -80,7 +80,7 @@ const CartScreen = () => {
           <ListGroup variant='flush'>
             <ListGroupItem>
               <h4>Items: ({cartItems.reduce((acc, item) => acc + item.qty, 0)})</h4>
-              Total: {cartItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2)}$
+              Total: £{cartItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2)}
             </ListGroupItem>
             <ListGroupItem>
               <div className="d-grid gap-2">

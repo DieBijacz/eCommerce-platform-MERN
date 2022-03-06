@@ -10,6 +10,7 @@ import SearchBar from '../components/SearchBar';
 import { USER_DELETE_RESET } from '../constants/userConstants';
 import { useState } from 'react';
 import Meta from '../components/Meta';
+import Badge from '../components/Badge';
 
 const AdminUsersListScreen = () => {
   const [showSuccessDeleteMessage, setShowSuccessDeleteMessage] = useState(false)
@@ -66,20 +67,20 @@ const AdminUsersListScreen = () => {
         <Table striped bordered responsive className='table-sm'>
           <thead>
             <tr>
-              <th className='text-center'>ID</th>
-              <th className='text-center'>Name</th>
-              <th className='text-center'>Email</th>
-              <th className='text-center'>Admin</th>
-              <th className='text-center'></th>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Admin</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             {users.map(user => (
               <tr key={user._id}>
-                <td className='text-center'>{user._id}</td>
-                <td className='text-center'>{user.name}</td>
-                <td className='text-center'><a href={`mailto:${user.email}`}>{user.email}</a></td>
-                <td className='text-center'>{user.isAdmin ? <i className='fas fa-check' style={{color: 'green'}}></i> : <i className='fas fa-times' style={{color: 'red'}}></i>}</td>
+                <td>{user._id}</td>
+                <td>{user.name}</td>
+                <td><a href={`mailto:${user.email}`}>{user.email}</a></td>
+                <td>{user.isAdmin ? <Badge color='green' text='Admin' /> : '' }</td>
                 <td>
                   <LinkContainer to={`/admin/edit/user/${user._id}`}>
                     <div className='d-grid gap-2'>

@@ -83,12 +83,12 @@ const AdminProductListScreen = () => {
         <Table striped bordered responsive className='table-sm'>
           <thead>
             <tr>
-              <th className='text-center'>Product</th>
-              <th className='text-center'>Name</th>
-              <th className='text-center'>Price</th>
-              <th className='text-center'>Category</th>
-              <th className='text-center'>Brand</th>
-              <th className='text-center'></th>
+              <th>Product</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Category</th>
+              <th>Brand</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -100,9 +100,9 @@ const AdminProductListScreen = () => {
                   </div>
                 </td>
                 <td>{product.name}{product.countInStock === 0 && <div style={{color: 'red'}}>Out of stock</div>}</td>
-                <td className='text-center'>$ {product.price}</td>
-                <td className='text-center'>{product.category}</td>
-                <td className='text-center'>{product.brand}</td>
+                <td>$ {product.price}</td>
+                <td>{product.category}</td>
+                <td>{product.brand}</td>
                 <td>
                   <LinkContainer to={`/admin/edit/product/${product._id}`}>
                       <div className='d-grid gap-2'>

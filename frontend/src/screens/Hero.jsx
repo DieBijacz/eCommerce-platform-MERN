@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState} from 'react'
+import React, { useEffect, useRef} from 'react'
 import {gsap} from 'gsap'
 
 const Hero = () => {
-  const [render, setRender] = useState(0)
 
   const boxRef = useRef()
 
@@ -10,7 +9,7 @@ const Hero = () => {
     gsap.from(boxRef.current, { left: '-100%', duration: 1 });
     gsap.from('.hero-box-el', { opacity: 0, duration: 1, delay: 1, stagger: 1});
     gsap.from('.fa-arrow-down-long', {opacity: 0, top: '50%', duration: 1, delay: 4, ease: 'bounce'})
-  },[render]);
+  },[]);
 
   return (
     <div className='hero'>
@@ -22,7 +21,7 @@ const Hero = () => {
       </div>
 
       <img src="\images\hero.jpg" alt="hero" style={{width: '100%'}}/>
-      <i class="fa-solid fa-arrow-down-long"></i>
+      <i className="fa-solid fa-arrow-down-long"></i>
     </div>
   )
 }

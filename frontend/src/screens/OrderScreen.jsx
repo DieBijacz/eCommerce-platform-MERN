@@ -133,7 +133,7 @@ const OrderScreen = () => {
                         </Col>
                         <Col md={7} lg={9}>
                           <Link to={`/product/${item.product}`}>{item.name}</Link>
-                          <div>{item.qty}x ${item.price} = ${(item.qty * item.price).toFixed(2)}</div>
+                          <div>{item.qty}x £{item.price} = £{(item.qty * item.price).toFixed(2)}</div>
                         </Col>
                       </Row>                      
                     </ListGroupItem>
@@ -152,25 +152,25 @@ const OrderScreen = () => {
               <ListGroupItem>
                 <Row>
                   <Col>Items:</Col>
-                  <Col>${order.itemsPrice}</Col>
+                  <Col>£{order.itemsPrice}</Col>
                 </Row>
               </ListGroupItem>
               <ListGroupItem>
                 <Row>
                   <Col>Shipping:</Col>
-                  <Col>${order.shippingPrice}</Col>
+                  <Col>£{order.shippingPrice}</Col>
                 </Row>
               </ListGroupItem>
               <ListGroupItem>
                 <Row>
                   <Col>Tax:</Col>
-                  <Col>${order.taxPrice}</Col>
+                  <Col>£{order.taxPrice}</Col>
                 </Row>
               </ListGroupItem>
               <ListGroupItem>
                 <Row>
                   <Col>Total:</Col>
-                  <Col>${order.totalPrice}</Col>
+                  <Col>£{order.totalPrice}</Col>
                 </Row>
               </ListGroupItem>
               {!order.isPaid && (

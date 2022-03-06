@@ -6,7 +6,7 @@ import Product from '../models/productModel.js'
 // @access  Public
 // asyncHandler https://github.com/Abazhenov/express-async-handler
 export const getProducts = asyncHandler(async (req, res) => {
-  const pageSize = 4
+  const pageSize = 8
   const page = Number(req.query.pageNumber) || 1
 
   //  if there is a keyword then use regex to match name of any product

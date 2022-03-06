@@ -7,6 +7,7 @@ import Card from '../components/Card';
 import Loader from '../components/Loader.js';
 import Message from '../components/Message.js';
 import Meta from '../components/Meta.js';
+import Badge from '../components/Badge.jsx';
 
 const AdminOrdersListScreen = () => {
   const dispatch = useDispatch()
@@ -41,19 +42,19 @@ const AdminOrdersListScreen = () => {
               <Table striped bordered responsive className='table-sm'>
                 <thead>
                   <tr>
-                    <th className='text-center'>User</th>
-                    <th className='text-center'>Paid</th>
-                    <th className='text-center'>Delivered</th>
-                    <th className='text-center'>Items</th>
+                    <th>User</th>
+                    <th>Paid</th>
+                    <th>Delivered</th>
+                    <th>Items</th>
                   </tr>
                 </thead>
                 <tbody>
                   {orders && orders.map(order => (
                     <tr key={order._id}>
-                      <td className='text-center'>{order.user.name}</td>
-                      <td className='text-center'>{order.isPaid ? 'paid' : 'not paid'}</td>
-                      <td className='text-center'>{order.isDelivered ? 'delivered' : 'not delivered'}</td>
-                      <td className='text-center'>{order.orderItems.map(item => <div><Link to={`/product/${item.product}`}>{item.qty} x {item.name}</Link></div>)}</td>
+                      <td>{order.user.name}</td>
+                      <td>{order.isPaid ? <Badge color='green' text='Paid'/>: <Badge color='#ffae00' text='Pending'/>}</td>
+                      <td>{order.isDelivered ? <Badge color='green' text='Delivered'/> : <Badge color='#ffae00' text='Not Delivered'/>}</td>
+                      <td>{order.orderItems.map(item => <div><Link to={`/product/${item.product}`}>{item.qty} x {item.name}</Link></div>)}</td>
                     </tr>
                   ))}
                 </tbody>

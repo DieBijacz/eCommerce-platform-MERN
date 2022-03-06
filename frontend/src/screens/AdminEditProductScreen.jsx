@@ -120,7 +120,7 @@ const AdminEditProductScreen = () => {
 
   return (
     <>
-      <Link to='/admin/products' className='btn btn-primary my-3'>Go Back</Link>
+      <button className='btn btn-primary my-3' onClick={() => window.history.go(-1)}>Go Back</button>
       {showUpdateMessage && <Message variant='success'>Product Updated</Message>}
       {loadingDelete ? <Loader /> : errorDelete ? <Message variant='danger'>{errorDelete}</Message> : (
         <Row>

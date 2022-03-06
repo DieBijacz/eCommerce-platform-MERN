@@ -87,7 +87,7 @@ const ProductScreen = () => {
   return (
     <>
       <Meta title={product.name} />
-      <Link to='/' className='btn btn-primary my-3'>Go Back</Link>
+      <button className='btn btn-primary my-3' onClick={() => window.history.go(-1)}>Go Back</button>
       {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
         <>
           <Row>

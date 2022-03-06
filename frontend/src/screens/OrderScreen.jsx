@@ -94,7 +94,7 @@ const OrderScreen = () => {
         </Col>
         <Col>
           <div className='d-flex justify-content-md-end'>
-            <Button className='btn-primary my-3' onClick={() => navigate('/profile')}>Go Back</Button>
+            <button className='btn btn-primary my-3' onClick={() => window.history.go(-1)}>Go Back</button>
           </div>
         </Col>
       </Row>

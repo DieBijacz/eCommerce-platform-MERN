@@ -14,6 +14,7 @@ dotenv.config()
 connectDB()
 const app = express()
 
+// ============ IN DEVELOPMENT ============
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
 }
@@ -29,10 +30,6 @@ app.get('/api/config/paypal', (req, res) =>
   res.send(process.env.PAYPAL_CLIENT_ID)
 )
 
-app.get('/', (req, res) => {
-  res.send('API is running...')
-})
-
 // Each route can have one or more handler functions, which are executed when the route is matched.
 // app.METHOD(PATH, HANDLER)
 // app is an instance of express.
@@ -43,6 +40,20 @@ app.use('/api/products', productRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/orders', orderRoutes)
 app.use('/api/upload', uploadRoutes)
+
+// ============ IN PRODUCTION ============
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '/frontend/build')))
+  // any route thats not /api will point to frontend/build/index.html
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+  )
+} else {
+  // if not in production
+  app.get('/', (req, res) => {
+    res.send('API is running...')
+  })
+}
 
 // MIDDLEWERE
 // https://expressjs.com/en/guide/using-middleware.html

@@ -20,6 +20,7 @@ const AdminEditProductScreen = () => {
   const [category, setCategory] = useState('')
   const [countInStock, setCountInStock] = useState(0)
   const [description, setDescription] = useState('')
+  const [changedImage, setChangedImage] = useState(null)
 
   const [showUpdateMessage, setShowUpdateMessage] = useState(false)
   const [uploading, setUploading] = useState(false)
@@ -88,6 +89,7 @@ const AdminEditProductScreen = () => {
 
   const uploadFileHandler = async (e) => {
     e.preventDefault();
+    setChangedImage(URL.createObjectURL(e.target.files[0]))
 
     const file = e.target.files[0]
     const formData = new FormData()
@@ -123,7 +125,7 @@ const AdminEditProductScreen = () => {
       {loadingDelete ? <Loader /> : errorDelete ? <Message variant='danger'>{errorDelete}</Message> : (
         <Row>
           <Col md={5}>
-            <Image src={product.image} alt={product.name} fluid />
+            <Image id='preview-image' src={changedImage ? changedImage : product.image} alt={product.name} fluid/>
           </Col>
           <Col md={7}>
             <h1>Edit Product:</h1>

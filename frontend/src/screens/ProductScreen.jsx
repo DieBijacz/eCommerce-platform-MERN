@@ -109,8 +109,8 @@ const ProductScreen = () => {
                   Price: ${product.price}
                 </ListGroupItem>
                 <ListGroupItem>
-                  <div className='ober'>
-                    Description: {product.description}
+                  <div className='product-description'>
+                    {product.description}
                   </div>
                 </ListGroupItem>
               </ListGroup>

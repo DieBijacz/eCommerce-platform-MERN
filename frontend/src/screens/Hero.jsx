@@ -2,13 +2,14 @@ import React, { useEffect, useRef} from 'react'
 import {gsap} from 'gsap'
 
 const Hero = () => {
-
   const boxRef = useRef()
-
+  
   useEffect(() => {
-    gsap.from(boxRef.current, { left: '-100%', duration: 1 });
-    gsap.from('.hero-box-el', { opacity: 0, duration: 1, delay: 1, stagger: 1});
-    gsap.from('.fa-arrow-down-long', {opacity: 0, top: '50%', duration: 1, delay: 4, ease: 'bounce'})
+    gsap.timeline()
+      .from('.hero', {opacity: 0, duration: 1})
+      .from(boxRef.current, {left: '-100%', duration: 1})
+      .from('.hero-box-el', { opacity: 0, duration: 1, stagger: 1})
+      .from('.fa-arrow-down-long', {opacity: 0, top: '50%', duration: 1, ease: 'bounce'})
   },[]);
 
   return (

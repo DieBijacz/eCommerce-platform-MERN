@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { LinkContainer } from 'react-router-bootstrap'
 import { useNavigate, useParams } from 'react-router-dom';
-import { Table, Button, Row, Col } from 'react-bootstrap'
+import { Table, Button, Row, Col, Image } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
@@ -95,8 +95,8 @@ const AdminProductListScreen = () => {
             {products.map(product => (
               <tr key={product._id}>
                 <td>
-                  <div style={{width: '100px'}}>
-                      <img src={product.image} alt={product.name} style={{width: '100%', height: 'auto'}} className={product.countInStock === 0 ? 'outOfStockImageCover' : undefined}/>
+                  <div style={{width: '100%'}} className='d-flex justify-content-center'>
+                      <Image src={product.image} alt={product.name} fluid style={{maxWidth: '100px'}} className={product.countInStock === 0 ? 'outOfStockImageCover' : undefined}/>
                   </div>
                 </td>
                 <td>{product.name}{product.countInStock === 0 && <div style={{color: 'red'}}>Out of stock</div>}</td>

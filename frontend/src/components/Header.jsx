@@ -16,7 +16,7 @@ const Header = () => {
 
   return (
     <header>
-      <Navbar bg="primary" variant='dark' collapseOnSelect expand="md">
+      <Navbar bg="primary" variant='dark' collapseOnSelect expand="md" sticky='top'>
         <Container>
           <LinkContainer to='/'>
             <Navbar.Brand>Masta</Navbar.Brand>

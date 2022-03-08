@@ -36,7 +36,7 @@ const HomeScreen = () => {
         <Hero />
       </Row>
       <Row className='my-5' style={{minHeight: '300px'}}>
-        <Col lg={8}>
+        <Col md={7} lg={8}>
         <div className='d-flex-column justify-content-center align-items-center my-3'>
           <h2>Top rated products:</h2>
           <div>
@@ -44,7 +44,7 @@ const HomeScreen = () => {
           </div>
         </div>
         </Col>
-        <Col lg={4}>
+        <Col md={5} lg={4}>
           {!keyword && <ProductCarousel />}
         </Col>
       </Row>
@@ -54,7 +54,7 @@ const HomeScreen = () => {
           <>
             <Row>
               {products.map(product => (
-                <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                <Col key={product._id} xs={6} sm={6} md={6} lg={4} xl={3}>
                   <Product product={product}/>
                 </Col>
               ))}

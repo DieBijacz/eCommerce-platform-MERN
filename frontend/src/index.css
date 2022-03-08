@@ -97,17 +97,6 @@ h5 {
   height: 100%;
 }
 
-/* arrow */
-.hero i {
-  position: absolute;
-  font-size: 2.2rem;
-  text-shadow: 0px 0px 20px black;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 5vh;
-  color: rgb(255, 255, 255);
-}
-
 /* left side box */
 .animation-box {
   position: absolute;
@@ -115,30 +104,31 @@ h5 {
   flex-direction: column;
   justify-content: space-around;
   padding: 30px;
-  top: 10%;
+  top: 20%;
   left: 10%;
-  width: 700px;
-  height: 300px;
-  border-radius: 30px;
-  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .hero-box-el {
-  font-size: 2.4rem;
+  font-size: 4.4rem;
   font-weight: bold;
+  color: rgb(24, 24, 24);
 }
 /*=========================================== HERO =========================================== */
 /* ======================================= FOUR ICONS  ======================================= */
 
 .four-icons i {
   color: var(--main);
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   margin-right: 10px;
 }
 .four-icons p {
   margin: 0;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: bold;
+}
+.four-icons span {
+  font-size: 0.9rem;
+  color: grey;
 }
 /* ======================================= FOUR ICONS  ======================================= */
 
@@ -199,17 +189,22 @@ h5 {
     height: 70vh;
   }
 
+  /* HERO */
   .animation-box {
-    top: 10%;
     left: 5%;
-    width: 450px;
-    height: 200px;
-    border-radius: 20px;
+  }
+  .hero-box-el {
+    font-size: 3.2rem;
   }
 
-  .hero-box-el {
-    font-size: 1.6rem;
-    font-weight: bold;
+  .four-icons i {
+    font-size: 1.4rem;
+  }
+  .four-icons p {
+    font-size: 1rem;
+  }
+  .four-icons span {
+    font-size: 0.7rem;
   }
 }
 
@@ -217,22 +212,27 @@ h5 {
   .carousel-caption h2 {
     font-size: 2.5vw;
   }
+
   .product-component-image {
-    height: 300px;
+    max-height: 200px;
   }
 
+  /* HERO */
   .animation-box {
-    top: 10%;
     left: 5%;
-    width: 250px;
-    height: 200px;
-    border-radius: 10px;
-    line-height: 20px;
+  }
+  .hero-box-el {
+    font-size: 2.5rem;
   }
 
-  .hero-box-el {
+  .four-icons i {
     font-size: 1.2rem;
-    font-weight: bold;
+  }
+  .four-icons p {
+    font-size: 0.8rem;
+  }
+  .four-icons span {
+    font-size: 0.7rem;
   }
 
   .hero-high,
@@ -254,7 +254,16 @@ h5 {
 
 @media (max-width: 768px) {
   .product-component-image {
-    height: 400px;
+    max-height: 150px;
+  }
+
+  .animation-box {
+    left: -3%;
+    top: 35%;
+  }
+
+  .hero-box-el {
+    font-size: 2.1rem;
   }
 
   .four-icons-box,

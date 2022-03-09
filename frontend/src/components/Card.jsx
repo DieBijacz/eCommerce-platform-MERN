@@ -46,7 +46,7 @@ const Card = ({order}) => {
               <h5>Payment details:</h5>
               <div>{order.isPaid ? <Message variant='success'>Paid on {order.paidAt.substring(0, 10)}</Message> : <Message variant='danger'>Not Paid</Message>}</div>
               <div>Total price: {order.totalPrice}</div>
-              {!order.isPaid &&<Button onClick={() => navigate(`/orders/${order._id}`)}>Go to payment</Button>}
+              {!order.isPaid &&<button className='btn' onClick={() => navigate(`/orders/${order._id}`)}>Go to payment</button>}
             </Col>
           </Row>
           <Row>
@@ -56,10 +56,10 @@ const Card = ({order}) => {
               {order.orderItems.map(item => (
                 <ListGroupItem key={item._id}>
                   <Row>
-                    <Col sm={5} md={3} lg={2}>
+                    <Col sm={5} md={4} lg={3}>
                       <Image fluid src={item.image}></Image>
                     </Col>
-                    <Col sm={7} md={9} lg={10}>
+                    <Col sm={7} md={8} lg={9}>
                       <Link to={`/product/${item.product}`}>
                         {item.qty} x {item.name}
                       </Link>

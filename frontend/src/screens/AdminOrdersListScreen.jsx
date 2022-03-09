@@ -28,8 +28,10 @@ const AdminOrdersListScreen = () => {
     } else {
       navigate('/login')
     }
-    
   }, [navigate, dispatch, userInfo])
+  
+  const handleDispatch = () => {
+  }
   
   return <>
     <Meta title={'Admin Orders Control Panel'} />
@@ -37,14 +39,43 @@ const AdminOrdersListScreen = () => {
       {loadingAllOrders ? <Loader /> : errorLoadingOrders ? <Message variant='danger'>{errorLoadingOrders}</Message> : (
         <>
           <Col lg={7}>
+
+            {/* SUMMARY */}
+            <Row className='admin-order-summary mb-5'>
+              <Col>
+                <div className='summary-box shadow'>
+                  <div className='summary-number'>{orders && orders.length}</div>
+                  <div className='summary-title'>Total orders</div>
+                </div>
+              </Col>
+              <Col>
+                <div className='summary-box shadow'>
+                  <div className='summary-number'>{orders && orders.reduce((acc, o) => acc + o.orderItems.length, 0)}</div>
+                  <div className='summary-title'>Total items</div>
+                </div>
+              </Col>
+              <Col>
+                <div className='summary-box shadow'>
+                  <div className='summary-number'>{orders && orders.reduce((acc, o) => o.isPaid === true ? acc + 1 : acc + 0 ,0)}</div>
+                  <div className='summary-title'>Orders Paid</div>
+                </div>
+              </Col>
+              <Col>
+                <div className='summary-box shadow'>
+                  <div className='summary-number'>{orders && orders.reduce((acc, o) => o.isDelivered === true ? acc + 1 : acc + 0 ,0)}</div>
+                  <div className='summary-title'>Dispatched</div>
+                </div>
+              </Col>
+            </Row>
+
+            {/* TABLE */}
             <Row>
-              <p>Total orders: {orders && orders.length}</p>
-              <Table striped bordered responsive className='table-sm'>
+              <Table striped bordered responsive className='table-sm shadow'>
                 <thead>
                   <tr>
                     <th>User</th>
                     <th>Paid</th>
-                    <th>Delivered</th>
+                    <th>Dispatch</th>
                     <th>Items</th>
                   </tr>
                 </thead>
@@ -53,15 +84,30 @@ const AdminOrdersListScreen = () => {
                     <tr key={order._id}>
                       <td>{order.user.name}</td>
                       <td>{order.isPaid ? <Badge color='green' text='Paid'/>: <Badge color='#ffae00' text='Pending'/>}</td>
-                      <td>{order.isDelivered ? <Badge color='green' text='Delivered'/> : <Badge color='#ffae00' text='Not Delivered'/>}</td>
-                      <td>{order.orderItems.map(item => <div><Link to={`/product/${item.product}`}>{item.qty} x {item.name}</Link></div>)}</td>
+                      <td>{order.isDelivered ? <Badge color='green' text='Dispatched'/> : <Badge color='#bbb' text='Not Dispatched'/>}</td>
+                      <td>{order.orderItems.map(item => <Link key={item._id} to={`/product/${item.product}`}>{item.qty} x {item.name}</Link>)}</td>
                     </tr>
                   ))}
                 </tbody>
               </Table>
             </Row>
+
+            {/* DISPATCH */}
+            {/* <Row className='admin-order-dispatch'>
+              <h3>Dispatch</h3>
+              <div className='d-flex'>
+                <Select type="select" onChange={(e)=>setForDispatch(e.target.value)}>
+                  <option defaultValue={forDispatch} hidden>Select Order for dispatch</option>
+                  {orders.map(order => <option value={order._id} key={order._id}>{order._id}</option>)}
+                </Select>
+                <button className='btn' onClick={handleDispatch}>DISPATCH</button>
+              </div>
+                {forDispatch}
+            </Row> */}
           </Col>
-          <Col lg={5}>
+
+          {/* ORDERS */}
+          <Col lg={5} className='admin-orders custom-scroll'>
             <h3>Orders:</h3>
             {loadingAllOrders ? <Loader /> : errorLoadingOrders ? <Message variant='danger'>{errorLoadingOrders}</Message> : 
               orders.map(order => (<Card order={order} key={order._id} />))    

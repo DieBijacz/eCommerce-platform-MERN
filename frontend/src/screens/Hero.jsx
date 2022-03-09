@@ -2,8 +2,6 @@ import React, { useEffect, useRef} from 'react'
 import {gsap} from 'gsap'
 
 const Hero = () => {
-  const boxRef = useRef()
-  
   useEffect(() => {
     gsap.timeline()
       .from('.hero', {opacity: 0, duration: 1, ease: 'power2.out'})

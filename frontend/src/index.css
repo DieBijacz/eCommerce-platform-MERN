@@ -17,6 +17,14 @@ body::-webkit-scrollbar {
   display: none;
 }
 
+p,
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0;
+}
 main {
   min-height: 80vh;
 }
@@ -33,12 +41,6 @@ td {
   text-align: center;
 }
 
-p,
-h4,
-h5 {
-  margin: 0;
-}
-
 .order-details-button:hover {
   text-decoration: underline;
 }
@@ -46,6 +48,17 @@ h5 {
 .outOfStockImageCover {
   opacity: 0.5;
 }
+
+.product-description {
+  max-height: 200px;
+}
+
+.product-component-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
 /* ============================================ BUTTON  ============================================ */
 .btn {
   position: relative;
@@ -65,22 +78,23 @@ h5 {
 .btn-copy-clipboard:hover {
   color: var(--main);
 }
+/* ============================================ BUTTON  ============================================ */
+/* ============================================ CUSTOM SCROLL  ============================================ */
 
-.product-description {
-  max-height: 200px;
+.custom-scroll {
   overflow-y: scroll;
 }
-.product-description::-webkit-scrollbar {
+.custom-scroll::-webkit-scrollbar {
   width: 0.4em;
 }
-.product-description::-webkit-scrollbar-thumb {
+.custom-scroll::-webkit-scrollbar-thumb {
   background: var(--main);
 }
-.product-description::-webkit-scrollbar-track {
+.custom-scroll::-webkit-scrollbar-track {
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
 
-/* ============================================ BUTTON  ============================================ */
+/* ============================================ CUSTOM SCROLL  ============================================ */
 /*=========================================== HERO =========================================== */
 .hero-high {
   height: 90vh;
@@ -111,7 +125,8 @@ h5 {
 .hero-box-el {
   font-size: 4.4rem;
   font-weight: bold;
-  color: rgb(24, 24, 24);
+  color: rgb(241, 241, 241);
+  text-shadow: -2px 3px 5px rgb(78, 78, 78);
 }
 /*=========================================== HERO =========================================== */
 /* ======================================= FOUR ICONS  ======================================= */
@@ -131,17 +146,12 @@ h5 {
   color: grey;
 }
 /* ======================================= FOUR ICONS  ======================================= */
-
-.product-component-image {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-}
-
 /*============================================ CAROUSEL ============================================ */
+
 .carousel {
   position: relative;
-  width: 100%;
+  max-width: 400px;
+  padding: 0;
   border-radius: 10px;
   overflow: hidden;
 }
@@ -163,7 +173,7 @@ h5 {
 
 .carousel img {
   width: 100%;
-  height: 300px;
+  height: 400px;
   object-fit: cover;
 }
 
@@ -181,6 +191,34 @@ h5 {
 }
 
 /* =================================================== BADGE =================================================== */
+/* ================================================ ADMIN-PANEL ================================================ */
+.admin-orders {
+  max-height: 80vh;
+}
+
+.summary-box {
+  display: flex;
+  position: relative;
+  min-height: 100px;
+  background-color: rgb(240, 240, 240);
+  font-weight: bold;
+  border-radius: 20px;
+}
+.summary-number {
+  position: absolute;
+  color: var(--main);
+  top: 5%;
+  left: 5%;
+  font-size: 2.4rem;
+}
+.summary-title {
+  position: absolute;
+  bottom: 10%;
+  left: 5%;
+  font-size: 1rem;
+}
+
+/* ================================================ ADMIN-PANEL ================================================ */
 /*==================================================== MEDIA ====================================================*/
 @media (max-width: 1600px) {
   .hero-high,

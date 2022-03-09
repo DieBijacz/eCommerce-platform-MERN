@@ -35,17 +35,14 @@ const HomeScreen = () => {
       <Row className='hero-high'>
         <Hero />
       </Row>
-      <Row className='my-5' style={{minHeight: '300px'}}>
-        <Col md={7} lg={8}>
-        <div className='d-flex-column justify-content-center align-items-center my-3'>
-          <h2>Top rated products:</h2>
-          <div>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatem nihil illo, earum laborum esse minima, culpa fugiat, accusantium saepe tempore accusamus itaque sit quae delectus est laudantium consectetur iure tempora?
-          </div>
-        </div>
-        </Col>
-        <Col md={5} lg={4}>
+      <Row className='my-5 mx-5 top-rated'>
+        <Col md={5}>
           {!keyword && <ProductCarousel />}
+        </Col>
+        <Col md={7}>
+          <h4>Top rated products:</h4>
+          <br />
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor, expedita? Eos, voluptatum eaque nemo modi maiores recusandae? Quos ducimus velit incidunt molestiae perferendis? Nostrum eum modi debitis quos asperiores culpa reprehenderit consectetur suscipit, molestias nisi soluta, officiis perferendis id inventore, repellendus iste facilis magnam. Delectus ad sed fuga iusto repellat.
         </Col>
       </Row>
       <FourIcon />

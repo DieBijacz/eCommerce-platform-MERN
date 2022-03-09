@@ -109,7 +109,7 @@ const ProductScreen = () => {
                   Price: ${product.price}
                 </ListGroupItem>
                 <ListGroupItem>
-                  <div className='product-description'>
+                  <div className='product-description custom-scroll'>
                     {product.description}
                   </div>
                 </ListGroupItem>

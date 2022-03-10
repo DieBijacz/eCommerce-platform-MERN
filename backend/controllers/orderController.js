@@ -87,12 +87,13 @@ export const updateOrderToPaid = asyncHandler(async (req, res) => {
 })
 
 // @desc    Update order to deliver
-// @route   PUT /api/orders/:id/deliver
+// @route   PUT /api/orders/:id/dispatch
 // @access  Private/Admin
-export const updateOrderToDeliver = asyncHandler(async (req, res) => {
+export const updateOrderToDispatch = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id)
 
   if (order) {
+    // update order
     order.isDelivered = true
     order.deliveredAt = Date.now()
 

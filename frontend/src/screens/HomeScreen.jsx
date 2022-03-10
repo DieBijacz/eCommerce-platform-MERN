@@ -32,9 +32,7 @@ const HomeScreen = () => {
   return (
     <>
       <Meta title={'Home Page'} />
-      <Row className='hero-high'>
-        <Hero />
-      </Row>
+      <Hero />
       <Row className='my-5 mx-5 top-rated'>
         <Col md={5}>
           {!keyword && <ProductCarousel />}

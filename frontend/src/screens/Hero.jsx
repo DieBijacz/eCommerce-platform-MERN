@@ -1,5 +1,6 @@
 import React, { useEffect, useRef} from 'react'
 import {gsap} from 'gsap'
+import { Row } from 'react-bootstrap';
 
 const Hero = () => {
   useEffect(() => {
@@ -9,16 +10,17 @@ const Hero = () => {
   },[]);
 
   return (
-    <div className='hero'>
+    <Row className='hero-high'>
+      <div className='hero'>
+        <div className='animation-box'>
+          <div className='hero-box-el'>MAKE</div>
+          <div className='hero-box-el'>YOUR TOOLS</div>
+          <div className='hero-box-el'>WORK FOR YOU</div>
+        </div>
 
-      <div className='animation-box'>
-        <div className='hero-box-el'>MAKE</div>
-        <div className='hero-box-el'>YOUR TOOLS</div>
-        <div className='hero-box-el'>WORK FOR YOU</div>
+        <img src="\images\hero.jpg" alt="hero" style={{width: '100%'}}/>
       </div>
-
-      <img src="\images\hero.jpg" alt="hero" style={{width: '100%'}}/>
-    </div>
+    </Row>
   )
 }
 

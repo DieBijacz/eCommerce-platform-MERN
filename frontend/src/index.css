@@ -59,6 +59,10 @@ td {
   object-fit: cover;
 }
 
+.scaled {
+  transform: scale(0.8);
+}
+
 /* ============================================ BUTTON  ============================================ */
 .btn {
   position: relative;
@@ -202,7 +206,7 @@ td {
   min-height: 100px;
   background-color: rgb(240, 240, 240);
   font-weight: bold;
-  border-radius: 20px;
+  border-radius: 5px;
 }
 .summary-number {
   position: absolute;

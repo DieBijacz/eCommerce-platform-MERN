@@ -14,13 +14,13 @@ import {
   ORDER_LIST_FAIL,
   ORDER_LIST_REQUEST,
   ORDER_LIST_SUCCESS,
-  ORDER_DELIVER_REQUEST,
-  ORDER_DELIVER_SUCCESS,
-  ORDER_DELIVER_FAIL,
   ORDER_USER_LIST_REQUEST,
   ORDER_USER_LIST_SUCCESS,
   ORDER_USER_LIST_FAIL,
   ORDER_MY_LIST_FAIL,
+  ORDER_DISPATCH_REQUEST,
+  ORDER_DISPATCH_SUCCESS,
+  ORDER_DISPATCH_FAIL,
 } from '../constants/orderConstants.js'
 
 export const createOrder = (order) => async (dispatch, getState) => {
@@ -128,9 +128,9 @@ export const payOrder =
     }
   }
 
-export const deliverOrder = (id) => async (dispatch, getState) => {
+export const dispatchOrder = (id) => async (dispatch, getState) => {
   try {
-    dispatch({ type: ORDER_DELIVER_REQUEST })
+    dispatch({ type: ORDER_DISPATCH_REQUEST })
 
     const {
       userLogin: { userInfo },
@@ -142,15 +142,16 @@ export const deliverOrder = (id) => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.put(`/api/orders/deliver/${id}`, {}, config)
+    const { data } = await axios.put(`/api/orders/dispatch/${id}`, {}, config)
+    console.log(data)
 
     dispatch({
-      type: ORDER_DELIVER_SUCCESS,
+      type: ORDER_DISPATCH_SUCCESS,
       payload: data,
     })
   } catch (error) {
     dispatch({
-      type: ORDER_DELIVER_FAIL,
+      type: ORDER_DISPATCH_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

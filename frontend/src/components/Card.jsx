@@ -9,19 +9,6 @@ const Card = ({order}) => {
   return (
     <Container>
       <Row className='justify-content-md-center border my-3 p-3 shadow'>
-        {/* <Col md={3}>
-          <Row>
-            <div style={{width: '100%'}}>
-              <Image src={order.orderItems[0].image} alt={order.orderItems[0].name} fluid />
-            </div>
-          </Row>
-          <Row>
-            <div className='d-flex' style={{width: '100px'}}>
-              <Image src={order.orderItems[0].image} alt={order.orderItems[0].name} fluid />
-              <Image src={order.orderItems[0].image} alt={order.orderItems[0].name} fluid />
-            </div>
-          </Row>
-        </Col> */}
         <Col>
           <div className='d-flex justify-content-center align-items-center'>
             <h5 className='text-center'>{order._id}</h5>

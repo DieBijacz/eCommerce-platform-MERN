@@ -55,12 +55,12 @@ td {
 
 .product-component-image {
   width: 100%;
-  height: 200px;
   object-fit: cover;
 }
 
 .scaled {
-  transform: scale(0.8);
+  transform-origin: top;
+  transform: scale(0.6);
 }
 
 /* ============================================ BUTTON  ============================================ */
@@ -114,25 +114,41 @@ td {
   object-fit: cover;
   height: 100%;
 }
-
-/* left side box */
 .animation-box {
   position: absolute;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  padding: 30px;
-  top: 20%;
-  left: 10%;
+  top: 30%;
+  left: 15%;
 }
-
-.hero-box-el {
-  font-size: 4.4rem;
+.hero-text-el {
+  font-size: 4vw;
   font-weight: bold;
   color: rgb(241, 241, 241);
   text-shadow: -2px 3px 5px rgb(78, 78, 78);
 }
+.btn-hero {
+  border: 1px solid white;
+  color: white;
+  font-size: 1.2rem;
+}
+.btn-hero:hover {
+  color: white;
+}
+.test {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgba(255, 255, 255, 0.6);
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  border: 2px solid white;
+  padding: 1vw 2vw;
+  text-align: center;
+}
 /*=========================================== HERO =========================================== */
+.ps5 {
+  width: 100%;
+  margin: 3rem 0;
+}
 /* ======================================= FOUR ICONS  ======================================= */
 
 .four-icons i {
@@ -201,7 +217,6 @@ td {
 }
 
 .summary-box {
-  display: flex;
   position: relative;
   min-height: 100px;
   background-color: rgb(240, 240, 240);
@@ -214,6 +229,7 @@ td {
   top: 5%;
   left: 5%;
   font-size: 2.4rem;
+  text-shadow: 3px 3px 3px rgb(207, 207, 207);
 }
 .summary-title {
   position: absolute;
@@ -221,24 +237,14 @@ td {
   left: 5%;
   font-size: 1rem;
 }
+.card-preview-container {
+  position: relative;
+  height: 350px;
+}
 
 /* ================================================ ADMIN-PANEL ================================================ */
 /*==================================================== MEDIA ====================================================*/
 @media (max-width: 1600px) {
-  .hero-high,
-  .hero img,
-  .hero {
-    height: 70vh;
-  }
-
-  /* HERO */
-  .animation-box {
-    left: 5%;
-  }
-  .hero-box-el {
-    font-size: 3.2rem;
-  }
-
   .four-icons i {
     font-size: 1.4rem;
   }
@@ -259,30 +265,6 @@ td {
     max-height: 200px;
   }
 
-  /* HERO */
-  .animation-box {
-    left: 5%;
-  }
-  .hero-box-el {
-    font-size: 2.5rem;
-  }
-
-  .four-icons i {
-    font-size: 1.2rem;
-  }
-  .four-icons p {
-    font-size: 0.8rem;
-  }
-  .four-icons span {
-    font-size: 0.7rem;
-  }
-
-  .hero-high,
-  .hero img,
-  .hero {
-    height: 60vh;
-  }
-
   span {
     font-size: 0.8rem;
   }
@@ -297,15 +279,6 @@ td {
 @media (max-width: 768px) {
   .product-component-image {
     max-height: 150px;
-  }
-
-  .animation-box {
-    left: -3%;
-    top: 35%;
-  }
-
-  .hero-box-el {
-    font-size: 2.1rem;
   }
 
   .four-icons-box,

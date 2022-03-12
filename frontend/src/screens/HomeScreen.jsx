@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import { Row, Col } from 'react-bootstrap'
+import { Row, Col, Image } from 'react-bootstrap'
 import Product from '../components/Product'
 import { listProducts } from '../actions/productActions'
 import Message from '../components/Message'
@@ -8,7 +8,7 @@ import Loader from '../components/Loader'
 import SearchBar from '../components/SearchBar.jsx'
 import { useParams } from 'react-router-dom'
 import Paginate from '../components/Paginate'
-import ProductCarousel from '../components/ProductCarousel'
+import TopRated from '../components/TopRated'
 import Meta from '../components/Meta'
 import FourIcon from '../components/FourIcon.jsx'
 import Hero from './Hero'
@@ -22,7 +22,6 @@ const HomeScreen = () => {
   const pageNumber = params.pageNumber || 1
 
   const productList = useSelector(state => state.productList)
-  // return { loading: false, products: action.payload } from productReducers.js
   const {loading, error, products, page, pages} = productList
 
   useEffect(() => {
@@ -33,17 +32,9 @@ const HomeScreen = () => {
     <>
       <Meta title={'Home Page'} />
       <Hero />
-      <Row className='my-5 mx-5 top-rated'>
-        <Col md={5}>
-          {!keyword && <ProductCarousel />}
-        </Col>
-        <Col md={7}>
-          <h4>Top rated products:</h4>
-          <br />
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor, expedita? Eos, voluptatum eaque nemo modi maiores recusandae? Quos ducimus velit incidunt molestiae perferendis? Nostrum eum modi debitis quos asperiores culpa reprehenderit consectetur suscipit, molestias nisi soluta, officiis perferendis id inventore, repellendus iste facilis magnam. Delectus ad sed fuga iusto repellat.
-        </Col>
-      </Row>
+      <TopRated />
       <FourIcon />
+      <Image src='../images/ps5.png' alt='ps5' className='ps5' />
       <SearchBar />
       {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
           <>

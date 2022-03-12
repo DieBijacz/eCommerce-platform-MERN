@@ -8,7 +8,7 @@ const Card = ({order}) => {
 
   return (
     <Container>
-      <Row className='justify-content-md-center border my-3 p-3 shadow'>
+      <Row className='justify-content-md-center border my-3 p-3 shadow card'>
         <Col>
           <div className='d-flex justify-content-center align-items-center'>
             <h5 className='text-center'>{order._id}</h5>

@@ -26,7 +26,7 @@ const AdminOrdersListScreen = () => {
   const {loading: loadingDispatch, success: successDispatch, error: errorDispatch} = orderDispatch
 
   const orderDetails = useSelector(state => state.orderDetails)
-  const {loading, order, error} = orderDetails
+  const {loading:loadingPreviewOrder, order, error:errorPreviewOrder} = orderDetails
   
   useEffect(() => {
     if((userInfo && userInfo.isAdmin) || successDispatch) {
@@ -59,13 +59,13 @@ const AdminOrdersListScreen = () => {
               <Col>
                 <div className='summary-box shadow'>
                   <div className='summary-number'>{orders && orders.length}</div>
-                  <div className='summary-title'>Total orders</div>
+                  <div className='summary-title'>Total Orders</div>
                 </div>
               </Col>
               <Col>
                 <div className='summary-box shadow'>
                   <div className='summary-number'>{orders && orders.reduce((acc, o) => acc + o.orderItems.length, 0)}</div>
-                  <div className='summary-title'>Total items</div>
+                  <div className='summary-title'>Total Items</div>
                 </div>
               </Col>
               <Col>
@@ -107,12 +107,12 @@ const AdminOrdersListScreen = () => {
             </Row>
 
             {/* DISPATCH */}
-            <Row className='admin-order-dispatch'>
-              <Col md={5}>
+            <Row className='text-center'>
+              <Col>
                 <h3>Dispatch</h3>
                 {errorDispatch && <Message variant='danger'>{errorDispatch}</Message>}
                 {loadingDispatch ? <Loader /> : (
-                  <div className='d-flex '>
+                  <div className='d-flex justify-content-center'>
                     <select value={forDispatch} onChange={(e)=> setForDispatch(e.target.value)}>
                       <option hidden>Select Order for dispatch</option>
                       {orders.map(order => order.isPaid === true ? <option value={order._id} key={order._id}>{order._id}</option> : '')}
@@ -121,14 +121,18 @@ const AdminOrdersListScreen = () => {
                   </div>
                 )}
               </Col>
-              <Col md={7}>
-                <Card order={order}/>
+              <Col>
+                <div className='scaled card-preview-container'>
+                  <div className='card-preview'>
+                    {forDispatch !== '' && loadingPreviewOrder ? <Loader /> : order && <Card order={order}/>}
+                  </div>
+                </div>
               </Col>
             </Row>
           </Col>
 
           {/* ORDERS */}
-          <Col lg={4} className='admin-orders custom-scroll'>
+          <Col lg={4}className='admin-orders custom-scroll'>
             <h3>Orders:</h3>
             {loadingAllOrders ? <Loader /> : errorLoadingOrders ? <Message variant='danger'>{errorLoadingOrders}</Message> : 
               orders.map(order => (<Card order={order} key={order._id} />))    

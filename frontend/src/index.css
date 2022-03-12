@@ -54,8 +54,8 @@ td {
 }
 
 .product-component-image {
-  width: 100%;
-  object-fit: cover;
+  object-fit: scale-down;
+  height: 200px;
 }
 
 .scaled {
@@ -260,27 +260,9 @@ td {
   .carousel-caption h2 {
     font-size: 2.5vw;
   }
-
-  .product-component-image {
-    max-height: 200px;
-  }
-
-  span {
-    font-size: 0.8rem;
-  }
-  i {
-    font-size: 1.2rem;
-  }
-  p {
-    font-size: 1rem;
-  }
 }
 
 @media (max-width: 768px) {
-  .product-component-image {
-    max-height: 150px;
-  }
-
   .four-icons-box,
   .four-icons > * {
     display: none;

@@ -17,7 +17,7 @@ const Product = ({product}) => {
       <Card.Text as='div' className='d-flex justify-content-center'>
         <Rating value={product.rating} text={` ${product.numReviews} reviews`} />
       </Card.Text>
-      <Card.Text as='h3' className='d-flex justify-content-center'>£{product.price}</Card.Text>
+      <Card.Text as='h5' className='d-flex justify-content-center'>£{product.price}</Card.Text>
     </Card>
   )
 }

@@ -1,4 +1,9 @@
-<h1>Masta</h1>
-      <a href="https://drive.google.com/file/d/1oHEVMWB3uXknxFbIuLdJoJo5NR5BfeWM/view?usp=sharing">
-         <img alt="hero" src="uploads/screens/e-commerce-admin1.png" width="150px" height="70px">
-      </a>
+<h1>Masta eCommerce</h1>
+  <img alt="hero" src="uploads/screens/hero.png" width="100%">
+<hr/>
+
+<h3>E-commerce platform build with React, Redux, Express and MongoDB</h3>
+
+<div id="badges">
+  <img src="https://img.shields.io/badge/React-blue" alt="React Badge"/>
+</div>

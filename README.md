@@ -33,11 +33,13 @@
 
 
 <h3>Run</h3>
-# Frontend (:3000), Backend (:5000)
-npm run dev
+<p># Frontend (:3000), Backend (:5000)</p>
+<p>npm run dev</p>
 
-# Run backend only
-npm run server
+<p># Run backend only</p>
+<p>npm run server</p>
+
+<hr/>
 
 <h3>Login</h3>
 # Sample User Logins

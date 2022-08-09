@@ -23,8 +23,8 @@
 
 <h3>Fully Responsive Website</h3>
 <div width='50%'>
-  <img alt="phone1" src="uploads/screens/e-commerce-phone1.png">
-  <img alt="phone2" src="uploads/screens/e-commerce-phone2.png">
+  <img alt="phone1" src="uploads/screens/e-commerce-phone1.png" height='200px'>
+  <img alt="phone2" src="uploads/screens/e-commerce-phone2.png" height='200px'>
 </div>
 
 <hr/>

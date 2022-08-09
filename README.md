@@ -1,5 +1,4 @@
-<script type="module" src="./node_modules/@github/clipboard-copy-element/dist/index.js">
-<h1>Masta eCommerce</h1>
+<h1>Masta eCommerce website</h1>
   <img alt="hero" src="uploads/screens/e-commerce-hero.png" width="100%">
 <hr/>
 
@@ -14,7 +13,7 @@
     MongoDB
   </div>
   <div>
-    <img alt="MongoDB" width="26px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" style="padding-right:10px;" />
+    <img alt="MongoDB" width="26px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" style="padding-right:10px; background-color: white" />
     Express
   </div>
 </div>

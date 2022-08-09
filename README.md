@@ -22,9 +22,9 @@
 <hr/>
 
 <h3>Fully Responsive Website</h3>
-<div>
-  <img alt="phone1" src="uploads/screens/e-commerce-phone1.png" width="50%">
-  <img alt="phone2" src="uploads/screens/e-commerce-phone2.png" width="50%">
+<div width='50%'>
+  <img alt="phone1" src="uploads/screens/e-commerce-phone1.png">
+  <img alt="phone2" src="uploads/screens/e-commerce-phone2.png">
 </div>
 
 <hr/>

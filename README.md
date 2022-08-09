@@ -1,2 +1,2 @@
 <h1>Masta</h1>
-<img src='../uploads/readme-images/e-commerce-hero.png' alt='hero'>/<img>
+![hero](https://drive.google.com/file/d/1oHEVMWB3uXknxFbIuLdJoJo5NR5BfeWM/view?usp=sharing)

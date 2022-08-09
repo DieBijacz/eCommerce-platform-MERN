@@ -39,7 +39,6 @@
 
 <hr/>
 
-
 <h3>Run</h3>
 <p># Frontend (:3000), Backend (:5000)</p>
 <p>npm run dev</p>
@@ -50,14 +49,12 @@
 <hr/>
 
 <h3>Login</h3>
-# Sample User Logins
+<p># Sample User Logins</p>
 
-Login as admin
-email: admin@example.com 
-password: 123
+<p>Login as admin</p>
+<p>email: admin@example.com </p>
+<p>password: 123</p>
 
-Paypal
-email: sb-autpc13044434@personal.example.com
-password: 0S4^$sTc
-
-
+<p>Paypal</p>
+<p>email: sb-autpc13044434@personal.example.com</p>
+<p>password: 0S4^$sTc</p>

@@ -23,15 +23,17 @@
 
 <h3>Fully Responsive Website</h3>
 <div width='50%'>
-  <img alt="phone1" src="uploads/screens/e-commerce-phone1.png" height='200px'>
-  <img alt="phone2" src="uploads/screens/e-commerce-phone2.png" height='200px'>
+  <img alt="phone1" src="uploads/screens/e-commerce-phone1.png" height='400px'>
+  <img alt="phone2" src="uploads/screens/e-commerce-phone2.png" height='400px'>
 </div>
 
 <hr/>
 
 <h3>Admin Panels</h3>
 <div>
+<h4>Control Orders</h4>
   <img alt="admin1" src="uploads/screens/e-commerce-admin1.png" width="100%">
+<h4>Control Products and Users</h4>
   <img alt="admin2" src="uploads/screens/e-commerce-admin2.png" width="100%">
 </div>
 

@@ -41,7 +41,7 @@ const TopRated = () => {
                   <Col lg={6} md={3}>
                     <ListGroup variant='flush'>
                       <ListGroupItem>
-                        <h3>{p.name}</h3>
+                        <h3 className='text-truncate'>{p.name}</h3>
                       </ListGroupItem>
                       <ListGroupItem>
                         <Rating value={p.rating} text={p.numReviews > 1 ? ` ${p.numReviews} reviews` : ` ${p.numReviews} review`} />

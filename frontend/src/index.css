@@ -8,15 +8,11 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-size: clamp(0.9rem, 0.9vw, 1.1rem);
 }
 
 body {
   font-family: 'Poppins', sans-serif;
-}
-
-body::-webkit-scrollbar {
-  overflow-x: hidden;
-  display: none;
 }
 
 p,
@@ -59,7 +55,7 @@ td {
 
 .product-component-image {
   object-fit: scale-down;
-  height: 200px;
+  max-height: 200px;
 }
 
 .scaled {
@@ -100,10 +96,6 @@ td {
 
 .custom-scroll::-webkit-scrollbar-thumb {
   background: var(--main);
-}
-
-.custom-scroll::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
 
 /* ============================================ CUSTOM SCROLL  ============================================ */

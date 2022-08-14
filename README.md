@@ -5,12 +5,13 @@
 - Log in as an administrator to add/remove/edit products or control dispatch on the admin panel.
 - Use integrated **PayPal** for payments in the checkout process
 
-<div width='50%'>
-  <img alt="phone1" src="uploads/screens/e-commerce-phone1.png" height='200px'>
-  <img alt="phone2" src="uploads/screens/e-commerce-phone2.png" height='200px'>
+<div width='100%'>
+  <img alt="phone1" src="uploads/screens/e-commerce-phone1.png" height='350px'>
+  <img alt="phone2" src="uploads/screens/e-commerce-phone2.png" height='350px'>
+  <img alt="phone2" src="uploads/screens/e-commerce-main1.png" height='350px'>
 </div>
 
-## Admin Panels
+## Admin Panel
 ![Admin Panel](https://github.com/DieBijacz/eCommerce-platform-MERN/blob/main/uploads/screens/e-commerce-admin1.png?raw=true)
 
 ## Login

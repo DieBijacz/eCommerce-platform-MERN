@@ -1,14 +1,15 @@
-<span style="background-color:green">asdas</span>
-
-# [Masta](https://github.com/DieBijacz/eCommerce-platform-MERN)
+# [Masta e-commerce platform](https://github.com/DieBijacz/eCommerce-platform-MERN)
 ![Hero](https://github.com/DieBijacz/eCommerce-platform-MERN/blob/main/uploads/screens/e-commerce-hero.png?raw=true)
 
-Foobar is a Python library for dealing with word pluralization.
+## Fully responsive website
 
-## Installation
+<div width='50%'>
+![Phone 1](https://github.com/DieBijacz/eCommerce-platform-MERN/blob/main/uploads/screens/e-commerce-phone1.png?raw=true)
+![Phone2](https://github.com/DieBijacz/eCommerce-platform-MERN/blob/main/uploads/screens/e-commerce-phone2.png?raw=true)
+</div>
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
-![GitHub last commit](https://img.shields.io/github/last-commit/dieBijacz/eCommerce-platform-MERN)
+## Admin Panels
+![Admin Panel](https://github.com/DieBijacz/eCommerce-platform-MERN/blob/main/uploads/screens/e-commerce-admin1.png?raw=true)
 
 ## Login
 Log in as admin to use all features
@@ -21,19 +22,8 @@ admin@example.com
 sb-autpc13044434@personal.example.com
 0S4^$sTc
 ```
-
-```python
-import foobar
-
-# returns 'words'
-foobar.pluralize('word')
-
-# returns 'geese'
-foobar.pluralize('goose')
-
-# returns 'phenomenon'
-foobar.singularize('phenomena')
+## Installation
 ```
-
-## Admin Panels
-![Admin Panel](https://github.com/DieBijacz/eCommerce-platform-MERN/blob/main/uploads/screens/e-commerce-admin1.png?raw=true)
+# Run frontend (:3000) & backend (:5000)
+npm run dev
+```

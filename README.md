@@ -6,8 +6,8 @@
 - Use integrated **PayPal** for payments in the checkout process
 
 <div width='50%'>
-  <img alt="phone1" src="uploads/screens/e-commerce-phone1.png">
-  <img alt="phone2" src="uploads/screens/e-commerce-phone2.png">
+  <img alt="phone1" src="uploads/screens/e-commerce-phone1.png" height='200px'>
+  <img alt="phone2" src="uploads/screens/e-commerce-phone2.png" height='200px'>
 </div>
 
 ## Admin Panels
